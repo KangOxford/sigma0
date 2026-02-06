@@ -45,25 +45,37 @@
 
             <!-- ========== AUTHORS (dynamically shuffled) ========== -->
             <div class="text-center" style="margin-top: 20px;">
-                <p id="author-list" style="font-size: 15px; line-height: 1.8em;"></p>
-                <p id="faculty-list" style="font-size: 13px; color: #777; margin-top: 5px;"></p>
+                <div id="author-list" style="font-size: 15px; line-height: 2.2em;"></div>
+                <div id="faculty-list" style="font-size: 13px; color: #777; margin-top: 8px;"></div>
                 <p id="seed-note" style="font-size: 12px; color: #999; margin-top: 8px;"></p>
             </div>
 
-            <!-- ========== AFFILIATIONS ========== -->
-            <div class="text-center" style="margin-top: 10px;">
-                <p>
-                    University of Oxford
-                    <!-- Additional affiliations TBD -->
-                </p>
+            <!-- ========== AFFILIATIONS (logos) ========== -->
+            <div class="text-center" style="margin-top: 15px; margin-bottom: 15px;">
+                <img src="imgs/oxford_logo.png" alt="University of Oxford" height="48" style="display: inline-block; margin: 0 20px; vertical-align: middle;">
+                <img src="imgs/flair_logo.png" alt="FLAIR" height="48" style="display: inline-block; margin: 0 20px; vertical-align: middle;">
             </div>
 
-            <!-- ========== NAV BUTTONS ========== -->
-            <div class="text-center" style="margin-top: 15px; margin-bottom: 25px;">
-                <ul class="nav nav-pills nav-justified" style="max-width: 400px; margin: 0 auto;">
-                    <li><a href="#"><i class="fa fa-file-pdf-o"></i> Paper</a></li>
-                    <li><a href="#"><i class="fa fa-github"></i> Code</a></li>
-                </ul>
+            <!-- ========== NAV BUTTONS (icon + text below) ========== -->
+            <div class="text-center" style="margin-top: 20px; margin-bottom: 30px;">
+                <div style="display: inline-block; text-align: center; margin: 0 25px; vertical-align: top;">
+                    <a href="#" style="color: #333;">
+                        <i class="fa fa-file-text-o" style="font-size: 40px; display: block; margin-bottom: 6px;"></i>
+                        <span style="font-size: 14px;">Paper</span>
+                    </a>
+                </div>
+                <div style="display: inline-block; text-align: center; margin: 0 25px; vertical-align: top;">
+                    <a href="#" style="color: #333;">
+                        <i class="fa fa-github" style="font-size: 40px; display: block; margin-bottom: 6px;"></i>
+                        <span style="font-size: 14px;">Code</span>
+                    </a>
+                </div>
+                <div style="display: inline-block; text-align: center; margin: 0 25px; vertical-align: top;">
+                    <a href="#" style="color: #333;">
+                        <i class="fa fa-database" style="font-size: 40px; display: block; margin-bottom: 6px;"></i>
+                        <span style="font-size: 14px;">Checkpoint</span>
+                    </a>
+                </div>
             </div>
 
             <!-- ========== HERO IMAGE ========== -->
@@ -292,7 +304,7 @@
                 <textarea id="bibtex" style="display:none;">
 @misc{lobs5_2025,
     title={Scaling Laws for Quantitative Finance Foundation Models},
-    author={Ani Calinescu and Bidipta Sarkar and Reuben and Jakob Foerster and Kang and Mihai Cucuringu and Satyam and Gereon Franken and Peer Nagy and Stefan Zohren and Aramis Marti-Shahandeh and George Nigmatulin and Valentin and Sascha Frey and Frensi Zejnullahu and Alfie Backhouse},
+    author={Ani Calinescu and Bidipta Sarkar and Reuben and Jakob Foerster and Kang Li and Mihai Cucuringu and Satyam and Gereon Franken and Peer Nagy and Stefan Zohren and Aramis Marti-Shahandeh and George Nigmatulin and Valentin and Sascha Frey and Frensi Zejnullahu and Alfie Backhouse},
     year={2025}
 }
                 </textarea>
@@ -344,7 +356,7 @@
 
     var allAuthors = [
         'Ani Calinescu', 'Bidipta Sarkar', 'Reuben', 'Jakob Foerster',
-        'Kang', 'Mihai Cucuringu', 'Satyam', 'Gereon Franken',
+        'Kang Li', 'Mihai Cucuringu', 'Satyam', 'Gereon Franken',
         'Peer Nagy', 'Stefan Zohren', 'Aramis Marti-Shahandeh',
         'George Nigmatulin', 'Valentin', 'Sascha Frey',
         'Frensi Zejnullahu', 'Alfie Backhouse'
@@ -363,9 +375,11 @@
     var rng2 = mulberry32(hhmm + 1);
     var shuffledFaculty = shuffle(facultyArr, rng2);
 
-    // Render student list with middot separators
+    // Render student list with wide spacing (like eshyperscale)
     document.getElementById('author-list').innerHTML =
-        shuffledStudents.join(' &nbsp;&middot;&nbsp; ');
+        shuffledStudents.map(function(n) {
+            return '<span style="display:inline-block; margin: 0 12px;">' + n + '</span>';
+        }).join('');
 
     // Render faculty list
     document.getElementById('faculty-list').innerHTML =
