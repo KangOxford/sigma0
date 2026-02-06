@@ -147,6 +147,15 @@
                 A key open question is whether LOB modeling requires the full quadratic attention mechanism, or whether linear attention with longer context windows is sufficient. Our scaling results suggest the latter&mdash;LOBS5 achieves strong performance with linear complexity, and performance continues to improve with model scale.
             </p>
 
+            <h3>Long Context: What Does 10k Orders Mean?</h3>
+            <p>
+                With a TBPTT window of 20 segments (each 512 tokens), LOBS5 processes approximately <strong>10,000 orders</strong> per training context. But how much real market time does that represent? The answer depends heavily on market activity:
+            </p>
+            <img src="imgs/context_window_time.png" alt="10k messages wall-clock time across years and activity levels" style="width: 85%; margin: 20px auto;">
+            <p class="fig-caption">
+                <strong>Figure 3.</strong> Wall-clock time spanned by 10k order messages (GOOG, 2016&ndash;2023). High-activity periods (red) compress 10k orders into just 2&ndash;5 minutes, while low-activity periods (gray) can stretch to 30+ minutes. The secular trend toward higher activity means recent data packs more information per context window.
+            </p>
+
             <h3>24-Token Encoding</h3>
             <p>
                 Each limit order message is discretized into <strong>24 categorical tokens</strong> representing:
