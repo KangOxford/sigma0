@@ -265,6 +265,15 @@
                 This multi-agent setup enables accurate modeling of dynamic price impact, capturing how the ego agent's orders influence market microstructure through the reactions of synthetic background agents.
             </p>
 
+            <h3>Order Injection and Price Impact</h3>
+            <p>
+                To validate that LOBS5 captures <strong>dynamic price impact</strong>, we inject buy or sell market orders at the junction point (step 500) and observe the midprice response. The model correctly learns that buy pressure drives prices up and sell pressure drives prices down&mdash;with the combined signal showing a persistent positive drift after injection:
+            </p>
+            <img src="imgs/injection_orders.png" alt="Midprice return after order injection: BUY vs SELL" style="width: 90%; margin: 20px auto;">
+            <p class="fig-caption">
+                <strong>Figure 7.</strong> Aggregated midprice return (mean &plusmn; 1 std) after injecting BUY (blue) and SELL*(&minus;1) (red) orders at the junction. The combined mean (purple) shows a clear positive drift post-injection, confirming that LOBS5 models realistic price impact dynamics rather than merely memorizing patterns.
+            </p>
+
             <h3>Results</h3>
             <p>
                 Fine-tuning on Google (GOOG) order flow from January 2023:
