@@ -599,6 +599,27 @@
                 </div>
             </div>
 
+            <!-- Q9: GPU Kernel Bubbles -->
+            <div class="oq-item">
+                <button class="oq-btn" onclick="toggleOQ(this)">
+                    <span class="oq-num">Q9</span> Minimising GPU Kernel Bubbles via Profiler-Guided Optimisation?
+                </button>
+                <div class="oq-body" style="display:none;">
+                    <p>
+                        Even when individual kernels are fast, <strong>inter-kernel bubbles</strong>&mdash;idle gaps between consecutive GPU kernel launches&mdash;can dominate wall-clock time. These bubbles arise from host-side dispatch overhead, synchronisation barriers, small kernels that underutilise SMs, and memory allocation stalls. For SSM training, where each step involves many small operations (element-wise gates, scans, reductions), the bubble fraction can exceed the useful compute fraction.
+                    </p>
+                    <p>
+                        The principled approach is <strong>profiler-guided optimisation</strong>: use tools like <a href="https://docs.nvidia.com/nsight-systems/"><strong>Nsight Systems</strong></a>, <strong>XProfiler</strong>, or JAX's built-in profiler to generate GPU execution timelines, identify the largest bubbles, and systematically eliminate them through kernel fusion, async memory transfers, CUDA graph capture, or reordering operations to overlap compute with communication. For LOBS5, which chains SSM scans with MLP blocks and loss computation, how much wall-clock time is lost to bubbles, and what is the theoretical speedup from closing them?
+                    </p>
+                    <div class="oq-comment-toggle">
+                        <button onclick="loadComments(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
+                        <div class="oq-body" style="display:none;">
+                            <div class="giscus-q9" data-term="Q9 Minimising GPU Kernel Bubbles via Profiler-Guided Optimisation?"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- ========== SPONSOR ========== -->
             <h2>Support This Research</h2>
             <p>
