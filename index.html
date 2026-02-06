@@ -1025,7 +1025,7 @@
     // Render faculty list, mark Jakob Foerster as PI
     document.getElementById('faculty-list').innerHTML =
         '<em>Faculty: ' + shuffledFaculty.map(function(n) {
-            return n === 'Jakob Foerster' ? n + ' (PI)' : n;
+            return n;
         }).join(', ') + '</em>';
 
     // Seed note right below authors
