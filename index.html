@@ -60,21 +60,21 @@
 
             <!-- ========== NAV BUTTONS (2x2 grid on mobile) ========== -->
             <div class="text-center" style="margin-top: 20px; margin-bottom: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 500px; margin-left: auto; margin-right: auto;">
-                <button onclick="var el=document.getElementById('papers-list');el.style.display=el.style.display==='none'?'block':'none';" style="flex: 1 1 140px; max-width: 200px; padding: 10px 12px; border: 1px solid #d0d0d0; border-radius: 8px; color: #333; font-size: 14px; background: #fafafa; cursor: pointer; text-align: center;">
+                <button onclick="toggleNav('papers-list')" style="flex: 1 1 140px; max-width: 200px; padding: 10px 12px; border: 1px solid #d0d0d0; border-radius: 8px; color: #333; font-size: 14px; background: #fafafa; cursor: pointer; text-align: center;">
                     <i class="fa fa-file-text-o" style="margin-right: 6px;"></i>Papers
                 </button>
-                <a href="#" style="flex: 1 1 140px; max-width: 200px; padding: 10px 12px; border: 1px solid #d0d0d0; border-radius: 8px; color: #333; font-size: 14px; text-decoration: none; background: #fafafa; text-align: center; display: flex; align-items: center; justify-content: center;">
+                <button onclick="toggleNav('code-list')" style="flex: 1 1 140px; max-width: 200px; padding: 10px 12px; border: 1px solid #d0d0d0; border-radius: 8px; color: #333; font-size: 14px; background: #fafafa; cursor: pointer; text-align: center;">
                     <i class="fa fa-github" style="margin-right: 6px;"></i>Code
-                </a>
-                <a href="#" style="flex: 1 1 140px; max-width: 200px; padding: 10px 12px; border: 1px solid #d0d0d0; border-radius: 8px; color: #333; font-size: 14px; text-decoration: none; background: #fafafa; text-align: center; display: flex; align-items: center; justify-content: center;">
+                </button>
+                <button onclick="toggleNav('checkpoint-list')" style="flex: 1 1 140px; max-width: 200px; padding: 10px 12px; border: 1px solid #d0d0d0; border-radius: 8px; color: #333; font-size: 14px; background: #fafafa; cursor: pointer; text-align: center;">
                     <i class="fa fa-database" style="margin-right: 6px;"></i>Checkpoint
-                </a>
-                <button onclick="var el=document.getElementById('past-contrib-list');el.style.display=el.style.display==='none'?'block':'none';" style="flex: 1 1 140px; max-width: 200px; padding: 10px 12px; border: 1px solid #d0d0d0; border-radius: 8px; color: #333; font-size: 14px; background: #fafafa; cursor: pointer; text-align: center;">
+                </button>
+                <button onclick="toggleNav('past-contrib-list')" style="flex: 1 1 140px; max-width: 200px; padding: 10px 12px; border: 1px solid #d0d0d0; border-radius: 8px; color: #333; font-size: 14px; background: #fafafa; cursor: pointer; text-align: center;">
                     <i class="fa fa-users" style="margin-right: 6px;"></i>Past Contributors
                 </button>
 
-                <!-- Papers dropdown -->
-                <div id="papers-list" style="display: none; margin-top: 15px; text-align: left; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px 20px; background: #fafafa;">
+                <!-- Nav dropdowns (mutually exclusive) -->
+                <div id="papers-list" class="nav-dropdown" style="display: none; margin-top: 15px; text-align: left; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px 20px; background: #fafafa;">
                     <table style="width: 100%; border: none;">
                         <tr style="border-bottom: 1px solid #eee;">
                             <td style="padding: 10px 5px; border: none; vertical-align: top;">
@@ -128,8 +128,18 @@
                     </table>
                 </div>
 
+                <!-- Code dropdown -->
+                <div id="code-list" class="nav-dropdown" style="display: none; margin-top: 15px; text-align: center; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px 20px; background: #fafafa;">
+                    <p style="margin: 0;"><a href="https://github.com/KangOxford/sigma0" style="font-size: 14px;"><i class="fa fa-github"></i>&nbsp; github.com/KangOxford/sigma0</a></p>
+                </div>
+
+                <!-- Checkpoint dropdown -->
+                <div id="checkpoint-list" class="nav-dropdown" style="display: none; margin-top: 15px; text-align: center; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px 20px; background: #fafafa;">
+                    <p style="margin: 0; color: #777;">Checkpoints coming soon.</p>
+                </div>
+
                 <!-- Past contributors dropdown -->
-                <div id="past-contrib-list" style="display: none; margin-top: 10px;">
+                <div id="past-contrib-list" class="nav-dropdown" style="display: none; margin-top: 10px;">
                     <p style="font-size: 13px; color: #777; text-align: center; margin: 8px 0;">
                         Peer Nagy &middot; Alfie Backhouse &middot; Reuben &middot; Frensi Zejnullahu &middot; Chris Lu &middot; Gereon Franken &middot; Silvia Sapora &middot; Timon Willi
                     </p>
@@ -729,7 +739,7 @@
 
             <div id="sponsor-accordion" style="max-width: 600px; margin: 0 auto;">
                 <div class="oq-item">
-                    <button class="oq-btn" onclick="toggleSponsor(this)">
+                    <button class="oq-btn" onclick="toggleOQ(this)">
                         <i class="fa fa-server" style="margin-right: 8px;"></i> Compute
                     </button>
                     <div class="oq-body" style="display:block;">
@@ -744,7 +754,7 @@
                     </div>
                 </div>
                 <div class="oq-item">
-                    <button class="oq-btn" onclick="toggleSponsor(this)">
+                    <button class="oq-btn" onclick="toggleOQ(this)">
                         <i class="fa fa-database" style="margin-right: 8px;"></i> Data
                     </button>
                     <div class="oq-body" style="display:block;">
@@ -759,7 +769,7 @@
                     </div>
                 </div>
                 <div class="oq-item">
-                    <button class="oq-btn" onclick="toggleSponsor(this)">
+                    <button class="oq-btn" onclick="toggleOQ(this)">
                         <i class="fa fa-graduation-cap" style="margin-right: 8px;"></i> Funding
                     </button>
                     <div class="oq-body" style="display:block;">
@@ -773,7 +783,7 @@
                     </div>
                 </div>
                 <div class="oq-item">
-                    <button class="oq-btn" onclick="toggleSponsor(this)">
+                    <button class="oq-btn" onclick="toggleOQ(this)">
                         <i class="fa fa-line-chart" style="margin-right: 8px;"></i> Live Trading
                     </button>
                     <div class="oq-body" style="display:block;">
@@ -964,15 +974,15 @@ function toggleOQ(btn) {
     body.style.display = body.style.display === 'none' ? 'block' : 'none';
 }
 
-function toggleSponsor(btn) {
-    var body = btn.nextElementSibling;
-    if (!body) return;
-    var isOpen = body.style.display === 'block';
-    // Close all sponsor panels
-    var panels = document.querySelectorAll('#sponsor-accordion .oq-body');
-    panels.forEach(function(p) { p.style.display = 'none'; });
+// Nav buttons: mutually exclusive (Papers, Code, Checkpoint, Past Contributors)
+function toggleNav(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var isOpen = el.style.display === 'block';
+    // Close all nav dropdowns
+    document.querySelectorAll('.nav-dropdown').forEach(function(d) { d.style.display = 'none'; });
     // Toggle clicked one
-    if (!isOpen) body.style.display = 'block';
+    if (!isOpen) el.style.display = 'block';
 }
 
 // Single shared giscus widget - moved between questions
