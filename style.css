@@ -195,6 +195,11 @@ blockquote p {
   border-top: 1px dashed #e0e0e0;
 }
 
+/* Shrink giscus iframe to match page proportions */
+.giscus, .giscus-frame {
+  zoom: 0.75;
+}
+
 /* Pipeline diagram styling */
 .pipeline-box {
   border: 2px solid #1772d0;
