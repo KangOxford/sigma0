@@ -578,6 +578,27 @@
                 </div>
             </div>
 
+            <!-- Q8: Hybrid Attention -->
+            <div class="oq-item">
+                <button class="oq-btn" onclick="toggleOQ(this)">
+                    <span class="oq-num">Q8</span> Hybrid Attention: Mixing Linear and Softmax Layers?
+                </button>
+                <div class="oq-body" style="display:none;">
+                    <p>
+                        Rather than choosing purely between quadratic attention and linear attention, recent architectures explore <strong>hybrid designs</strong> that interleave both. <a href="https://arxiv.org/abs/2408.11321"><strong>Jamba</strong></a> (AI21) mixes Transformer and Mamba layers, while <a href="https://arxiv.org/abs/2501.08313"><strong>MiniMax-Text-01</strong></a> (456B parameters, 4M context) uses a striking pattern: every 8 layers, 7 use <strong>Lightning Attention</strong> (linear, $O(n)$) and 1 uses <strong>Softmax Attention</strong> (quadratic, $O(n^2)$)&mdash;achieving 87.5% linear / 12.5% softmax ratio.
+                    </p>
+                    <p>
+                        The insight is that <strong>linear attention struggles with precise retrieval</strong> (needle-in-a-haystack), while softmax excels at it. Periodically inserting a softmax layer acts as a "calibration point" that recovers fine-grained token lookup without sacrificing the efficiency of linear layers for the bulk of computation. For LOB order flow, could a similar hybrid unlock both the <em>long context</em> of linear models and the <em>precise event retrieval</em> of softmax attention? The optimal mixing ratio and layer placement for financial sequences is entirely unexplored.
+                    </p>
+                    <div class="oq-comment-toggle">
+                        <button onclick="loadComments(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
+                        <div class="oq-body" style="display:none;">
+                            <div class="giscus-q8" data-term="Q8 Hybrid Attention: Mixing Linear and Softmax Layers?"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- ========== SPONSOR ========== -->
             <h2>Support This Research</h2>
             <p>
