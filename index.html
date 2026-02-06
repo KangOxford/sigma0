@@ -206,11 +206,6 @@
                 All metrics measured on a single node (4&times; GH200 GPUs).
             </p>
 
-            <h3>Throughput</h3>
-            <img src="imgs/throughput.png" alt="Message Generation Throughput" style="width: 85%; margin: 20px auto;">
-            <p class="fig-caption">
-                <strong>Figure 3.</strong> Message generation throughput comparison. LOBSv2 achieves <strong>100&ndash;600&times;</strong> throughput improvement over v1, reaching up to 15,000 messages/second. This throughput is critical for Evolution Strategies fine-tuning, which requires massive parallel rollouts.
-            </p>
 
             <h3>Generation Quality Across Versions</h3>
             <p>
@@ -242,31 +237,47 @@
                 <strong>Figure 5.</strong> Tick-normalised microscopic response functions for GOOG. Market orders (MO, red) exhibit the characteristic concave square-root shape, limit orders (LO, green) show negative impact, and cancellations (CA, blue) are near-zero. LOBS5v2 variants closely reproduce the real data patterns, while v1 (s5_main) shows deviations at longer lags.
             </p>
 
+            <!-- ========== ENVIRONMENT ========== -->
+            <h2>Environment: Hardware-Accelerated Order Book Simulator</h2>
+            <p>
+                Training and evaluating trading agents requires a fast, faithful market simulator. We build on two award-winning simulators from our group:
+            </p>
+            <ul>
+                <li><a href="https://arxiv.org/abs/2308.13289"><strong>JAX-LOB</strong></a> &mdash; A fully vectorized limit order book simulator in JAX that implements the full NASDAQ ITCH protocol with price-time priority matching (<em>ICAIF 2023 Best Paper</em>)</li>
+                <li><a href="https://dl.acm.org/doi/pdf/10.1145/3768292.3770416"><strong>JaxMARL-HFT</strong></a> &mdash; A multi-agent reinforcement learning extension that enables multiple trading agents to interact within the same order book environment (<em>ICAIF 2025 Best Paper</em>)</li>
+            </ul>
+            <p>
+                These simulators leverage JAX's <code>vmap</code> to run <strong>65,536 parallel environments</strong> on a single GPU cluster (2,048 per GPU &times; 32 GPUs), enabling the massive rollout throughput required by Evolution Strategies.
+            </p>
+
+            <h3>The Sequential Bottleneck</h3>
+            <p>
+                Order book matching is inherently <strong>sequential</strong>: each trade modifies the book state, and the next match depends on the updated state. In JAX, this is implemented via <code>lax.while_loop</code>, which requires a <strong>device-to-host (D2H) synchronization</strong> on every iteration to evaluate the loop condition on CPU. This costs 110&ndash;500ms per matching operation&mdash;despite the entire order book fitting in just 4.8 KB of SRAM.
+            </p>
+            <p>
+                The bottleneck is not compute, but <strong>memory access patterns</strong>. The data is small enough to live entirely in GPU shared memory, yet the JAX control flow forces it through the slow HBM &rarr; CPU &rarr; HBM path on every iteration.
+            </p>
+
+            <h3>Triton Kernel Fusion</h3>
+            <p>
+                We rewrite the order book matching engine (<code>_match_against_bid/ask_orders</code>) as fused <strong>Triton kernels</strong> that keep the entire while loop on-GPU, eliminating all D2H round-trips:
+            </p>
+            <ul>
+                <li><strong>Zero D2H overhead</strong>: Loop condition evaluated in SRAM, no CPU synchronization needed</li>
+                <li><strong>99% HBM efficiency</strong>: Order book data (100 orders &times; 6 columns &times; 4 bytes = 2.4 KB per side) pinned in shared memory for the entire kernel duration</li>
+                <li><strong>Fused operations</strong>: Price-time priority search (parallel reduction), quantity deduction, trade recording, and empty-slot cleanup&mdash;all in a single kernel launch</li>
+                <li><strong>Sequential correctness</strong>: The kernel preserves exact price-time priority semantics&mdash;matching is done in a for-loop within the kernel, respecting state dependencies between consecutive trades</li>
+            </ul>
+
+            <img src="imgs/throughput.png" alt="Message Generation Throughput" style="width: 85%; margin: 20px auto;">
+            <p class="fig-caption">
+                <strong>Figure 6.</strong> Message generation throughput comparison. LOBSv2 achieves <strong>100&ndash;600&times;</strong> throughput improvement over v1, reaching up to 15,000 messages/second. This throughput is critical for Evolution Strategies fine-tuning, which requires massive parallel rollouts.
+            </p>
+
             <!-- ========== FINE-TUNING ========== -->
             <h2>Fine-tuning for Trading</h2>
             <p>
                 Foundation models must adapt to domain-specific tasks. We demonstrate LOBS5's versatility through fine-tuning on <strong>order execution</strong>&mdash;a central problem in high-frequency trading: executing a specified quantity (e.g., sell 30 shares) within a time window while maximizing profit. This task presents a non-differentiable reward signal (realized PnL), making it unsuitable for gradient-based optimization.
-            </p>
-
-            <h3>JAX-LOB: Hardware-Accelerated Order Book Simulator</h3>
-            <p>
-                Fine-tuning requires running millions of market simulations in parallel. We build on <a href="https://arxiv.org/abs/2308.13289"><strong>JAX-LOB</strong></a> (<em>ICAIF 2023 Best Paper</em>), a fully vectorized limit order book simulator in JAX, and its multi-agent extension <a href="https://dl.acm.org/doi/pdf/10.1145/3768292.3770416"><strong>JaxMARL-HFT</strong></a> (<em>ICAIF 2025 Best Paper</em>). These simulators enable <strong>65,536 parallel environments</strong> on a single GPU cluster, but the sequential nature of order matching&mdash;where each trade's state depends on the previous&mdash;creates a bottleneck.
-            </p>
-            <p>
-                The core issue: JAX's <code>lax.while_loop</code> in the matching engine requires a <strong>device-to-host (D2H) synchronization</strong> on every iteration to evaluate the loop condition, costing 110&ndash;500ms per matching operation. Since the entire order book fits in 4.8 KB of SRAM, the bottleneck is not compute but memory access.
-            </p>
-
-            <h4>Triton Kernel Fusion</h4>
-            <p>
-                We rewrite the order book matching engine (<code>_match_against_bid/ask_orders</code>) as fused <strong>Triton kernels</strong>, eliminating all D2H round-trips by keeping the while loop entirely on-GPU. The kernel performs parallel reduction to find the best price level, then sequentially matches orders within a single kernel launch:
-            </p>
-            <ul>
-                <li><strong>Zero D2H overhead</strong>: Loop condition evaluated in SRAM, no CPU synchronization</li>
-                <li><strong>99% HBM efficiency</strong>: All order book data (100 orders &times; 6 columns &times; 4 bytes = 2.4 KB per side) fits in shared memory</li>
-                <li><strong>Fused operations</strong>: Price-time priority search, quantity reduction, trade recording, and empty-slot cleanup in a single kernel</li>
-            </ul>
-            <p>
-                This kernel fusion is critical for Evolution Strategies fine-tuning: with 65,536 parallel environments each running sequential order matching, even small per-match latency improvements compound into massive throughput gains.
             </p>
 
             <h3>EGGROLL + LoRA</h3>
