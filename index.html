@@ -722,6 +722,9 @@
                     <p>
                         This is a direct trade-off: <strong>long sequences with small vocabulary</strong> vs. <strong>short sequences with large vocabulary</strong>. For a context of 500 orders, our encoding produces 12,000 tokens while a 1-token encoding produces 500 tokens but may need a vocabulary of 100k+ to avoid information loss. Which regime is more efficient depends on the architecture (SSMs handle long sequences cheaply; Transformers prefer shorter sequences but can handle large vocabularies via efficient softmax). The optimal operating point on this Pareto frontier for LOB modelling is unknown.
                     </p>
+                    <p>
+                        Large vocabularies also create a concrete engineering problem: the <strong>cross-entropy loss layer</strong> materialises a logit matrix of size (batch &times; seq_len &times; vocab_size), which can consume more memory than the rest of the model combined. Techniques like <a href="https://arxiv.org/abs/2411.09009"><strong>Cut Cross-Entropy</strong></a> (CCE) avoid materialising the full logit matrix by computing only the logit for the correct token and evaluating log-sum-exp on the fly. In practice, we sidestepped this by switching from a 22-token encoding (base-10,000 prices, vocab ~12k) to a <strong>24-token encoding</strong> (base-100 prices), which cuts ~9,900 entries from the vocabulary at the cost of just 2 extra tokens per message.
+                    </p>
                     <div class="oq-comment-toggle">
                         <button onclick="loadComments(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
                         <div class="oq-body" style="display:none;">
