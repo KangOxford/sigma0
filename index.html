@@ -151,6 +151,7 @@
 
             <!-- ========== ABSTRACT ========== -->
             <h2>Abstract</h2>
+            <blockquote>
             <p>
                 Financial markets operate through limit order books (LOBs), which aggregate market participants' trading intentions in the form of limit orders specifying order type, direction, price, and quantity. The continuous stream of these orders&mdash;the <em>order flow</em>&mdash;provides a high-fidelity record of market dynamics at unprecedented scale: the S&amp;P 500 constituents alone generated approximately <strong>3.8 trillion tokens</strong> of order flow between 2016 and 2021, comparable to the largest natural language corpora.
             </p>
@@ -160,6 +161,7 @@
             <p>
                 Our complete training pipeline consists of three stages: (1) S5-based pre-training with <em>Sliding Window Recurrences</em> for long context processing, (2) <em>Discrete Flow Matching</em> post-training that eliminates compound error through bidirectional refinement (48.6% reduction in Wasserstein distance), and (3) <em>Evolution Strategies</em> fine-tuning via EGGROLL that achieves 155% PnL improvement on order execution tasks with 65,536 parallel simulations. Pre-training exhibits clear scaling laws: test loss decreases monotonically from 34M to 617M parameters, achieving approximately 40% Model FLOPs Utilization comparable to Meta's Llama-3.1.
             </p>
+            </blockquote>
 
             <!-- ========== WHY ORDER FLOW ========== -->
             <h2>Why Order Flow?</h2>
