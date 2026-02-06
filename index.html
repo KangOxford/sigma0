@@ -309,31 +309,37 @@
                 Training and evaluating trading agents requires a fast, faithful market simulator. Our simulator stack has three layers, each adding richer dynamics:
             </p>
 
-            <h3>Layer 1: Match Engine &mdash; JAX-LOB</h3>
-            <p>
-                At the foundation is <a href="https://arxiv.org/abs/2308.13289"><strong>JAX-LOB</strong></a> (<em>ICAIF 2023 Best Paper</em>), a fully vectorized limit order book matching engine in JAX. It implements the complete NASDAQ ITCH protocol with price-time priority matching. Given an incoming order and the current book state, the match engine deterministically executes trades and updates the book. This layer captures <strong>direct price impact</strong>&mdash;when your order consumes liquidity at a price level, that liquidity is gone and cannot be filled again.
-            </p>
+            <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #fff8f0; border: 1px solid #f0dcc0;">
+                <h3 style="margin-top: 0;">Layer 1: Match Engine &mdash; JAX-LOB</h3>
+                <p style="margin-bottom: 0;">
+                    At the foundation is <a href="https://arxiv.org/abs/2308.13289"><strong>JAX-LOB</strong></a> (<em>ICAIF 2023 Best Paper</em>), a fully vectorized limit order book matching engine in JAX. It implements the complete NASDAQ ITCH protocol with price-time priority matching. Given an incoming order and the current book state, the match engine deterministically executes trades and updates the book. This layer captures <strong>direct price impact</strong>&mdash;when your order consumes liquidity at a price level, that liquidity is gone and cannot be filled again.
+                </p>
+            </div>
 
-            <h3>Layer 2: Environment &mdash; Historical Replay</h3>
-            <p>
-                Wrapping the match engine with historical order flow replay creates an <strong>environment</strong>. The agent's orders are interleaved with real historical messages and processed through the match engine. This is sufficient for backtesting but has a critical limitation: the historical background agents do not react to the ego agent's actions&mdash;they replay the same orders regardless of what the agent does.
-            </p>
-            <p>
-                <a href="https://dl.acm.org/doi/pdf/10.1145/3768292.3770416"><strong>JaxMARL-HFT</strong></a> (<em>ICAIF 2025 Best Paper</em>) extends this to multi-agent settings, where multiple trading agents interact within the same order book. Both simulators leverage JAX's <code>vmap</code> to run <strong>65,536 parallel environments</strong> on a single GPU cluster (2,048 per GPU &times; 32 GPUs).
-            </p>
+            <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #fff3eb; border: 1px solid #f0cdb8;">
+                <h3 style="margin-top: 0;">Layer 2: Environment &mdash; Historical Replay</h3>
+                <p>
+                    Wrapping the match engine with historical order flow replay creates an <strong>environment</strong>. The agent's orders are interleaved with real historical messages and processed through the match engine. This is sufficient for backtesting but has a critical limitation: the historical background agents do not react to the ego agent's actions&mdash;they replay the same orders regardless of what the agent does.
+                </p>
+                <p style="margin-bottom: 0;">
+                    <a href="https://dl.acm.org/doi/pdf/10.1145/3768292.3770416"><strong>JaxMARL-HFT</strong></a> (<em>ICAIF 2025 Best Paper</em>) extends this to multi-agent settings, where multiple trading agents interact within the same order book. Both simulators leverage JAX's <code>vmap</code> to run <strong>65,536 parallel environments</strong> on a single GPU cluster (2,048 per GPU &times; 32 GPUs).
+                </p>
+            </div>
 
-            <h3>Layer 3: World Model Simulator &mdash; LOBS5 as Background</h3>
-            <p>
-                The full simulator replaces historical replay with a <strong>world model</strong>: the frozen pretrained LOBS5 generates background market activity <em>conditioned on the current state</em>, including the ego agent's actions. This unlocks <strong>indirect price impact</strong>&mdash;phenomena that historical replay cannot capture:
-            </p>
-            <ul>
-                <li><strong>Adversarial selection</strong>: Background agents observe the ego agent's orders and change their behavior accordingly. For example, a market maker seeing a large buy order may widen their spread or pull their quotes&mdash;exactly the adverse selection that makes real trading difficult</li>
-                <li><strong>Dynamic liquidity response</strong>: The order book replenishes (or thins out) in response to the ego agent's activity, rather than following a fixed historical script</li>
-                <li><strong>Strategic interaction</strong>: The world model learns the <em>equilibrium distribution</em> of market responses, providing a far more realistic training signal than static replay</li>
-            </ul>
-            <p>
-                This creates a two-model architecture: the <strong>policy model</strong> (fine-tuned LOBS5) learns to trade, while the <strong>world model</strong> (frozen pretrained LOBS5) provides the reactive environment. The policy model must learn strategies that are robust to adversarial selection&mdash;not just strategies that work against passive historical data.
-            </p>
+            <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #ffede6; border: 1px solid #f0bfaf;">
+                <h3 style="margin-top: 0;">Layer 3: World Model Simulator &mdash; LOBS5 as Background</h3>
+                <p>
+                    The full simulator replaces historical replay with a <strong>world model</strong>: the frozen pretrained LOBS5 generates background market activity <em>conditioned on the current state</em>, including the ego agent's actions. This unlocks <strong>indirect price impact</strong>&mdash;phenomena that historical replay cannot capture:
+                </p>
+                <ul>
+                    <li><strong>Adversarial selection</strong>: Background agents observe the ego agent's orders and change their behavior accordingly. For example, a market maker seeing a large buy order may widen their spread or pull their quotes&mdash;exactly the adverse selection that makes real trading difficult</li>
+                    <li><strong>Dynamic liquidity response</strong>: The order book replenishes (or thins out) in response to the ego agent's activity, rather than following a fixed historical script</li>
+                    <li><strong>Strategic interaction</strong>: The world model learns the <em>equilibrium distribution</em> of market responses, providing a far more realistic training signal than static replay</li>
+                </ul>
+                <p style="margin-bottom: 0;">
+                    This creates a two-model architecture: the <strong>policy model</strong> (fine-tuned LOBS5) learns to trade, while the <strong>world model</strong> (frozen pretrained LOBS5) provides the reactive environment. The policy model must learn strategies that are robust to adversarial selection&mdash;not just strategies that work against passive historical data.
+                </p>
+            </div>
 
             <h4>Order Injection: Validating Price Impact</h4>
             <p>
