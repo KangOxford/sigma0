@@ -677,6 +677,27 @@
                 </div>
             </div>
 
+            <!-- Q12: Tokenisation Trade-off -->
+            <div class="oq-item">
+                <button class="oq-btn" onclick="toggleOQ(this)">
+                    <span class="oq-num">Q12</span> The Tokenisation Trade-off: Sequence Length vs. Vocabulary Size?
+                </button>
+                <div class="oq-body" style="display:none;">
+                    <p>
+                        For a fixed context window of $N$ orders, there is a fundamental tension between <strong>tokens per message</strong> and <strong>vocabulary size</strong>. Using more tokens per message (e.g., our 24-token encoding) preserves full fidelity but makes the sequence very long ($24N$ tokens for $N$ orders), stressing the model's context capacity. Using fewer tokens per message (down to 1-token encodings like MarS or LOBERT) keeps the sequence short ($N$ tokens) but requires a much larger vocabulary to encode the same information, increasing the embedding table size and softmax computation.
+                    </p>
+                    <p>
+                        This is a direct trade-off: <strong>long sequences with small vocabulary</strong> vs. <strong>short sequences with large vocabulary</strong>. For a context of 500 orders, our encoding produces 12,000 tokens while a 1-token encoding produces 500 tokens but may need a vocabulary of 100k+ to avoid information loss. Which regime is more efficient depends on the architecture (SSMs handle long sequences cheaply; Transformers prefer shorter sequences but can handle large vocabularies via efficient softmax). The optimal operating point on this Pareto frontier for LOB modelling is unknown.
+                    </p>
+                    <div class="oq-comment-toggle">
+                        <button onclick="loadComments(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
+                        <div class="oq-body" style="display:none;">
+                            <div class="giscus-q12" data-term="Q12 The Tokenisation Trade-off: Sequence Length vs. Vocabulary Size?"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- ========== SPONSOR ========== -->
             <h2>Support This Research</h2>
             <p>
@@ -688,7 +709,7 @@
                     <button class="oq-btn" onclick="toggleSponsor(this)">
                         <i class="fa fa-server" style="margin-right: 8px;"></i> Compute
                     </button>
-                    <div class="oq-body" style="display:none;">
+                    <div class="oq-body" style="display:block;">
                         <table class="data-table" style="max-width: 100%;">
                             <thead><tr><th style="width: 30%;">Resource</th><th>What we need</th></tr></thead>
                             <tbody>
@@ -703,7 +724,7 @@
                     <button class="oq-btn" onclick="toggleSponsor(this)">
                         <i class="fa fa-database" style="margin-right: 8px;"></i> Data
                     </button>
-                    <div class="oq-body" style="display:none;">
+                    <div class="oq-body" style="display:block;">
                         <table class="data-table" style="max-width: 100%;">
                             <thead><tr><th style="width: 30%;">Source</th><th>What we need</th></tr></thead>
                             <tbody>
@@ -718,7 +739,7 @@
                     <button class="oq-btn" onclick="toggleSponsor(this)">
                         <i class="fa fa-graduation-cap" style="margin-right: 8px;"></i> Funding
                     </button>
-                    <div class="oq-body" style="display:none;">
+                    <div class="oq-body" style="display:block;">
                         <table class="data-table" style="max-width: 100%;">
                             <thead><tr><th style="width: 30%;">Type</th><th>What we need</th></tr></thead>
                             <tbody>
@@ -732,7 +753,7 @@
                     <button class="oq-btn" onclick="toggleSponsor(this)">
                         <i class="fa fa-line-chart" style="margin-right: 8px;"></i> Live Trading
                     </button>
-                    <div class="oq-body" style="display:none;">
+                    <div class="oq-body" style="display:block;">
                         <table class="data-table" style="max-width: 100%;">
                             <thead><tr><th style="width: 30%;">Area</th><th>What we offer</th></tr></thead>
                             <tbody>
