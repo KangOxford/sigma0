@@ -21,9 +21,8 @@
     <!-- Custom styles -->
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Sponsor grid: only 1col, 2col, or 4col */
-        .sponsor-grid { display: grid; gap: 15px; grid-template-columns: 1fr; }
-        @media (min-width: 580px) { .sponsor-grid { grid-template-columns: 1fr 1fr; } }
+        /* Sponsor grid: 2×2 default, 1×4 on wide screens */
+        .sponsor-grid { display: grid; gap: 15px; grid-template-columns: 1fr 1fr; }
         @media (min-width: 1000px) { .sponsor-grid { grid-template-columns: repeat(4, 1fr); } }
     </style>
 
