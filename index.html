@@ -464,7 +464,7 @@
                 </button>
                 <div class="oq-body" style="display:none;">
                     <p>
-                        LOBS5 tokenizes each order message into 24 categorical tokens. An alternative is <strong>time-stepped representation</strong>&mdash;e.g., using RAP (Recurrent Autoregressive Processes) where each time step aggregates multiple events into a fixed-size snapshot. Tokenized representations preserve full message-level fidelity but produce very long sequences. Time-stepped approaches compress information but may lose critical microstructure details. Which is better for which tasks?
+                        LOBS5 tokenizes each order message into 24 categorical tokens. An alternative is <strong>time-stepped representation</strong>&mdash;e.g., using RoPE (Rotary Position Embedding) with fixed time-step snapshots where each step aggregates multiple events. Tokenized representations preserve full message-level fidelity but produce very long sequences. Time-stepped approaches compress information but may lose critical microstructure details. Which is better for which tasks?
                     </p>
                     <div class="oq-comment-toggle">
                         <button onclick="toggleOQ(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
