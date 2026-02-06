@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Scaling Laws for Quantitative Finance Foundation Models - LOBS5">
+    <meta name="keywords" content="foundation model, limit order book, state space model, order flow, quantitative finance, scaling laws">
+    <title>LOBS5 - Scaling Laws for Quantitative Finance Foundation Models</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- CodeMirror (for BibTeX display) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.css">
+    <!-- Template styles -->
+    <link rel="stylesheet" href="utils/style.css">
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- MathJax 3 -->
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+
+<body>
+<div class="container" id="main">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+
+            <!-- ========== TITLE ========== -->
+            <div class="text-center" style="margin-top: 40px;">
+                <h1 style="font-size: 36px; font-weight: 700;">
+                    Scaling Laws for Quantitative Finance<br>Foundation Models
+                </h1>
+            </div>
+
+            <!-- ========== AUTHORS ========== -->
+            <div class="text-center" style="margin-top: 20px;">
+                <ul class="list-inline author-list">
+                    <li>Ani Calinescu<sup>*</sup></li>
+                    <li>Bidipta Sarkar</li>
+                    <li>Reuben</li>
+                    <li>Jakob Foerster<sup>*</sup></li>
+                    <li>Kang</li>
+                    <li>Mihai Cucuringu<sup>*</sup></li>
+                    <li>Satyam</li>
+                    <li>Gereon Franken</li>
+                    <li>Peer Nagy</li>
+                    <li>Stefan Zohren<sup>*</sup></li>
+                    <li>Aramis Marti-Shahandeh</li>
+                    <li>George Nigmatulin</li>
+                    <li>Valentin</li>
+                    <li>Sascha Frey</li>
+                    <li>Frensi Zejnullahu</li>
+                    <li>Alfie Backhouse</li>
+                </ul>
+                <p style="font-size: 12px; color: #999;">
+                    <sup>&dagger;</sup> Author order randomized with <code>seed(1147)</code>.
+                    &nbsp; <sup>*</sup> Faculty.
+                </p>
+            </div>
+
+            <!-- ========== AFFILIATIONS ========== -->
+            <div class="text-center" style="margin-top: 10px;">
+                <p>
+                    University of Oxford
+                    <!-- Additional affiliations TBD -->
+                </p>
+            </div>
+
+            <!-- ========== NAV BUTTONS ========== -->
+            <div class="text-center" style="margin-top: 15px; margin-bottom: 25px;">
+                <ul class="nav nav-pills nav-justified" style="max-width: 400px; margin: 0 auto;">
+                    <li><a href="#"><i class="fa fa-file-pdf-o"></i> Paper</a></li>
+                    <li><a href="#"><i class="fa fa-github"></i> Code</a></li>
+                </ul>
+            </div>
+
+            <!-- ========== HERO IMAGE ========== -->
+            <div id="header_img">
+                <img src="imgs/scaling_law.png" alt="Scaling Laws for LOB Foundation Models" style="width: 90%;">
+                <p class="fig-caption">
+                    <strong>Figure 1.</strong> Scaling laws for LOBS5: test loss decreases monotonically with model size (34M to 617M parameters), trained on 25 billion tokens of NASDAQ order flow. The ratio indicates tokens-per-parameter.
+                </p>
+            </div>
+
+            <!-- ========== TL;DR ========== -->
+            <blockquote>
+                <strong>TL;DR</strong> &mdash; Finance is one of the hardest domains for ML &mdash; noisy, fast, strategic. We develop <strong>LOBS5</strong>, the first state-space foundation model for limit order book data, trained on <strong>25 billion tokens</strong> of NASDAQ order flow. Our three-stage pipeline &mdash; pre-training, post-training with Discrete Flow Matching, and fine-tuning with Evolution Strategies &mdash; achieves <strong>155% PnL improvement</strong> on order execution and exhibits clear scaling laws from 34M to 2B+ parameters.
+            </blockquote>
+
+            <!-- ========== ABSTRACT ========== -->
+            <h2>Abstract</h2>
+            <p>
+                Financial markets operate through limit order books (LOBs), which aggregate market participants' trading intentions in the form of limit orders specifying order type, direction, price, and quantity. The continuous stream of these orders&mdash;the <em>order flow</em>&mdash;provides a high-fidelity record of market dynamics at unprecedented scale: the S&amp;P 500 constituents alone generated approximately <strong>3.8 trillion tokens</strong> of order flow between 2016 and 2021, comparable to the largest natural language corpora.
+            </p>
+            <p>
+                We introduce <strong>LOBS5</strong>, a foundation model for LOB data built on the S5 State Space Model architecture, pretrained on 25 billion tokens from NASDAQ using a 24-token encoding scheme that discretizes each limit order message into categorical tokens. Unlike natural language where tokens are purely symbolic, order flow comprises both categorical values (event type, direction) and numerical values (price, quantity) in which magnitude carries semantic meaning&mdash;making LOB order flow an ideal testbed for foundation models on structured time series.
+            </p>
+            <p>
+                Our complete training pipeline consists of three stages: (1) S5-based pre-training with <em>Sliding Window Recurrences</em> for long context processing, (2) <em>Discrete Flow Matching</em> post-training that eliminates compound error through bidirectional refinement (48.6% reduction in Wasserstein distance), and (3) <em>Evolution Strategies</em> fine-tuning via EGGROLL that achieves 155% PnL improvement on order execution tasks with 65,536 parallel simulations. Pre-training exhibits clear scaling laws: test loss decreases monotonically from 34M to 617M parameters, achieving approximately 40% Model FLOPs Utilization comparable to Meta's Llama-3.1.
+            </p>
+
+            <!-- ========== WHY ORDER FLOW ========== -->
+            <h2>Why Order Flow?</h2>
+            <p>
+                The stock exchanges (NYSE and NASDAQ) generate massive volumes of high-frequency trading data, with new orders created at the millisecond level. These orders encapsulate a wealth of insights: the tendencies and preferences of various market participants, underlying market information, and the correlations between different stocks.
+            </p>
+            <p>
+                Our core objective is to train a foundation model on this terabyte-scale dataset, enabling it to identify the transition dynamics of limit order books. Through post-training, we fine-tune this large model for downstream tasks such as prediction, classification, and order execution. Even a few basis points of improvement in execution can translate to enormous profits when deployed at scale.
+            </p>
+
+            <button class="collapsible">The Multi-Agent Perspective</button>
+            <div class="contentx">
+                <p style="margin-top: 12px;">
+                    At its core, a limit order book is an <strong>anonymous multi-agent system</strong>. Each market participant submits orders (actions) that modify the shared order book (state). The <em>state transitions</em> are governed by the matching engine (deterministic), but the <em>distribution of future states</em> depends on the collective behavior of all participants&mdash;analogous to video frame prediction in computer vision.
+                </p>
+                <p>
+                    LOBS5 captures this state distribution through next-token prediction on order flow tokens. The foundation model learns two fundamental capabilities:
+                </p>
+                <ul>
+                    <li><strong>Mimic historical orders</strong>: Generate realistic background market activity as a world model</li>
+                    <li><strong>Optimize trading policy</strong>: Fine-tune an ego agent for downstream tasks using evolution strategies</li>
+                </ul>
+                <p>
+                    This enables simulation of <em>dynamic price impact</em> (not static), <em>indirect price impact</em> (not direct), and <em>adversarial selection</em>&mdash;where other agents observe and react to the ego agent's behavior, changing their original plans. These phenomena are critical for realistic market simulation but are absent from traditional backtesting frameworks.
+                </p>
+            </div>
+
+            <!-- ========== PRE-TRAINING ========== -->
+            <h2>LOBS5: Pre-training at Scale</h2>
+
+            <h3>Architecture: S5 State Space Model</h3>
+            <p>
+                LOBS5 is built on the <strong>S5 State Space Model</strong>, a modern alternative to Transformers that provides linear-time $O(n)$ complexity for sequence modeling, compared to the quadratic $O(n^2)$ cost of self-attention. The choice of S5 is motivated by three factors:
+            </p>
+            <ol>
+                <li><strong>Linear complexity</strong>: Efficient processing of long order flow sequences (10,000+ tokens)</li>
+                <li><strong>Natural bridge</strong>: The state space formulation naturally connects continuous market dynamics with discrete observations</li>
+                <li><strong>Memory efficiency</strong>: 40&ndash;60% lower memory usage compared to Transformers</li>
+            </ol>
+            <p>
+                A key open question is whether LOB modeling requires the full quadratic attention mechanism, or whether linear attention with longer context windows is sufficient. Our scaling results suggest the latter&mdash;LOBS5 achieves strong performance with linear complexity, and performance continues to improve with model scale.
+            </p>
+
+            <h3>24-Token Encoding</h3>
+            <p>
+                Each limit order message is discretized into <strong>24 categorical tokens</strong> representing:
+            </p>
+            <ul>
+                <li><strong>Event type</strong>: new order, cancellation, execution, etc.</li>
+                <li><strong>Direction</strong>: buy or sell</li>
+                <li><strong>Relative price levels</strong>: distance from best bid/ask</li>
+                <li><strong>Size digits</strong>: order quantity decomposed into individual digits</li>
+            </ul>
+            <p>
+                This encoding enables the application of language modeling techniques (next-token prediction with cross-entropy loss) to financial time series while preserving the semantic meaning of numerical values.
+            </p>
+
+            <h3>Scaling Laws</h3>
+            <p>
+                Pre-training on 25 billion tokens of Google (GOOG) stock order flow from 2022 reveals clear power-law scaling:
+            </p>
+
+            <img src="imgs/scaling_law.png" alt="Loss vs Model Parameters" style="width: 80%; margin: 20px auto;">
+            <p class="fig-caption">
+                <strong>Figure 2.</strong> Test loss vs. model parameters (25B tokens). Loss decreases monotonically from 1.35 (34M) to 0.90 (617M), following a power-law relationship. Ratio = tokens / parameters.
+            </p>
+
+            <h3>GPU Efficiency</h3>
+            <p>
+                We achieve approximately <strong>40% Model FLOPs Utilization</strong> (MFU) during pre-training, comparable to Meta's Llama-3.1 (38&ndash;43%):
+            </p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Model Size</th>
+                        <th>MFU</th>
+                        <th>GPU Util %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>2.17B</td><td>38.4%</td><td>93.4 &plusmn; 7.9</td></tr>
+                    <tr><td>1.95B</td><td>35.3%</td><td>95.6 &plusmn; 7.4</td></tr>
+                    <tr><td>1.86B</td><td>36.3%</td><td>94.2 &plusmn; 7.3</td></tr>
+                    <tr><td>1.4B</td><td>41.7%</td><td>80.7 &plusmn; 37.5</td></tr>
+                    <tr><td>1.0B</td><td>41.3%</td><td>72.9 &plusmn; 41.3</td></tr>
+                    <tr><td>360M</td><td>36.2%</td><td>85.0 &plusmn; 33.9</td></tr>
+                </tbody>
+            </table>
+            <p style="font-size: 13px; color: #666; text-align: center;">
+                All metrics measured on a single node (4&times; GH200 GPUs).
+            </p>
+
+            <h3>Throughput</h3>
+            <img src="imgs/throughput.png" alt="Message Generation Throughput" style="width: 85%; margin: 20px auto;">
+            <p class="fig-caption">
+                <strong>Figure 3.</strong> Message generation throughput comparison. LOBSv2 achieves <strong>100&ndash;600&times;</strong> throughput improvement over v1, reaching up to 15,000 messages/second. This throughput is critical for Evolution Strategies fine-tuning, which requires massive parallel rollouts.
+            </p>
+
+            <!-- ========== POST-TRAINING ========== -->
+            <h2>Post-training: Discrete Flow Matching</h2>
+            <p>
+                A fundamental limitation of autoregressive (AR) models is <strong>compound error accumulation</strong>: prediction errors propagate and amplify throughout sequence generation, as each token conditions on potentially incorrect previous outputs. This problem is particularly severe for financial order flow, where distributional shifts compound rapidly over long generation horizons.
+            </p>
+            <p>
+                To address this, we introduce a post-training stage using <strong>Discrete Flow Matching (DFM)</strong>, which converts our pretrained AR model into a flow-based generator. Unlike traditional flow matching that starts from random noise, our approach leverages the pretrained model's learned distribution as the starting point, significantly reducing the learning burden.
+            </p>
+            <p>
+                The results are striking: while AR models exhibit Wasserstein distance increasing from 3 to 20+ throughout sequence generation, DFM maintains a nearly flat error profile (3&ndash;4) across all time steps, achieving a <strong class="metric-highlight">48.6% reduction</strong> in Wasserstein distance. This post-training framework preserves the model's learned representations while eliminating the compound error inherent in left-to-right generation.
+            </p>
+
+            <!-- ========== FINE-TUNING ========== -->
+            <h2>Fine-tuning for Trading</h2>
+            <p>
+                Foundation models must adapt to domain-specific tasks. We demonstrate LOBS5's versatility through fine-tuning on <strong>order execution</strong>&mdash;a central problem in high-frequency trading: executing a specified quantity (e.g., sell 30 shares) within a time window while maximizing profit. This task presents a non-differentiable reward signal (realized PnL), making it unsuitable for gradient-based optimization.
+            </p>
+
+            <h3>EGGROLL + LoRA</h3>
+            <p>
+                We employ <strong>Evolution Strategies</strong> via EGGROLL (Evolution Guided GeneRal Optimisation via Low-rank Learning), combined with LoRA rank-4 on all projection matrices while freezing SSM parameters. EGGROLL uses low-rank perturbations $AB^\top$ where $r \ll \min(m,n)$, reducing memory from $mn$ to $r(m+n)$ per layer and achieving up to a <strong>hundredfold increase</strong> in training throughput for billion-parameter models.
+            </p>
+
+            <h3>Dual-Role Architecture</h3>
+            <p>
+                Critically, our pretrained foundation model serves <strong>dual roles</strong>:
+            </p>
+            <ul>
+                <li><strong>Ego agent</strong>: The fine-tuned LOBS5 executes trades to maximize PnL</li>
+                <li><strong>World model</strong>: The frozen pretrained LOBS5 generates background market activity, simulating realistic responses from other market participants</li>
+            </ul>
+            <p>
+                This multi-agent setup enables accurate modeling of dynamic price impact, capturing how the ego agent's orders influence market microstructure through the reactions of synthetic background agents.
+            </p>
+
+            <h3>Results</h3>
+            <p>
+                Fine-tuning on Google (GOOG) order flow from January 2023:
+            </p>
+            <table class="data-table" style="max-width: 500px; margin: 0 auto;">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Mean PnL (pretrained)</td><td>4,700</td></tr>
+                    <tr><td>Mean PnL (fine-tuned)</td><td><strong>12,000</strong></td></tr>
+                    <tr><td>Improvement</td><td class="metric-highlight">155%</td></tr>
+                    <tr><td>Parallel environments</td><td>65,536</td></tr>
+                    <tr><td>Per-GPU parallelism</td><td>2,048</td></tr>
+                    <tr><td>Total GPUs</td><td>32</td></tr>
+                    <tr><td>HBM access efficiency</td><td>99%</td></tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 12px;">
+                The matching engine simulator uses custom CUDA kernels that parallelize originally sequential order matching operations, minimizing data transfers between shared memory and HBM to achieve 99% HBM access efficiency.
+            </p>
+
+            <!-- ========== SCALING ========== -->
+            <h2>Scaling to SPY500</h2>
+            <p>
+                Having established scaling laws on single-stock data, the next frontier is training on the <strong>full S&amp;P 500</strong> universe. The dataset scales are:
+            </p>
+
+            <table class="data-table" style="max-width: 450px; margin: 0 auto;">
+                <thead>
+                    <tr>
+                        <th>Dataset</th>
+                        <th>Tokens</th>
+                        <th>Orders</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>GOOG 2022</td><td>8.3B</td><td>1/3B</td></tr>
+                    <tr><td>GOOG (all years)</td><td>25B</td><td>1B</td></tr>
+                    <tr><td><strong>SPY500</strong></td><td><strong>3,800B</strong></td><td><strong>152B</strong></td></tr>
+                </tbody>
+            </table>
+
+            <p style="margin-top: 15px;">
+                Scaling to the full SPY500 dataset with a 2B parameter model requires an estimated <strong>40,000&ndash;160,000 node-hours</strong>, derived from our single-stock training profile (16 node-hours/epoch for GOOG 2022), adjusted for the 456&times; data increase and ~50% multi-node communication efficiency.
+            </p>
+            <p>
+                A multi-stock foundation model would unlock <strong>cross-stock correlation learning</strong>&mdash;understanding how order flow in one stock influences another&mdash;which is critical for portfolio-level applications.
+            </p>
+
+            <!-- ========== NEXT STEPS ========== -->
+            <h2>Next Steps</h2>
+            <ul>
+                <li><strong>Multi-stock cross-correlation</strong>: Training on the full SPY500 to learn inter-stock dependencies and portfolio-level dynamics</li>
+                <li><strong>Mixture-of-Experts (MoE)</strong>: Specialized expert networks for different market regimes (volatile vs. stable, trending vs. mean-reverting), with dynamic router layers</li>
+                <li><strong>Adversarial selection modeling</strong>: Extending the multi-agent framework to model strategic interactions where market participants adapt to each other's behavior</li>
+                <li><strong>Attention mechanism research</strong>: Empirically testing whether quadratic attention provides meaningful gains over linear attention for LOB modeling at scale</li>
+            </ul>
+
+            <!-- ========== CITATION ========== -->
+            <h2>Citation</h2>
+            <div style="margin-top: 15px;">
+                <textarea id="bibtex" style="display:none;">
+@misc{lobs5_2025,
+    title={Scaling Laws for Quantitative Finance Foundation Models},
+    author={Ani Calinescu and Bidipta Sarkar and Reuben and Jakob Foerster and Kang and Mihai Cucuringu and Satyam and Gereon Franken and Peer Nagy and Stefan Zohren and Aramis Marti-Shahandeh and George Nigmatulin and Valentin and Sascha Frey and Frensi Zejnullahu and Alfie Backhouse},
+    year={2025}
+}
+                </textarea>
+            </div>
+
+            <!-- ========== FOOTNOTES ========== -->
+            <div class="footnotes">
+                <p>
+                    <sup>&dagger;</sup> Author order was randomized using Python <code>random.seed(1147)</code> where 1147 is the time (HHMM) at which the author list was generated.
+                </p>
+                <p>
+                    <sup>*</sup> Faculty members.
+                </p>
+            </div>
+
+            <!-- ========== FOOTER ========== -->
+            <div class="text-center" style="margin-top: 30px; margin-bottom: 30px; font-size: 12px; color: #999;">
+                <p>
+                    Template adapted from <a href="https://github.com/EasyAcademicWebsite/EasyAcademicWebsite.github.io">EasyAcademicWebsite</a>.
+                </p>
+            </div>
+
+        </div><!-- col -->
+    </div><!-- row -->
+</div><!-- container -->
+
+<!-- Scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.js"></script>
+<script src="utils/app.js"></script>
+
+<!-- Collapsible toggle -->
+<script>
+document.querySelectorAll('.collapsible').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        this.classList.toggle('active');
+        var content = this.nextElementSibling;
+        content.classList.toggle('show');
+    });
+});
+</script>
+
+</body>
+</html>
