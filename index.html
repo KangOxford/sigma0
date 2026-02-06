@@ -206,6 +206,11 @@
                 All metrics measured on a single node (4&times; GH200 GPUs).
             </p>
 
+            <h3>Throughput</h3>
+            <img src="imgs/throughput.png" alt="Message Generation Throughput" style="width: 85%; margin: 20px auto;">
+            <p class="fig-caption">
+                <strong>Figure 4.</strong> Message generation throughput comparison. LOBSv2 achieves <strong>100&ndash;600&times;</strong> throughput improvement over v1, reaching up to 15,000 messages/second.
+            </p>
 
             <h3>Generation Quality Across Versions</h3>
             <p>
@@ -268,11 +273,6 @@
                 <li><strong>Fused operations</strong>: Price-time priority search (parallel reduction), quantity deduction, trade recording, and empty-slot cleanup&mdash;all in a single kernel launch</li>
                 <li><strong>Sequential correctness</strong>: The kernel preserves exact price-time priority semantics&mdash;matching is done in a for-loop within the kernel, respecting state dependencies between consecutive trades</li>
             </ul>
-
-            <img src="imgs/throughput.png" alt="Message Generation Throughput" style="width: 85%; margin: 20px auto;">
-            <p class="fig-caption">
-                <strong>Figure 6.</strong> Message generation throughput comparison. LOBSv2 achieves <strong>100&ndash;600&times;</strong> throughput improvement over v1, reaching up to 15,000 messages/second. This throughput is critical for Evolution Strategies fine-tuning, which requires massive parallel rollouts.
-            </p>
 
             <!-- ========== FINE-TUNING ========== -->
             <h2>Fine-tuning for Trading</h2>
