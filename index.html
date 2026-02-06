@@ -60,18 +60,75 @@
 
             <!-- ========== NAV BUTTONS (horizontal row) ========== -->
             <div class="text-center" style="margin-top: 20px; margin-bottom: 30px;">
-                <a href="#" style="display: inline-block; margin: 0 8px; padding: 10px 24px; border: 1px solid #d0d0d0; border-radius: 8px; color: #333; font-size: 14px; text-decoration: none; background: #fafafa; transition: background 0.2s;">
-                    <i class="fa fa-file-text-o" style="margin-right: 6px;"></i>Paper
-                </a>
-                <a href="#" style="display: inline-block; margin: 0 8px; padding: 10px 24px; border: 1px solid #d0d0d0; border-radius: 8px; color: #333; font-size: 14px; text-decoration: none; background: #fafafa; transition: background 0.2s;">
+                <button onclick="var el=document.getElementById('papers-list');el.style.display=el.style.display==='none'?'block':'none';" style="display: inline-block; margin: 0 8px; padding: 10px 24px; border: 1px solid #d0d0d0; border-radius: 8px; color: #333; font-size: 14px; background: #fafafa; cursor: pointer;">
+                    <i class="fa fa-file-text-o" style="margin-right: 6px;"></i>Papers
+                </button>
+                <a href="#" style="display: inline-block; margin: 0 8px; padding: 10px 24px; border: 1px solid #d0d0d0; border-radius: 8px; color: #333; font-size: 14px; text-decoration: none; background: #fafafa;">
                     <i class="fa fa-github" style="margin-right: 6px;"></i>Code
                 </a>
-                <a href="#" style="display: inline-block; margin: 0 8px; padding: 10px 24px; border: 1px solid #d0d0d0; border-radius: 8px; color: #333; font-size: 14px; text-decoration: none; background: #fafafa; transition: background 0.2s;">
+                <a href="#" style="display: inline-block; margin: 0 8px; padding: 10px 24px; border: 1px solid #d0d0d0; border-radius: 8px; color: #333; font-size: 14px; text-decoration: none; background: #fafafa;">
                     <i class="fa fa-database" style="margin-right: 6px;"></i>Checkpoint
                 </a>
-                <button id="past-contrib-btn" onclick="var el=document.getElementById('past-contrib-list');el.style.display=el.style.display==='none'?'block':'none';" style="display: inline-block; margin: 0 8px; padding: 10px 24px; border: 1px solid #d0d0d0; border-radius: 8px; color: #333; font-size: 14px; background: #fafafa; cursor: pointer;">
+                <button onclick="var el=document.getElementById('past-contrib-list');el.style.display=el.style.display==='none'?'block':'none';" style="display: inline-block; margin: 0 8px; padding: 10px 24px; border: 1px solid #d0d0d0; border-radius: 8px; color: #333; font-size: 14px; background: #fafafa; cursor: pointer;">
                     <i class="fa fa-users" style="margin-right: 6px;"></i>Past Contributors
                 </button>
+
+                <!-- Papers dropdown -->
+                <div id="papers-list" style="display: none; margin-top: 15px; text-align: left; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px 20px; background: #fafafa;">
+                    <table style="width: 100%; border: none;">
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 10px 5px; border: none; vertical-align: top;">
+                                <a href="https://arxiv.org/abs/2309.13689" style="font-size: 14px; font-weight: 600;">Generative AI for End-to-End Limit Order Book Modelling: A Token-Level Autoregressive Generative Model of Message Flow Using a Deep State Space Network</a><br>
+                                <span style="font-size: 12px; color: #666;">P Nagy, S Frey, S Sapora, K Li, A Calinescu, S Zohren, J Foerster</span><br>
+                                <span style="font-size: 12px; color: #999;">[Oral] ICAIF 2023 &nbsp;&middot;&nbsp; Cited: 34</span>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 10px 5px; border: none; vertical-align: top;">
+                                <a href="https://arxiv.org/abs/2308.13289" style="font-size: 14px; font-weight: 600;">JAX-LOB: A GPU-Accelerated Limit Order Book Simulator to Unlock Large Scale Reinforcement Learning for Trading</a><br>
+                                <span style="font-size: 12px; color: #666;">SY Frey, K Li, P Nagy, S Sapora, C Lu, S Zohren, J Foerster, A Calinescu</span><br>
+                                <span style="font-size: 12px; color: #e74c3c; font-weight: 600;">[Best Paper] ICAIF 2023</span> <span style="font-size: 12px; color: #999;">&nbsp;&middot;&nbsp; Cited: 34</span>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 10px 5px; border: none; vertical-align: top;">
+                                <a href="https://arxiv.org/abs/2502.09172" style="font-size: 14px; font-weight: 600;">LOB-Bench: Benchmarking Generative AI for Finance &mdash; an Application to Limit Order Book Data</a><br>
+                                <span style="font-size: 12px; color: #666;">P Nagy, S Frey, K Li, B Sarkar, S Vyetrenko, S Zohren, A Calinescu, ...</span><br>
+                                <span style="font-size: 12px; color: #999;">arXiv 2025 &nbsp;&middot;&nbsp; Cited: 5</span>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 10px 5px; border: none; vertical-align: top;">
+                                <a href="https://dl.acm.org/doi/10.1145/3677052.3698620" style="font-size: 14px; font-weight: 600;">Mixtures of Experts for Scaling Up Neural Networks in Order Execution</a><br>
+                                <span style="font-size: 12px; color: #666;">K Li, M Cucuringu, L S&aacute;nchez-Betancourt, T Willi</span><br>
+                                <span style="font-size: 12px; color: #999;">ICAIF 2024</span>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 10px 5px; border: none; vertical-align: top;">
+                                <a href="https://dl.acm.org/doi/10.1145/3768292.3768314" style="font-size: 14px; font-weight: 600;">Discrete Flow Matching is a Surprisingly Effective Post-training Method to Address Compound Error in Autoregressive Models</a><br>
+                                <span style="font-size: 12px; color: #666;">K Li, B Sarkar, Z Xiong, S Frey, Z Wang, F Zejnullahu, A Backhouse, ...</span><br>
+                                <span style="font-size: 12px; color: #999;">ICAIF 2025 &nbsp;&middot;&nbsp; Cited: 1</span>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 10px 5px; border: none; vertical-align: top;">
+                                <a href="https://dl.acm.org/doi/pdf/10.1145/3768292.3770416" style="font-size: 14px; font-weight: 600;">JaxMARL-HFT: GPU-Accelerated Large-Scale Multi-Agent Reinforcement Learning for High-Frequency Trading</a><br>
+                                <span style="font-size: 12px; color: #666;">V Mohl, S Frey, R Leyland, K Li, G Nigmatulin, M Cucuringu, S Zohren, ...</span><br>
+                                <span style="font-size: 12px; color: #e74c3c; font-weight: 600;">[Best Paper] ICAIF 2025</span> <span style="font-size: 12px; color: #999;">&nbsp;&middot;&nbsp; Cited: 1</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px 5px; border: none; vertical-align: top;">
+                                <a href="https://arxiv.org/abs/2509.05107" style="font-size: 14px; font-weight: 600;">Painting the Market: Generative Diffusion Models for Financial Limit Order Book Simulation and Forecasting</a><br>
+                                <span style="font-size: 12px; color: #666;">A Backhouse, K Li, J Foerster, A Calinescu, S Zohren</span><br>
+                                <span style="font-size: 12px; color: #999;">arXiv 2025</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- Past contributors dropdown -->
                 <div id="past-contrib-list" style="display: none; margin-top: 10px;">
                     <p style="font-size: 13px; color: #777; text-align: center; margin: 8px 0;">
                         Peer Nagy &middot; Alfie Backhouse &middot; Reuben &middot; Frensi Zejnullahu &middot; Chris Lu &middot; Gereon Franken &middot; Silvia Sapora &middot; Timon Willi
