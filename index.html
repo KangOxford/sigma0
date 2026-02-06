@@ -496,11 +496,11 @@
             <!-- Q5: Market Regime -->
             <div class="oq-item">
                 <button class="oq-btn" onclick="toggleOQ(this)">
-                    <span class="oq-num">Q5</span> Market Regime Identification via Mixture of Experts?
+                    <span class="oq-num">Q5</span> Memorizing Market Regimes via Mixture of Experts?
                 </button>
                 <div class="oq-body" style="display:none;">
                     <p>
-                        Financial markets exhibit distinct <strong>regimes</strong>&mdash;volatile vs. calm, trending vs. mean-reverting, crisis vs. normal. Should the model explicitly identify and memorize these regimes? A <strong>Mixture of Experts</strong> architecture could route tokens to specialized experts based on detected regime, allowing the model to maintain distinct behavioral modes. The key questions are: how many regimes exist, can they be discovered in an unsupervised way, and does explicit routing outperform a single large model that implicitly learns regime-dependent behavior?
+                        Financial markets exhibit distinct <strong>regimes</strong>&mdash;volatile vs. calm, trending vs. mean-reverting, crisis vs. normal. A single model must <strong>memorize</strong> all these regimes and switch behavior accordingly. Can a <strong>Mixture of Experts</strong> architecture achieve this by dedicating different experts to different regimes&mdash;where each expert memorizes the dynamics of a particular market state? The key questions are: how many distinct regimes need to be memorized, can a router learn to detect regime shifts in real time, and does explicit expert specialization outperform a single large model that must implicitly memorize all regimes in its parameters?
                     </p>
                     <div class="oq-comment-toggle">
                         <button onclick="toggleOQ(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
