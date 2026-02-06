@@ -742,64 +742,48 @@
                 Scaling foundation models for finance requires substantial resources. If you or your organisation can help, we would be grateful for support in any of the following areas:
             </p>
 
-            <div id="sponsor-accordion" style="max-width: 600px; margin: 0 auto;">
-                <div class="oq-item">
-                    <button class="oq-btn" onclick="toggleOQ(this)">
-                        <i class="fa fa-server" style="margin-right: 8px;"></i> Compute
-                    </button>
-                    <div class="oq-body" style="display:block;">
-                        <table class="data-table" style="max-width: 100%;">
-                            <thead><tr><th style="width: 30%;">Resource</th><th>What we need</th></tr></thead>
-                            <tbody>
-                                <tr><td>GPU / TPU clusters</td><td>Access to multi-node training infrastructure (H100, GH200, TPU v4+)</td></tr>
-                                <tr><td>Cloud credits</td><td>AWS, GCP, Azure, or Lambda credits for scaling experiments</td></tr>
-                                <tr><td>API tokens</td><td>Anthropic, OpenAI, or other LLM API credits for research acceleration</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 800px; margin: 0 auto;">
+                <!-- Compute -->
+                <div style="border: 1px solid #d0d0d0; border-radius: 10px; padding: 15px 18px; background: #fafafa;">
+                    <h3 style="margin: 0 0 10px; font-size: 15px;"><i class="fa fa-server" style="margin-right: 6px; color: #555;"></i>Compute</h3>
+                    <table class="data-table" style="max-width: 100%; margin: 0; font-size: 13px;">
+                        <tbody>
+                            <tr><td style="font-weight:600; width:35%;">GPU / TPU clusters</td><td>Multi-node training (H100, GH200, TPU v4+)</td></tr>
+                            <tr><td style="font-weight:600;">Cloud credits</td><td>AWS, GCP, Azure, or Lambda</td></tr>
+                            <tr><td style="font-weight:600;">API tokens</td><td>Anthropic, OpenAI, or other LLM API credits</td></tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="oq-item">
-                    <button class="oq-btn" onclick="toggleOQ(this)">
-                        <i class="fa fa-database" style="margin-right: 8px;"></i> Data
-                    </button>
-                    <div class="oq-body" style="display:block;">
-                        <table class="data-table" style="max-width: 100%;">
-                            <thead><tr><th style="width: 30%;">Source</th><th>What we need</th></tr></thead>
-                            <tbody>
-                                <tr><td>Options markets</td><td>Full order book data for options exchanges (CBOE, CME, Eurex)</td></tr>
-                                <tr><td>International equities</td><td>LOB data from non-US markets (LSE, TSE, SSE, HKEX, etc.)</td></tr>
-                                <tr><td>Other asset classes</td><td>Futures, FX, or crypto order book data at message level</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <!-- Data -->
+                <div style="border: 1px solid #d0d0d0; border-radius: 10px; padding: 15px 18px; background: #fafafa;">
+                    <h3 style="margin: 0 0 10px; font-size: 15px;"><i class="fa fa-database" style="margin-right: 6px; color: #555;"></i>Data</h3>
+                    <table class="data-table" style="max-width: 100%; margin: 0; font-size: 13px;">
+                        <tbody>
+                            <tr><td style="font-weight:600; width:35%;">Options markets</td><td>Full LOB data (CBOE, CME, Eurex)</td></tr>
+                            <tr><td style="font-weight:600;">International equities</td><td>Non-US markets (LSE, TSE, SSE, HKEX)</td></tr>
+                            <tr><td style="font-weight:600;">Other asset classes</td><td>Futures, FX, or crypto at message level</td></tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="oq-item">
-                    <button class="oq-btn" onclick="toggleOQ(this)">
-                        <i class="fa fa-graduation-cap" style="margin-right: 8px;"></i> Funding
-                    </button>
-                    <div class="oq-body" style="display:block;">
-                        <table class="data-table" style="max-width: 100%;">
-                            <thead><tr><th style="width: 30%;">Type</th><th>What we need</th></tr></thead>
-                            <tbody>
-                                <tr><td>PhD studentships</td><td>Sponsorship for new doctoral researchers to join the project</td></tr>
-                                <tr><td>Research grants</td><td>Collaborative grants or industry partnerships</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <!-- Funding -->
+                <div style="border: 1px solid #d0d0d0; border-radius: 10px; padding: 15px 18px; background: #fafafa;">
+                    <h3 style="margin: 0 0 10px; font-size: 15px;"><i class="fa fa-graduation-cap" style="margin-right: 6px; color: #555;"></i>Funding</h3>
+                    <table class="data-table" style="max-width: 100%; margin: 0; font-size: 13px;">
+                        <tbody>
+                            <tr><td style="font-weight:600; width:35%;">PhD studentships</td><td>Sponsorship for doctoral researchers</td></tr>
+                            <tr><td style="font-weight:600;">Research grants</td><td>Collaborative grants or industry partnerships</td></tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="oq-item">
-                    <button class="oq-btn" onclick="toggleOQ(this)">
-                        <i class="fa fa-line-chart" style="margin-right: 8px;"></i> Live Trading
-                    </button>
-                    <div class="oq-body" style="display:block;">
-                        <table class="data-table" style="max-width: 100%;">
-                            <thead><tr><th style="width: 30%;">Area</th><th>What we offer</th></tr></thead>
-                            <tbody>
-                                <tr><td>Model deployment</td><td>We can help deploy trained LOBS5 models to live trading infrastructure for real-market validation</td></tr>
-                                <tr><td>Strategy backtesting</td><td>End-to-end evaluation pipeline from simulation to paper trading to live execution</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <!-- Live Trading -->
+                <div style="border: 1px solid #d0d0d0; border-radius: 10px; padding: 15px 18px; background: #fafafa;">
+                    <h3 style="margin: 0 0 10px; font-size: 15px;"><i class="fa fa-line-chart" style="margin-right: 6px; color: #555;"></i>Live Trading</h3>
+                    <table class="data-table" style="max-width: 100%; margin: 0; font-size: 13px;">
+                        <tbody>
+                            <tr><td style="font-weight:600; width:35%;">Model deployment</td><td>Deploy LOBS5 to live trading infrastructure</td></tr>
+                            <tr><td style="font-weight:600;">Strategy backtesting</td><td>Simulation &rarr; paper trading &rarr; live execution</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
