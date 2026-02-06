@@ -357,7 +357,7 @@
                 Foundation models must adapt to domain-specific tasks. We demonstrate LOBS5's versatility through fine-tuning on <strong>order execution</strong>, a central problem in high-frequency trading: executing a specified quantity (e.g., sell 30 shares) within a time window while maximizing profit. Two fundamentally different optimization paradigms apply:
             </p>
 
-            <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #f0f4ff; border: 1px solid #c0d0f0;">
+            <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #ffe8de; border: 1px solid #f0b3a0;">
                 <h3 style="margin-top: 0;">Approach 1: Gradient-Based (First-Order)</h3>
                 <p>
                     Traditional fine-tuning via <strong>backpropagation</strong>: both forward pass and backward pass are required. This includes Inverse Reinforcement Learning (IRL) and standard RL policy gradient methods. Constraints must be expressed as differentiable regularisation terms in the loss function, limiting them to simple mathematical forms (L2 penalties, KL divergence bounds).
@@ -367,7 +367,7 @@
                 </p>
             </div>
 
-            <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #f0fff4; border: 1px solid #c0f0c8;">
+            <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #ffe2d6; border: 1px solid #f0a894;">
                 <h3 style="margin-top: 0;">Approach 2: Evolution Strategies (Zeroth-Order)</h3>
                 <p>
                     <strong>EGGROLL</strong> (Evolution Guided GeneRal Optimisation via Low-rank Learning) <strong>converts training into inference</strong>: no backpropagation is needed. Instead, the model is evaluated with random noise perturbations $AB^\top$ (LoRA rank-4) on all projection matrices, and the fitness signal (realized PnL) guides the search. This reduces memory from $mn$ to $r(m+n)$ per layer and achieves up to a <strong>hundredfold increase</strong> in training throughput for billion-parameter models.
