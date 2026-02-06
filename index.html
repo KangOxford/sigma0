@@ -435,7 +435,7 @@
                     <div class="oq-comment-toggle">
                         <button onclick="toggleOQ(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
                         <div class="oq-body" style="display:none;">
-                            <div class="giscus-q1"></div>
+                            <div class="giscus-q1" data-term="Q1 Quadratic Attention vs. Linear Attention vs. State Space Models?"></div>
                         </div>
                     </div>
                 </div>
@@ -453,7 +453,7 @@
                     <div class="oq-comment-toggle">
                         <button onclick="toggleOQ(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
                         <div class="oq-body" style="display:none;">
-                            <div class="giscus-q2"></div>
+                            <div class="giscus-q2" data-term="Q2 How Long Should the Context Window Be?"></div>
                         </div>
                     </div>
                 </div>
@@ -471,7 +471,7 @@
                     <div class="oq-comment-toggle">
                         <button onclick="toggleOQ(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
                         <div class="oq-body" style="display:none;">
-                            <div class="giscus-q3"></div>
+                            <div class="giscus-q3" data-term="Q3 Tokenized Messages vs. Time-Stepped Representations?"></div>
                         </div>
                     </div>
                 </div>
@@ -489,7 +489,7 @@
                     <div class="oq-comment-toggle">
                         <button onclick="toggleOQ(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
                         <div class="oq-body" style="display:none;">
-                            <div class="giscus-q4"></div>
+                            <div class="giscus-q4" data-term="Q4 Scale Up Stocks or Scale Up Years?"></div>
                         </div>
                     </div>
                 </div>
@@ -507,7 +507,7 @@
                     <div class="oq-comment-toggle">
                         <button onclick="toggleOQ(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
                         <div class="oq-body" style="display:none;">
-                            <div class="giscus-q5"></div>
+                            <div class="giscus-q5" data-term="Q5 Memorizing Market Regimes via Mixture of Experts?"></div>
                         </div>
                     </div>
                 </div>
@@ -525,7 +525,7 @@
                     <div class="oq-comment-toggle">
                         <button onclick="toggleOQ(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
                         <div class="oq-body" style="display:none;">
-                            <div class="giscus-q6"></div>
+                            <div class="giscus-q6" data-term="Q6 Low Arithmetic Intensity of State Space Models?"></div>
                         </div>
                     </div>
                 </div>
@@ -543,7 +543,7 @@
                     <div class="oq-comment-toggle">
                         <button onclick="toggleOQ(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
                         <div class="oq-body" style="display:none;">
-                            <div class="giscus-q7"></div>
+                            <div class="giscus-q7" data-term="Q7 Hand-Written Kernels vs. XLA Auto-Optimization?"></div>
                         </div>
                     </div>
                 </div>
@@ -657,11 +657,9 @@ function toggleOQ(btn) {
 
     // Lazy-load giscus when a comment section becomes visible
     if (body.style.display === 'block') {
-        var gDiv = body.querySelector('[class^="giscus-q"]');
+        var gDiv = body.querySelector('[data-term]');
         if (gDiv && !gDiv.dataset.loaded) {
-            var term = gDiv.className.replace('giscus-', '').toUpperCase().replace('Q', 'Q');
-            var qBtn = gDiv.closest('.oq-item').querySelector('.oq-btn');
-            var qTitle = qBtn ? qBtn.textContent.trim() : term;
+            var qTitle = gDiv.dataset.term;
             var script = document.createElement('script');
             script.src = 'https://giscus.app/client.js';
             script.setAttribute('data-repo', 'KangOxford/sigma0');
