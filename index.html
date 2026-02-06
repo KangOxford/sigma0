@@ -641,6 +641,30 @@
                 </div>
             </div>
 
+            <!-- Q11: Cancellation Modelling -->
+            <div class="oq-item">
+                <button class="oq-btn" onclick="toggleOQ(this)">
+                    <span class="oq-num">Q11</span> How Should Cancellation Orders Be Modelled?
+                </button>
+                <div class="oq-body" style="display:none;">
+                    <p>
+                        Cancellations account for a large fraction of order flow&mdash;often exceeding 90% of all messages. Yet modelling them in a foundation model poses unique <strong>vocabulary and architecture design</strong> challenges. A cancellation must reference a <em>specific prior order</em>, but how should this reference be encoded?
+                    </p>
+                    <p>
+                        Two natural approaches exist: <strong>(1) Cancel by time</strong>&mdash;specify the relative or absolute timestamp of the order to cancel, embedding temporal distance into the vocabulary; or <strong>(2) Cancel by order ID</strong>&mdash;generate a token referencing the original order's identifier. Approach (1) avoids an exploding vocabulary but is ambiguous when multiple orders share similar timestamps. Approach (2) is precise but requires the model to maintain and index an ever-growing set of live order IDs&mdash;a form of <em>pointer network</em> or <em>copy mechanism</em> that standard autoregressive architectures do not natively support.
+                    </p>
+                    <p>
+                        The design choice affects both the <strong>token vocabulary</strong> (fixed-size categorical vs. dynamic pointer) and the <strong>model architecture</strong> (does the model need an explicit memory of open orders?). Getting cancellations right is critical because they are the primary mechanism through which market makers manage inventory risk and adjust to new information.
+                    </p>
+                    <div class="oq-comment-toggle">
+                        <button onclick="loadComments(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
+                        <div class="oq-body" style="display:none;">
+                            <div class="giscus-q11" data-term="Q11 How Should Cancellation Orders Be Modelled?"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- ========== SPONSOR ========== -->
             <h2>Support This Research</h2>
             <p>
