@@ -358,7 +358,7 @@
                 Foundation models must adapt to domain-specific tasks. We demonstrate LOBS5's versatility through fine-tuning on <strong>order execution</strong>&mdash;a central problem in high-frequency trading: executing a specified quantity (e.g., sell 30 shares) within a time window while maximizing profit. This task presents a non-differentiable reward signal (realized PnL), making it unsuitable for gradient-based optimization.
             </p>
 
-            <h3>EGGROLL + LoRA</h3>
+            <h3>EGGROLL + LOBS5</h3>
             <p>
                 We employ <strong>Evolution Strategies</strong> via EGGROLL (Evolution Guided GeneRal Optimisation via Low-rank Learning), combined with LoRA rank-4 on all projection matrices while freezing SSM parameters. EGGROLL uses low-rank perturbations $AB^\top$ where $r \ll \min(m,n)$, reducing memory from $mn$ to $r(m+n)$ per layer and achieving up to a <strong>hundredfold increase</strong> in training throughput for billion-parameter models.
             </p>
