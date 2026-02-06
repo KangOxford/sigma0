@@ -883,6 +883,7 @@
                             <tr><td>Trading server setup</td><td>Set up servers that simulate real exchange connectivity&mdash;including realistic submission latency, network routing, and order queue position effects</td></tr>
                             <tr><td>Low-latency networking</td><td>Optimise the order submission pipeline: serialisation, router hops, and co-location simulation for realistic end-to-end latency profiling</td></tr>
                             <tr><td>C/C++ rewrite</td><td>Rewrite inference and simulator components in C/C++ for production-grade speed in live trading, replacing current JAX/Python implementations where latency is critical</td></tr>
+                            <tr><td>Google TPU support</td><td>Port training and inference pipelines to TPU (v4/v5e), including JAX TPU-specific optimizations, multi-pod scaling, and TPU-compatible custom kernels</td></tr>
                         </tbody>
                     </table>
                 </div>
