@@ -69,10 +69,10 @@
                 <a href="#" style="display: inline-block; margin: 0 8px; padding: 10px 24px; border: 1px solid #d0d0d0; border-radius: 8px; color: #333; font-size: 14px; text-decoration: none; background: #fafafa; transition: background 0.2s;">
                     <i class="fa fa-database" style="margin-right: 6px;"></i>Checkpoint
                 </a>
-                <button class="collapsible" style="display: inline-block; margin: 0 8px; padding: 10px 24px; border: 1px solid #d0d0d0; border-radius: 8px; color: #333; font-size: 14px; background: #fafafa; cursor: pointer; width: auto; text-align: center;">
+                <button id="past-contrib-btn" onclick="var el=document.getElementById('past-contrib-list');el.style.display=el.style.display==='none'?'block':'none';" style="display: inline-block; margin: 0 8px; padding: 10px 24px; border: 1px solid #d0d0d0; border-radius: 8px; color: #333; font-size: 14px; background: #fafafa; cursor: pointer;">
                     <i class="fa fa-users" style="margin-right: 6px;"></i>Past Contributors
                 </button>
-                <div class="contentx" style="margin-top: 10px;">
+                <div id="past-contrib-list" style="display: none; margin-top: 10px;">
                     <p style="font-size: 13px; color: #777; text-align: center; margin: 8px 0;">
                         Peer Nagy &middot; Alfie Backhouse &middot; Reuben &middot; Frensi Zejnullahu &middot; Chris Lu &middot; Gereon Franken &middot; Silvia Sapora &middot; Timon Willi
                     </p>
