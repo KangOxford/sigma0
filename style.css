@@ -195,9 +195,11 @@ blockquote p {
   border-top: 1px dashed #e0e0e0;
 }
 
-/* Shrink giscus widget text */
-.giscus-frame {
-  max-width: 100%;
+/* Shrink giscus widget to match page proportions */
+#shared-giscus {
+  zoom: 0.75;
+  -moz-transform: scale(0.75);
+  -moz-transform-origin: top left;
 }
 
 /* Pipeline diagram styling */
