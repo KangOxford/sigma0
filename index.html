@@ -763,6 +763,18 @@ function loadComments(btn) {
         }
     }
 }
+
+// Watch for giscus iframe insertion and scale it down
+var giscusObserver = new MutationObserver(function() {
+    var iframe = document.querySelector('#shared-giscus iframe.giscus-frame');
+    if (iframe && !iframe.dataset.scaled) {
+        iframe.style.transform = 'scale(0.75)';
+        iframe.style.transformOrigin = 'top left';
+        iframe.style.width = '133%';
+        iframe.dataset.scaled = '1';
+    }
+});
+giscusObserver.observe(giscusContainer, { childList: true, subtree: true });
 </script>
 
 <!-- Collapsible toggle -->
