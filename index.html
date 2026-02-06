@@ -93,7 +93,7 @@
                         </tr>
                         <tr style="border-bottom: 1px solid #eee;">
                             <td style="padding: 10px 5px; border: none; vertical-align: top;">
-                                <a href="https://arxiv.org/abs/2502.09172" style="font-size: 14px; font-weight: 600;">LOB-Bench: Benchmarking Generative AI for Finance &mdash; an Application to Limit Order Book Data</a><br>
+                                <a href="https://arxiv.org/abs/2502.09172" style="font-size: 14px; font-weight: 600;">LOB-Bench: Benchmarking Generative AI for Finance ,  an Application to Limit Order Book Data</a><br>
                                 <span style="font-size: 12px; color: #666;">P Nagy, S Frey, K Li, B Sarkar, S Vyetrenko, S Zohren, A Calinescu, ...</span><br>
                                 <span style="font-size: 12px; color: #e74c3c; font-weight: 600;">ICML 2025</span> <span style="font-size: 12px; color: #999;">&nbsp;&middot;&nbsp; Cited: 5</span>
                             </td>
@@ -157,16 +157,16 @@
             <!-- ========== ABSTRACT ========== -->
             <blockquote onclick="var el=document.getElementById('abstract-full');el.style.display=el.style.display==='none'?'block':'none';" style="cursor:pointer; background-color:#f0f4ff; border:1px solid #c0d0f0; border-radius:12px; padding:20px 25px; margin:0;">
             <p>
-                <strong>TL;DR</strong> &mdash; Finance is one of the hardest domains for ML: noisy, fast, strategic. We develop <strong>LOBS5</strong>, the first state-space foundation model for limit order book data, trained on <strong>25 billion tokens</strong> of NASDAQ order flow. Our three-stage pipeline (pre-training, post-training with Discrete Flow Matching, fine-tuning with Evolution Strategies) achieves <strong>155% PnL improvement</strong> on order execution and exhibits clear scaling laws from 34M to 2B+ parameters.
+                <strong>TL;DR</strong> ,  Finance is one of the hardest domains for ML: noisy, fast, strategic. We develop <strong>LOBS5</strong>, the first state-space foundation model for limit order book data, trained on <strong>25 billion tokens</strong> of NASDAQ order flow. Our three-stage pipeline (pre-training, post-training with Discrete Flow Matching, fine-tuning with Evolution Strategies) achieves <strong>155% PnL improvement</strong> on order execution and exhibits clear scaling laws from 34M to 2B+ parameters.
             </p>
             <div id="abstract-full" style="display:none; text-align:left;">
                     <hr style="border: none; border-top: 1px dashed #b0c4de; margin: 12px 0;">
                     <h3 style="margin: 8px 0 12px; font-size: 16px; font-weight: 700;">Abstract</h3>
                     <p>
-                        Financial markets operate through limit order books (LOBs), which aggregate market participants' trading intentions in the form of limit orders specifying order type, direction, price, and quantity. The continuous stream of these orders&mdash;the <em>order flow</em>&mdash;provides a high-fidelity record of market dynamics at unprecedented scale: the S&amp;P 500 constituents alone generated approximately <strong>3.8 trillion tokens</strong> of order flow between 2016 and 2021, comparable to the largest natural language corpora.
+                        Financial markets operate through limit order books (LOBs), which aggregate market participants' trading intentions in the form of limit orders specifying order type, direction, price, and quantity. The continuous stream of these orders, the <em>order flow</em>, provides a high-fidelity record of market dynamics at unprecedented scale: the S&amp;P 500 constituents alone generated approximately <strong>3.8 trillion tokens</strong> of order flow between 2016 and 2021, comparable to the largest natural language corpora.
                     </p>
                     <p>
-                        We introduce <strong>LOBS5</strong>, a foundation model for LOB data built on the S5 State Space Model architecture, pretrained on 25 billion tokens from NASDAQ using a 24-token encoding scheme that discretizes each limit order message into categorical tokens. Unlike natural language where tokens are purely symbolic, order flow comprises both categorical values (event type, direction) and numerical values (price, quantity) in which magnitude carries semantic meaning&mdash;making LOB order flow an ideal testbed for foundation models on structured time series.
+                        We introduce <strong>LOBS5</strong>, a foundation model for LOB data built on the S5 State Space Model architecture, pretrained on 25 billion tokens from NASDAQ using a 24-token encoding scheme that discretizes each limit order message into categorical tokens. Unlike natural language where tokens are purely symbolic, order flow comprises both categorical values (event type, direction) and numerical values (price, quantity) in which magnitude carries semantic meaning, making LOB order flow an ideal testbed for foundation models on structured time series.
                     </p>
                     <p>
                         Our complete training pipeline consists of three stages: (1) S5-based pre-training with <em>Sliding Window Recurrences</em> for long context processing, (2) <em>Discrete Flow Matching</em> post-training that eliminates compound error through bidirectional refinement (48.6% reduction in Wasserstein distance), and (3) <em>Evolution Strategies</em> fine-tuning via EGGROLL that achieves 155% PnL improvement on order execution tasks with 65,536 parallel simulations. Pre-training exhibits clear scaling laws: test loss decreases monotonically from 34M to 617M parameters, achieving approximately 40% Model FLOPs Utilization comparable to Meta's Llama-3.1.
@@ -178,13 +178,13 @@
             <button class="collapsible">Philosophy</button>
             <div class="contentx">
                 <p>
-                    We treat quantitative finance as a <strong>data science problem</strong>. Rather than hand-crafting trading rules or relying on closed-form models, we build <strong>AI infrastructure</strong>&mdash;foundation models, simulators, and evaluation pipelines&mdash;and then <strong>iterate rapidly</strong> through experiments.
+                    We treat quantitative finance as a <strong>data science problem</strong>. Rather than hand-crafting trading rules or relying on closed-form models, we build <strong>AI infrastructure</strong>, foundation models, simulators, and evaluation pipelines, and then <strong>iterate rapidly</strong> through experiments.
                 </p>
                 <p>
                     The core loop is: <strong>build &rarr; experiment &rarr; measure &rarr; iterate</strong>. We train models on terabytes of order flow data, run thousands of parallel simulations, compare results quantitatively, and feed insights back into the next iteration. Every design decision is validated empirically, not assumed theoretically.
                 </p>
                 <p>
-                    Because it is science: hypotheses are tested against data, results must be reproducible, and the infrastructure must support fast turnaround from idea to experiment to conclusion. This is why we invest heavily in GPU-accelerated simulation, automated benchmarking (LOB-Bench), and scalable training pipelines&mdash;they are the laboratory equipment that makes rapid experimental iteration possible.
+                    Because it is science: hypotheses are tested against data, results must be reproducible, and the infrastructure must support fast turnaround from idea to experiment to conclusion. This is why we invest heavily in GPU-accelerated simulation, automated benchmarking (LOB-Bench), and scalable training pipelines, they are the laboratory equipment that makes rapid experimental iteration possible.
                 </p>
             </div>
 
@@ -225,7 +225,7 @@
             <button class="collapsible">The Multi-Agent Perspective</button>
             <div class="contentx">
                 <p style="margin-top: 12px;">
-                    At its core, a limit order book is an <strong>anonymous multi-agent system</strong>. Each market participant submits orders (actions) that modify the shared order book (state). The <em>state transitions</em> are governed by the matching engine (deterministic), but the <em>distribution of future states</em> depends on the collective behavior of all participants&mdash;analogous to video frame prediction in computer vision.
+                    At its core, a limit order book is an <strong>anonymous multi-agent system</strong>. Each market participant submits orders (actions) that modify the shared order book (state). The <em>state transitions</em> are governed by the matching engine (deterministic), but the <em>distribution of future states</em> depends on the collective behavior of all participants, analogous to video frame prediction in computer vision.
                 </p>
                 <p>
                     LOBS5 captures this state distribution through next-token prediction on order flow tokens. The foundation model learns two fundamental capabilities:
@@ -235,7 +235,7 @@
                     <li><strong>Optimize trading policy</strong>: Fine-tune an ego agent for downstream tasks using evolution strategies</li>
                 </ul>
                 <p>
-                    This enables simulation of <em>dynamic price impact</em> (not static), <em>indirect price impact</em> (not direct), and <em>adversarial selection</em>&mdash;where other agents observe and react to the ego agent's behavior, changing their original plans. These phenomena are critical for realistic market simulation but are absent from traditional backtesting frameworks.
+                    This enables simulation of <em>dynamic price impact</em> (not static), <em>indirect price impact</em> (not direct), and <em>adversarial selection</em>, where other agents observe and react to the ego agent's behavior, changing their original plans. These phenomena are critical for realistic market simulation but are absent from traditional backtesting frameworks.
                 </p>
             </div>
 
@@ -252,7 +252,7 @@
                 <li><strong>Memory efficiency</strong>: 40&ndash;60% lower memory usage compared to Transformers</li>
             </ol>
             <p>
-                A key open question is whether LOB modeling requires the full quadratic attention mechanism, or whether linear attention with longer context windows is sufficient. Our scaling results suggest the latter&mdash;LOBS5 achieves strong performance with linear complexity, and performance continues to improve with model scale.
+                A key open question is whether LOB modeling requires the full quadratic attention mechanism, or whether linear attention with longer context windows is sufficient. Our scaling results suggest the latter, LOBS5 achieves strong performance with linear complexity, and performance continues to improve with model scale.
             </p>
 
             <h3>Long Context: What Does 10k Orders Mean?</h3>
@@ -322,7 +322,7 @@
 
             <h3>Generation Quality Across Versions</h3>
             <p>
-                Successive iterations of LOBS5 show consistent improvement in generation fidelity. Evaluated on both INTC and GOOG order flow, LOBS5v2 (conditional and unconditional) substantially outperforms v1 across L1 and Wasserstein distance metrics&mdash;with lower values indicating closer distributional match to real market data:
+                Successive iterations of LOBS5 show consistent improvement in generation fidelity. Evaluated on both INTC and GOOG order flow, LOBS5v2 (conditional and unconditional) substantially outperforms v1 across L1 and Wasserstein distance metrics, with lower values indicating closer distributional match to real market data:
             </p>
             <img src="imgs/lobs5_versions.png" alt="LOBS5 version comparison: L1 and Wasserstein distances" style="width: 85%; margin: 20px auto;">
             <p class="fig-caption">
@@ -348,16 +348,16 @@
             </p>
 
             <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #fff8f0; border: 1px solid #f0dcc0;">
-                <h3 style="margin-top: 0;">Layer 1: Match Engine &mdash; JAX-LOB</h3>
+                <h3 style="margin-top: 0;">Layer 1: Match Engine ,  JAX-LOB</h3>
                 <p style="margin-bottom: 0;">
                     At the foundation is <a href="https://arxiv.org/abs/2308.13289"><strong>JAX-LOB</strong></a> (<span style="color: #e74c3c; font-weight: 700;">ICAIF 2023 Best Paper</span>), a fully vectorized limit order book matching engine in JAX. It implements the complete NASDAQ ITCH protocol with price-time priority matching. Given an incoming order and the current book state, the match engine deterministically executes trades and updates the book.
                 </p>
             </div>
 
             <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #fff3eb; border: 1px solid #f0cdb8;">
-                <h3 style="margin-top: 0;">Layer 2: Environment &mdash; Historical Replay</h3>
+                <h3 style="margin-top: 0;">Layer 2: Environment ,  Historical Replay</h3>
                 <p>
-                    Wrapping the match engine with historical order flow replay creates an <strong>environment</strong>. The agent's orders are interleaved with real historical messages and processed through the match engine. This layer captures <strong>direct price impact</strong>&mdash;when your order consumes liquidity at a price level, that liquidity is gone and cannot be filled again. However, it has a critical limitation: the historical background agents do not react to the ego agent's actions&mdash;they replay the same orders regardless of what the agent does.
+                    Wrapping the match engine with historical order flow replay creates an <strong>environment</strong>. The agent's orders are interleaved with real historical messages and processed through the match engine. This layer captures <strong>direct price impact</strong>, when your order consumes liquidity at a price level, that liquidity is gone and cannot be filled again. However, it has a critical limitation: the historical background agents do not react to the ego agent's actions, they replay the same orders regardless of what the agent does.
                 </p>
                 <p style="margin-bottom: 0;">
                     <a href="https://dl.acm.org/doi/pdf/10.1145/3768292.3770416"><strong>JaxMARL-HFT</strong></a> (<span style="color: #e74c3c; font-weight: 700;">ICAIF 2025 Best Paper</span>) extends this to multi-agent settings, where multiple trading agents interact within the same order book. Both simulators leverage JAX's <code>vmap</code> to run <strong>65,536 parallel environments</strong> on a single GPU cluster (2,048 per GPU &times; 32 GPUs).
@@ -365,17 +365,17 @@
             </div>
 
             <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #ffede6; border: 1px solid #f0bfaf;">
-                <h3 style="margin-top: 0;">Layer 3: World Model Simulator &mdash; LOBS5 as Background</h3>
+                <h3 style="margin-top: 0;">Layer 3: World Model Simulator ,  LOBS5 as Background</h3>
                 <p>
-                    The full simulator replaces historical replay with a <strong>world model</strong>: the frozen pretrained LOBS5 generates background market activity <em>conditioned on the current state</em>, including the ego agent's actions. This unlocks <strong>indirect price impact</strong>&mdash;phenomena that historical replay cannot capture:
+                    The full simulator replaces historical replay with a <strong>world model</strong>: the frozen pretrained LOBS5 generates background market activity <em>conditioned on the current state</em>, including the ego agent's actions. This unlocks <strong>indirect price impact</strong>, phenomena that historical replay cannot capture:
                 </p>
                 <ul>
-                    <li><strong>Adversarial selection</strong>: Background agents observe the ego agent's orders and change their behavior accordingly. For example, a market maker seeing a large buy order may widen their spread or pull their quotes&mdash;exactly the adverse selection that makes real trading difficult</li>
+                    <li><strong>Adversarial selection</strong>: Background agents observe the ego agent's orders and change their behavior accordingly. For example, a market maker seeing a large buy order may widen their spread or pull their quotes, exactly the adverse selection that makes real trading difficult</li>
                     <li><strong>Dynamic liquidity response</strong>: The order book replenishes (or thins out) in response to the ego agent's activity, rather than following a fixed historical script</li>
                     <li><strong>Strategic interaction</strong>: The world model learns the <em>equilibrium distribution</em> of market responses, providing a far more realistic training signal than static replay</li>
                 </ul>
                 <p style="margin-bottom: 0;">
-                    This creates a two-model architecture: the <strong>policy model</strong> (fine-tuned LOBS5) learns to trade, while the <strong>world model</strong> (frozen pretrained LOBS5) provides the reactive environment. The policy model must learn strategies that are robust to adversarial selection&mdash;not just strategies that work against passive historical data.
+                    This creates a two-model architecture: the <strong>policy model</strong> (fine-tuned LOBS5) learns to trade, while the <strong>world model</strong> (frozen pretrained LOBS5) provides the reactive environment. The policy model must learn strategies that are robust to adversarial selection, not just strategies that work against passive historical data.
                 </p>
             </div>
 
@@ -385,7 +385,7 @@
             </p>
             <img src="imgs/injection_orders.png" alt="Midprice return after order injection: BUY vs SELL" style="width: 90%; margin: 20px auto;">
             <p class="fig-caption">
-                <strong>Figure 7.</strong> Aggregated midprice return (mean &plusmn; 1 std) after injecting BUY (blue) and SELL*(&minus;1) (red) orders at the junction. The combined mean (purple) shows a clear positive drift post-injection, confirming that the world model produces realistic indirect price impact&mdash;background agents respond to the injected orders rather than ignoring them.
+                <strong>Figure 7.</strong> Aggregated midprice return (mean &plusmn; 1 std) after injecting BUY (blue) and SELL*(&minus;1) (red) orders at the junction. The combined mean (purple) shows a clear positive drift post-injection, confirming that the world model produces realistic indirect price impact, background agents respond to the injected orders rather than ignoring them.
             </p>
 
             <h3>Triton Kernel Fusion</h3>
@@ -398,7 +398,7 @@
             <ul>
                 <li><strong>Zero D2H overhead</strong>: Loop condition evaluated in SRAM, no CPU synchronization needed</li>
                 <li><strong>99% HBM efficiency</strong>: Order book data (2.4 KB per side) pinned in shared memory for the entire kernel duration</li>
-                <li><strong>Fused operations</strong>: Price-time priority search, quantity deduction, trade recording, and empty-slot cleanup&mdash;all in a single kernel launch</li>
+                <li><strong>Fused operations</strong>: Price-time priority search, quantity deduction, trade recording, and empty-slot cleanup, all in a single kernel launch</li>
                 <li><strong>Sequential correctness</strong>: The kernel preserves exact price-time priority semantics via an in-kernel for-loop</li>
             </ul>
 
@@ -468,7 +468,7 @@
 
             <h3>Market Impact: Square Root Law</h3>
             <p>
-                A critical test of any order flow model is whether it reproduces the <strong>square root law of market impact</strong>&mdash;a universal empirical regularity where price response to order flow scales as $R_\pi \sim l^{1/2}$ with event lag $l$. We compare microscopic response functions between real GOOG data and three LOBS5 variants:
+                A critical test of any order flow model is whether it reproduces the <strong>square root law of market impact</strong>, a universal empirical regularity where price response to order flow scales as $R_\pi \sim l^{1/2}$ with event lag $l$. We compare microscopic response functions between real GOOG data and three LOBS5 variants:
             </p>
             <img src="imgs/market_impact.png" alt="Microscopic response functions: Real Data vs LOBS5 variants" style="width: 95%; margin: 20px auto;">
             <p class="fig-caption">
@@ -500,13 +500,13 @@
                 Scaling to the full SPY500 dataset with a 2B parameter model requires an estimated <strong>40,000&ndash;160,000 node-hours</strong>, derived from our single-stock training profile (16 node-hours/epoch for GOOG 2022), adjusted for the 456&times; data increase and ~50% multi-node communication efficiency.
             </p>
             <p>
-                A multi-stock foundation model would unlock <strong>cross-stock correlation learning</strong>&mdash;understanding how order flow in one stock influences another&mdash;which is critical for portfolio-level applications.
+                A multi-stock foundation model would unlock <strong>cross-stock correlation learning</strong>, understanding how order flow in one stock influences another, which is critical for portfolio-level applications.
             </p>
 
             <!-- ========== OPEN QUESTIONS ========== -->
             <h2>Open Questions</h2>
             <p>
-                These are unsolved problems we are actively working on. If you have ideas, insights, or preliminary results &mdash; <strong>we'd love to hear from you</strong>. Promising contributions lead to co-authorship on future publications. Click any question to explore the details and leave your thoughts below.
+                These are unsolved problems we are actively working on. If you have ideas, insights, or preliminary results ,  <strong>we'd love to hear from you</strong>. Promising contributions lead to co-authorship on future publications. Click any question to explore the details and leave your thoughts below.
             </p>
 
             <!-- Q1: Attention -->
@@ -516,13 +516,13 @@
                 </button>
                 <div class="oq-body" style="display:none;">
                     <p>
-                        There remains a <strong>fundamental unanswered question</strong>: is order flow modeling so complex that we need <strong>quadratic attention</strong> ($O(n^2)$) to capture intricate pairwise dependencies between events? Or is it <em>simple enough</em> that <strong>linear attention</strong> ($O(n)$) suffices&mdash;and the real challenge is just seeing enough history?
+                        There remains a <strong>fundamental unanswered question</strong>: is order flow modeling so complex that we need <strong>quadratic attention</strong> ($O(n^2)$) to capture intricate pairwise dependencies between events? Or is it <em>simple enough</em> that <strong>linear attention</strong> ($O(n)$) suffices, and the real challenge is just seeing enough history?
                     </p>
                     <p>
-                        If the latter is true, then <strong>long context</strong> is what matters: as long as every past order/event is in the context window, a linear model can predict well. This would mean the problem is not about attention complexity but about <em>context length</em>&mdash;and architectures like S5 that scale linearly with sequence length would be fundamentally better suited than Transformers, which cannot feasibly attend over 100k+ tokens. Concretely, with TBPTT=20 (10k orders), our context covers roughly <strong>3&ndash;30 minutes</strong> of real market time&mdash;is this enough, or do we need hours or full-day context? The optimal length likely depends on the task: execution may need minutes, portfolio optimization may need hours.
+                        If the latter is true, then <strong>long context</strong> is what matters: as long as every past order/event is in the context window, a linear model can predict well. This would mean the problem is not about attention complexity but about <em>context length</em>, and architectures like S5 that scale linearly with sequence length would be fundamentally better suited than Transformers, which cannot feasibly attend over 100k+ tokens. Concretely, with TBPTT=20 (10k orders), our context covers roughly <strong>3&ndash;30 minutes</strong> of real market time, is this enough, or do we need hours or full-day context? The optimal length likely depends on the task: execution may need minutes, portfolio optimization may need hours.
                     </p>
                     <p>
-                        A related dimension is <strong>tokenisation granularity</strong>. Our 24-token-per-message encoding preserves full fidelity but produces very long sequences. Alternative approaches like <a href="https://arxiv.org/abs/2405.01806">MarS</a> and <a href="https://arxiv.org/abs/2408.01441">LOBERT</a> use 1-token-per-message encodings&mdash;lossy, but enabling much longer effective context. A third option is <strong>time-stepped representation</strong> using RoPE with fixed time-step snapshots where each step aggregates multiple events&mdash;compressing information at the cost of microstructure details. The optimal trade-off between token fidelity and context length remains open.
+                        A related dimension is <strong>tokenisation granularity</strong>. Our 24-token-per-message encoding preserves full fidelity but produces very long sequences. Alternative approaches like <a href="https://arxiv.org/abs/2405.01806">MarS</a> and <a href="https://arxiv.org/abs/2408.01441">LOBERT</a> use 1-token-per-message encodings, lossy, but enabling much longer effective context. A third option is <strong>time-stepped representation</strong> using RoPE with fixed time-step snapshots where each step aggregates multiple events, compressing information at the cost of microstructure details. The optimal trade-off between token fidelity and context length remains open.
                     </p>
                     <div class="oq-comment-toggle">
                         <button onclick="loadComments(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
@@ -540,7 +540,7 @@
                 </button>
                 <div class="oq-body" style="display:none;">
                     <p>
-                        With TBPTT=20 (10k orders), our context covers roughly <strong>3&ndash;30 minutes</strong> of real market time. Is this sufficient to capture the dynamics that matter for trading, or do we need hours or even full-day context? Longer windows capture intraday trends and slow-moving signals, but they increase computational cost and may introduce noise. The optimal context length likely depends on the downstream task&mdash;execution may need minutes, while portfolio optimization may need hours.
+                        With TBPTT=20 (10k orders), our context covers roughly <strong>3&ndash;30 minutes</strong> of real market time. Is this sufficient to capture the dynamics that matter for trading, or do we need hours or even full-day context? Longer windows capture intraday trends and slow-moving signals, but they increase computational cost and may introduce noise. The optimal context length likely depends on the downstream task, execution may need minutes, while portfolio optimization may need hours.
                     </p>
                     <div class="oq-comment-toggle">
                         <button onclick="loadComments(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
@@ -558,7 +558,7 @@
                 </button>
                 <div class="oq-body" style="display:none;">
                     <p>
-                        LOBS5 tokenizes each order message into 24 categorical tokens. An alternative is <strong>time-stepped representation</strong>&mdash;e.g., using RoPE (Rotary Position Embedding) with fixed time-step snapshots where each step aggregates multiple events. Tokenized representations preserve full message-level fidelity but produce very long sequences. Time-stepped approaches compress information but may lose critical microstructure details. Which is better for which tasks?
+                        LOBS5 tokenizes each order message into 24 categorical tokens. An alternative is <strong>time-stepped representation</strong>, e.g., using RoPE (Rotary Position Embedding) with fixed time-step snapshots where each step aggregates multiple events. Tokenized representations preserve full message-level fidelity but produce very long sequences. Time-stepped approaches compress information but may lose critical microstructure details. Which is better for which tasks?
                     </p>
                     <div class="oq-comment-toggle">
                         <button onclick="loadComments(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
@@ -594,7 +594,7 @@
                 </button>
                 <div class="oq-body" style="display:none;">
                     <p>
-                        Financial markets exhibit distinct <strong>regimes</strong>&mdash;volatile vs. calm, trending vs. mean-reverting, crisis vs. normal. A single model must <strong>memorize</strong> all these regimes and switch behavior accordingly. Can a <strong>Mixture of Experts</strong> architecture achieve this by dedicating different experts to different regimes&mdash;where each expert memorizes the dynamics of a particular market state? The key questions are: how many distinct regimes need to be memorized, can a router learn to detect regime shifts in real time, and does explicit expert specialization outperform a single large model that must implicitly memorize all regimes in its parameters?
+                        Financial markets exhibit distinct <strong>regimes</strong>, volatile vs. calm, trending vs. mean-reverting, crisis vs. normal. A single model must <strong>memorize</strong> all these regimes and switch behavior accordingly. Can a <strong>Mixture of Experts</strong> architecture achieve this by dedicating different experts to different regimes, where each expert memorizes the dynamics of a particular market state? The key questions are: how many distinct regimes need to be memorized, can a router learn to detect regime shifts in real time, and does explicit expert specialization outperform a single large model that must implicitly memorize all regimes in its parameters?
                     </p>
                     <div class="oq-comment-toggle">
                         <button onclick="loadComments(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
@@ -612,7 +612,7 @@
                 </button>
                 <div class="oq-body" style="display:none;">
                     <p>
-                        SSMs have inherently <strong>low arithmetic intensity</strong>&mdash;the ratio of FLOPs to memory accesses is small, meaning they are memory-bandwidth-bound rather than compute-bound. This underutilizes <strong>Tensor Cores</strong> (designed for dense matrix multiply) and puts pressure on HBM bandwidth. How can we restructure SSM computations to increase arithmetic intensity? Possibilities include fusing more operations into single kernels, batching state updates, or hybrid architectures that mix attention (high intensity) with SSM (low intensity) layers.
+                        SSMs have inherently <strong>low arithmetic intensity</strong>, the ratio of FLOPs to memory accesses is small, meaning they are memory-bandwidth-bound rather than compute-bound. This underutilizes <strong>Tensor Cores</strong> (designed for dense matrix multiply) and puts pressure on HBM bandwidth. How can we restructure SSM computations to increase arithmetic intensity? Possibilities include fusing more operations into single kernels, batching state updates, or hybrid architectures that mix attention (high intensity) with SSM (low intensity) layers.
                     </p>
                     <div class="oq-comment-toggle">
                         <button onclick="loadComments(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
@@ -648,7 +648,7 @@
                 </button>
                 <div class="oq-body" style="display:none;">
                     <p>
-                        Rather than choosing purely between quadratic attention and linear attention, recent architectures explore <strong>hybrid designs</strong> that interleave both. <a href="https://arxiv.org/abs/2408.11321"><strong>Jamba</strong></a> (AI21) mixes Transformer and Mamba layers, while <a href="https://arxiv.org/abs/2501.08313"><strong>MiniMax-Text-01</strong></a> (456B parameters, 4M context) uses a striking pattern: every 8 layers, 7 use <strong>Lightning Attention</strong> (linear, $O(n)$) and 1 uses <strong>Softmax Attention</strong> (quadratic, $O(n^2)$)&mdash;achieving 87.5% linear / 12.5% softmax ratio.
+                        Rather than choosing purely between quadratic attention and linear attention, recent architectures explore <strong>hybrid designs</strong> that interleave both. <a href="https://arxiv.org/abs/2408.11321"><strong>Jamba</strong></a> (AI21) mixes Transformer and Mamba layers, while <a href="https://arxiv.org/abs/2501.08313"><strong>MiniMax-Text-01</strong></a> (456B parameters, 4M context) uses a striking pattern: every 8 layers, 7 use <strong>Lightning Attention</strong> (linear, $O(n)$) and 1 uses <strong>Softmax Attention</strong> (quadratic, $O(n^2)$), achieving 87.5% linear / 12.5% softmax ratio.
                     </p>
                     <p>
                         The insight is that <strong>linear attention struggles with precise retrieval</strong> (needle-in-a-haystack), while softmax excels at it. Periodically inserting a softmax layer acts as a "calibration point" that recovers fine-grained token lookup without sacrificing the efficiency of linear layers for the bulk of computation. For LOB order flow, could a similar hybrid unlock both the <em>long context</em> of linear models and the <em>precise event retrieval</em> of softmax attention? The optimal mixing ratio and layer placement for financial sequences is entirely unexplored.
@@ -690,10 +690,10 @@
                 </button>
                 <div class="oq-body" style="display:none;">
                     <p>
-                        Our current model only observes <strong>visible order flow</strong>&mdash;the limit orders, cancellations, and trades that appear in the public ITCH feed. However, <strong>hidden orders</strong> (iceberg orders, reserve orders, and dark pool executions) account for approximately <strong>20% of total market liquidity</strong>. These orders are invisible to the model yet materially affect price dynamics: a large hidden buy order silently absorbs sell-side liquidity, causing the price to rise less than the visible flow would predict.
+                        Our current model only observes <strong>visible order flow</strong>, the limit orders, cancellations, and trades that appear in the public ITCH feed. However, <strong>hidden orders</strong> (iceberg orders, reserve orders, and dark pool executions) account for approximately <strong>20% of total market liquidity</strong>. These orders are invisible to the model yet materially affect price dynamics: a large hidden buy order silently absorbs sell-side liquidity, causing the price to rise less than the visible flow would predict.
                     </p>
                     <p>
-                        Ignoring hidden liquidity means our model systematically overestimates price impact and underestimates available depth. Can a foundation model learn to <em>infer</em> the presence of hidden orders from observable signatures&mdash;such as unexplained price support, unusual fill rates, or discrepancies between expected and realised impact? Alternatively, should we explicitly model hidden liquidity as a latent variable? This is both a data problem (can we obtain or reconstruct hidden order information?) and a modelling problem (what architecture captures partial observability?).
+                        Ignoring hidden liquidity means our model systematically overestimates price impact and underestimates available depth. Can a foundation model learn to <em>infer</em> the presence of hidden orders from observable signatures, such as unexplained price support, unusual fill rates, or discrepancies between expected and realised impact? Alternatively, should we explicitly model hidden liquidity as a latent variable? This is both a data problem (can we obtain or reconstruct hidden order information?) and a modelling problem (what architecture captures partial observability?).
                     </p>
                     <div class="oq-comment-toggle">
                         <button onclick="loadComments(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
@@ -711,10 +711,10 @@
                 </button>
                 <div class="oq-body" style="display:none;">
                     <p>
-                        Cancellations account for a large fraction of order flow&mdash;often exceeding 90% of all messages. Yet modelling them in a foundation model poses unique <strong>vocabulary and architecture design</strong> challenges. A cancellation must reference a <em>specific prior order</em>, but how should this reference be encoded?
+                        Cancellations account for a large fraction of order flow, often exceeding 90% of all messages. Yet modelling them in a foundation model poses unique <strong>vocabulary and architecture design</strong> challenges. A cancellation must reference a <em>specific prior order</em>, but how should this reference be encoded?
                     </p>
                     <p>
-                        Two natural approaches exist: <strong>(1) Cancel by time</strong>&mdash;specify the relative or absolute timestamp of the order to cancel, embedding temporal distance into the vocabulary; or <strong>(2) Cancel by order ID</strong>&mdash;generate a token referencing the original order's identifier. Approach (1) avoids an exploding vocabulary but is ambiguous when multiple orders share similar timestamps. Approach (2) is precise but requires the model to maintain and index an ever-growing set of live order IDs&mdash;a form of <em>pointer network</em> or <em>copy mechanism</em> that standard autoregressive architectures do not natively support.
+                        Two natural approaches exist: <strong>(1) Cancel by time</strong>, specify the relative or absolute timestamp of the order to cancel, embedding temporal distance into the vocabulary; or <strong>(2) Cancel by order ID</strong>, generate a token referencing the original order's identifier. Approach (1) avoids an exploding vocabulary but is ambiguous when multiple orders share similar timestamps. Approach (2) is precise but requires the model to maintain and index an ever-growing set of live order IDs, a form of <em>pointer network</em> or <em>copy mechanism</em> that standard autoregressive architectures do not natively support.
                     </p>
                     <p>
                         The design choice affects both the <strong>token vocabulary</strong> (fixed-size categorical vs. dynamic pointer) and the <strong>model architecture</strong> (does the model need an explicit memory of open orders?). Getting cancellations right is critical because they are the primary mechanism through which market makers manage inventory risk and adjust to new information.
@@ -893,7 +893,7 @@
                             <tr><th style="width: 30%;"><i class="fa fa-plug"></i>&nbsp; Infrastructure</th><th>What we need</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td>Trading server setup</td><td>Set up servers that simulate real exchange connectivity&mdash;including realistic submission latency, network routing, and order queue position effects</td></tr>
+                            <tr><td>Trading server setup</td><td>Set up servers that simulate real exchange connectivity, including realistic submission latency, network routing, and order queue position effects</td></tr>
                             <tr><td>Low-latency networking</td><td>Optimise the order submission pipeline: serialisation, router hops, and co-location simulation for realistic end-to-end latency profiling</td></tr>
                             <tr><td>C/C++ reimplement</td><td>Rewrite inference and simulator components in C/C++ for production-grade speed in live trading, replacing current JAX/Python implementations where latency is critical</td></tr>
                             <tr><td>Google TPU support</td><td>Port training and inference pipelines to TPU (v4/v5e), including JAX TPU-specific optimizations, multi-pod scaling, and TPU-compatible custom kernels</td></tr>
@@ -916,7 +916,7 @@
                             <tr><th style="width: 35%;">Skill</th><th>What you'll work on</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td><strong>Mixture of Experts</strong></td><td>Native MoE training&mdash;expert routing, load balancing, and capacity factors at scale</td></tr>
+                            <tr><td><strong>Mixture of Experts</strong></td><td>Native MoE training, expert routing, load balancing, and capacity factors at scale</td></tr>
                             <tr><td><strong>Mixed Precision</strong></td><td>FP16/BF16/FP8 training pipelines, loss scaling, and numerical stability for SSMs</td></tr>
                             <tr><td><strong>Triton Kernels</strong></td><td>Write custom GPU kernels in Triton for order book operations and model inference</td></tr>
                             <tr><td><strong>Kernel Fusion</strong></td><td>Fuse multi-step operations (scan + matmul + activation) into single kernel launches to minimise HBM round-trips</td></tr>
@@ -1028,7 +1028,7 @@
     var pad = function(n) { return n < 10 ? '0' + n : '' + n; };
     var timeStr = pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
     document.getElementById('seed-note').innerHTML =
-        '<sup>&dagger;</sup> Author order randomized with <code>seed(' + hhmmss + ')</code> &mdash; ' +
+        '<sup>&dagger;</sup> Author order randomized with <code>seed(' + hhmmss + ')</code> ,  ' +
         'current timestamp HHMMSS (' + timeStr + '). Reload to re-shuffle.';
 })();
 </script>
