@@ -656,33 +656,64 @@ function toggleOQ(btn) {
     body.style.display = body.style.display === 'none' ? 'block' : 'none';
 }
 
-// Separate function: only loads giscus when Comments button is clicked
+// Single shared giscus widget - moved between questions
+var giscusLoaded = false;
+var giscusContainer = document.createElement('div');
+giscusContainer.id = 'shared-giscus';
+giscusContainer.style.marginTop = '12px';
+
 function loadComments(btn) {
     var container = btn.nextElementSibling;
     if (!container) return;
-    container.style.display = container.style.display === 'none' ? 'block' : 'none';
 
-    if (container.style.display === 'block') {
-        var gDiv = container.querySelector('[data-term]');
-        if (gDiv && !gDiv.dataset.loaded) {
-            var script = document.createElement('script');
-            script.src = 'https://giscus.app/client.js';
-            script.setAttribute('data-repo', 'KangOxford/sigma0');
-            script.setAttribute('data-repo-id', 'R_kgDORKDiSQ');
-            script.setAttribute('data-category', 'General');
-            script.setAttribute('data-category-id', 'DIC_kwDORKDiSc4C1-T6');
-            script.setAttribute('data-mapping', 'specific');
-            script.setAttribute('data-term', gDiv.dataset.term);
-            script.setAttribute('data-strict', '0');
-            script.setAttribute('data-reactions-enabled', '1');
-            script.setAttribute('data-emit-metadata', '0');
-            script.setAttribute('data-input-position', 'bottom');
-            script.setAttribute('data-theme', 'light');
-            script.setAttribute('data-lang', 'en');
-            script.setAttribute('crossorigin', 'anonymous');
-            script.async = true;
-            gDiv.appendChild(script);
-            gDiv.dataset.loaded = '1';
+    // If clicking same question again, toggle off
+    if (container.contains(giscusContainer) && container.style.display === 'block') {
+        container.style.display = 'none';
+        return;
+    }
+
+    // Hide any previously open comment containers
+    document.querySelectorAll('.oq-comment-toggle .oq-body').forEach(function(el) {
+        el.style.display = 'none';
+    });
+
+    container.style.display = 'block';
+    var gDiv = container.querySelector('[data-term]');
+    if (!gDiv) return;
+    var term = gDiv.dataset.term;
+
+    // Move shared container into this question
+    gDiv.innerHTML = '';
+    gDiv.appendChild(giscusContainer);
+
+    if (!giscusLoaded) {
+        // First load: create the giscus widget
+        var script = document.createElement('script');
+        script.src = 'https://giscus.app/client.js';
+        script.setAttribute('data-repo', 'KangOxford/sigma0');
+        script.setAttribute('data-repo-id', 'R_kgDORKDiSQ');
+        script.setAttribute('data-category', 'General');
+        script.setAttribute('data-category-id', 'DIC_kwDORKDiSc4C1-T6');
+        script.setAttribute('data-mapping', 'specific');
+        script.setAttribute('data-term', term);
+        script.setAttribute('data-strict', '0');
+        script.setAttribute('data-reactions-enabled', '1');
+        script.setAttribute('data-emit-metadata', '0');
+        script.setAttribute('data-input-position', 'bottom');
+        script.setAttribute('data-theme', 'light');
+        script.setAttribute('data-lang', 'en');
+        script.setAttribute('crossorigin', 'anonymous');
+        script.async = true;
+        giscusContainer.appendChild(script);
+        giscusLoaded = true;
+    } else {
+        // Already loaded: use postMessage to switch Discussion
+        var iframe = document.querySelector('iframe.giscus-frame');
+        if (iframe) {
+            iframe.contentWindow.postMessage(
+                { giscus: { setConfig: { term: term } } },
+                'https://giscus.app'
+            );
         }
     }
 }
