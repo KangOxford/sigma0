@@ -354,13 +354,30 @@
             <!-- ========== FINE-TUNING ========== -->
             <h2>Fine-tuning for Trading</h2>
             <p>
-                Foundation models must adapt to domain-specific tasks. We demonstrate LOBS5's versatility through fine-tuning on <strong>order execution</strong>&mdash;a central problem in high-frequency trading: executing a specified quantity (e.g., sell 30 shares) within a time window while maximizing profit. This task presents a non-differentiable reward signal (realized PnL), making it unsuitable for gradient-based optimization.
+                Foundation models must adapt to domain-specific tasks. We demonstrate LOBS5's versatility through fine-tuning on <strong>order execution</strong>, a central problem in high-frequency trading: executing a specified quantity (e.g., sell 30 shares) within a time window while maximizing profit. Two fundamentally different optimization paradigms apply:
             </p>
 
-            <h3>EGGROLL + LOBS5</h3>
-            <p>
-                We employ <strong>Evolution Strategies</strong> via EGGROLL (Evolution Guided GeneRal Optimisation via Low-rank Learning), combined with LoRA rank-4 on all projection matrices while freezing SSM parameters. EGGROLL uses low-rank perturbations $AB^\top$ where $r \ll \min(m,n)$, reducing memory from $mn$ to $r(m+n)$ per layer and achieving up to a <strong>hundredfold increase</strong> in training throughput for billion-parameter models.
-            </p>
+            <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #f0f4ff; border: 1px solid #c0d0f0;">
+                <h3 style="margin-top: 0;">Approach 1: Gradient-Based (First-Order)</h3>
+                <p>
+                    Traditional fine-tuning via <strong>backpropagation</strong>: both forward pass and backward pass are required. This includes Inverse Reinforcement Learning (IRL) and standard RL policy gradient methods. Constraints must be expressed as differentiable regularisation terms in the loss function, limiting them to simple mathematical forms (L2 penalties, KL divergence bounds).
+                </p>
+                <p style="margin-bottom: 0;">
+                    This approach is well-suited when the reward signal is differentiable or can be approximated by a learned reward model, but struggles with non-differentiable objectives like realized PnL.
+                </p>
+            </div>
+
+            <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #f0fff4; border: 1px solid #c0f0c8;">
+                <h3 style="margin-top: 0;">Approach 2: Evolution Strategies (Zeroth-Order)</h3>
+                <p>
+                    <strong>EGGROLL</strong> (Evolution Guided GeneRal Optimisation via Low-rank Learning) <strong>converts training into inference</strong>: no backpropagation is needed. Instead, the model is evaluated with random noise perturbations $AB^\top$ (LoRA rank-4) on all projection matrices, and the fitness signal (realized PnL) guides the search. This reduces memory from $mn$ to $r(m+n)$ per layer and achieves up to a <strong>hundredfold increase</strong> in training throughput for billion-parameter models.
+                </p>
+                <p>Two key advantages over gradient-based methods:</p>
+                <ul>
+                    <li><strong>Arbitrary constraints</strong>: Rather than encoding constraints as differentiable loss terms, Evolution Strategies can enforce complex, semantically described constraints (e.g., "never hold more than X shares", "respect exchange rate limits", "maintain inventory within bounds") by simply rejecting or penalising violating rollouts. The constraints do not need to be differentiable.</li>
+                    <li><strong>Stronger exploration</strong>: Each generation samples diverse noise perturbations across the entire parameter space, naturally exploring multiple modes of the fitness landscape. Unlike gradient descent, which concentrates updates around the current mean, ES does not collapse to the nearest local optimum but maintains broad coverage of the solution space.</li>
+                </ul>
+            </div>
 
             <h3>Results</h3>
             <p>
