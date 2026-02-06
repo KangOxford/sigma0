@@ -47,6 +47,7 @@
             <div class="text-center" style="margin-top: 20px;">
                 <p id="author-list" style="font-size: 15px; line-height: 1.8em;"></p>
                 <p id="faculty-list" style="font-size: 13px; color: #777; margin-top: 5px;"></p>
+                <p id="seed-note" style="font-size: 12px; color: #999; margin-top: 8px;"></p>
             </div>
 
             <!-- ========== AFFILIATIONS ========== -->
@@ -297,11 +298,6 @@
                 </textarea>
             </div>
 
-            <!-- ========== FOOTNOTES ========== -->
-            <div class="footnotes">
-                <p id="seed-footnote"></p>
-            </div>
-
             <!-- ========== FOOTER ========== -->
             <div class="text-center" style="margin-top: 30px; margin-bottom: 30px; font-size: 12px; color: #999;">
                 <p>
@@ -358,26 +354,29 @@
     var hhmm = now.getHours() * 100 + now.getMinutes();
     var rng = mulberry32(hhmm);
 
-    // Shuffle all authors together
-    var shuffled = shuffle(allAuthors, rng);
+    // Split into students and faculty
+    var students = allAuthors.filter(function(n) { return !faculty.has(n); });
+    var facultyArr = allAuthors.filter(function(n) { return faculty.has(n); });
 
-    // Render author list with commas
-    var authorEl = document.getElementById('author-list');
-    authorEl.innerHTML = shuffled.join(' &nbsp;&middot;&nbsp; ');
-
-    // Shuffle faculty separately for the faculty line
+    // Shuffle students and faculty separately
+    var shuffledStudents = shuffle(students, rng);
     var rng2 = mulberry32(hhmm + 1);
-    var facultyList = shuffle(Array.from(faculty), rng2);
-    document.getElementById('faculty-list').innerHTML =
-        '<em>Faculty: ' + facultyList.join(', ') + '</em>';
+    var shuffledFaculty = shuffle(facultyArr, rng2);
 
-    // Footnote with seed info
+    // Render student list with middot separators
+    document.getElementById('author-list').innerHTML =
+        shuffledStudents.join(' &nbsp;&middot;&nbsp; ');
+
+    // Render faculty list
+    document.getElementById('faculty-list').innerHTML =
+        '<em>Faculty: ' + shuffledFaculty.join(', ') + '</em>';
+
+    // Seed note right below authors
     var pad = function(n) { return n < 10 ? '0' + n : '' + n; };
     var timeStr = pad(now.getHours()) + ':' + pad(now.getMinutes());
-    document.getElementById('seed-footnote').innerHTML =
-        '<sup>&dagger;</sup> Author order randomized with <code>seed(' + hhmm + ')</code>. ' +
-        'Seed is the current timestamp HHMM (' + timeStr + '). ' +
-        'Reload to re-shuffle.';
+    document.getElementById('seed-note').innerHTML =
+        '<sup>&dagger;</sup> Author order randomized with <code>seed(' + hhmm + ')</code> &mdash; ' +
+        'current timestamp HHMM (' + timeStr + '). Reload to re-shuffle.';
 })();
 </script>
 
