@@ -224,6 +224,15 @@
                 The results are striking: while AR models exhibit Wasserstein distance increasing from 3 to 20+ throughout sequence generation, DFM maintains a nearly flat error profile (3&ndash;4) across all time steps, achieving a <strong class="metric-highlight">48.6% reduction</strong> in Wasserstein distance. This post-training framework preserves the model's learned representations while eliminating the compound error inherent in left-to-right generation.
             </p>
 
+            <h3>Market Impact: Square Root Law</h3>
+            <p>
+                A critical test of any order flow model is whether it reproduces the <strong>square root law of market impact</strong>&mdash;a universal empirical regularity where price response to order flow scales as $R_\pi \sim l^{1/2}$ with event lag $l$. We compare microscopic response functions between real GOOG data and three LOBS5 variants:
+            </p>
+            <img src="imgs/market_impact.png" alt="Microscopic response functions: Real Data vs LOBS5 variants" style="width: 95%; margin: 20px auto;">
+            <p class="fig-caption">
+                <strong>Figure 5.</strong> Tick-normalised microscopic response functions for GOOG. Market orders (MO, red) exhibit the characteristic concave square-root shape, limit orders (LO, green) show negative impact, and cancellations (CA, blue) are near-zero. LOBS5v2 variants closely reproduce the real data patterns, while v1 (s5_main) shows deviations at longer lags.
+            </p>
+
             <!-- ========== FINE-TUNING ========== -->
             <h2>Fine-tuning for Trading</h2>
             <p>
