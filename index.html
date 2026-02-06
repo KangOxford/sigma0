@@ -441,8 +441,8 @@
     ];
 
     var now = new Date();
-    var hhmm = now.getHours() * 100 + now.getMinutes();
-    var rng = mulberry32(hhmm);
+    var hhmmss = now.getHours() * 10000 + now.getMinutes() * 100 + now.getSeconds();
+    var rng = mulberry32(hhmmss);
 
     // Split into students and faculty
     var students = allAuthors.filter(function(n) { return !faculty.has(n); });
@@ -450,7 +450,7 @@
 
     // Shuffle students and faculty separately
     var shuffledStudents = shuffle(students, rng);
-    var rng2 = mulberry32(hhmm + 1);
+    var rng2 = mulberry32(hhmmss + 1);
     var shuffledFaculty = shuffle(facultyArr, rng2);
 
     // Render student list with wide spacing (like eshyperscale)
@@ -467,10 +467,10 @@
 
     // Seed note right below authors
     var pad = function(n) { return n < 10 ? '0' + n : '' + n; };
-    var timeStr = pad(now.getHours()) + ':' + pad(now.getMinutes());
+    var timeStr = pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
     document.getElementById('seed-note').innerHTML =
-        '<sup>&dagger;</sup> Author order randomized with <code>seed(' + hhmm + ')</code> &mdash; ' +
-        'current timestamp HHMM (' + timeStr + '). Reload to re-shuffle.';
+        '<sup>&dagger;</sup> Author order randomized with <code>seed(' + hhmmss + ')</code> &mdash; ' +
+        'current timestamp HHMMSS (' + timeStr + '). Reload to re-shuffle.';
 })();
 </script>
 
