@@ -620,6 +620,27 @@
                 </div>
             </div>
 
+            <!-- Q10: Hidden Orders -->
+            <div class="oq-item">
+                <button class="oq-btn" onclick="toggleOQ(this)">
+                    <span class="oq-num">Q10</span> Modelling Hidden Orders and Dark Liquidity?
+                </button>
+                <div class="oq-body" style="display:none;">
+                    <p>
+                        Our current model only observes <strong>visible order flow</strong>&mdash;the limit orders, cancellations, and trades that appear in the public ITCH feed. However, <strong>hidden orders</strong> (iceberg orders, reserve orders, and dark pool executions) account for approximately <strong>20% of total market liquidity</strong>. These orders are invisible to the model yet materially affect price dynamics: a large hidden buy order silently absorbs sell-side liquidity, causing the price to rise less than the visible flow would predict.
+                    </p>
+                    <p>
+                        Ignoring hidden liquidity means our model systematically overestimates price impact and underestimates available depth. Can a foundation model learn to <em>infer</em> the presence of hidden orders from observable signatures&mdash;such as unexplained price support, unusual fill rates, or discrepancies between expected and realised impact? Alternatively, should we explicitly model hidden liquidity as a latent variable? This is both a data problem (can we obtain or reconstruct hidden order information?) and a modelling problem (what architecture captures partial observability?).
+                    </p>
+                    <div class="oq-comment-toggle">
+                        <button onclick="loadComments(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
+                        <div class="oq-body" style="display:none;">
+                            <div class="giscus-q10" data-term="Q10 Modelling Hidden Orders and Dark Liquidity?"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- ========== SPONSOR ========== -->
             <h2>Support This Research</h2>
             <p>
