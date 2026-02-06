@@ -552,6 +552,27 @@
                 </div>
             </div>
 
+            <!-- ========== BENCHMARKING ========== -->
+            <h2>Benchmarking</h2>
+            <p>
+                We are building <a href="https://arxiv.org/abs/2502.09172"><strong>LOB-Bench</strong></a>, a comprehensive benchmarking suite for evaluating generative models on limit order book data. LOB-Bench measures distributional fidelity across multiple dimensions&mdash;price dynamics, queue sizes, inter-arrival times, and market impact&mdash;providing standardised metrics for comparing autoregressive, diffusion, and flow-matching approaches.
+            </p>
+
+            <!-- ========== SCALING TO SPY500 ========== -->
+            <h2>Scaling to SPY500</h2>
+            <p>
+                Our current models are trained on individual NASDAQ stocks (GOOG, INTC). The next frontier is <strong>scaling to the full S&amp;P 500 universe</strong>&mdash;approximately 3.8 trillion tokens of order flow across 500 constituents from 2016&ndash;2023. A multi-stock foundation model would unlock:
+            </p>
+            <ul>
+                <li><strong>Cross-stock transfer</strong>: Pre-train once, fine-tune on any stock&mdash;including newly listed or low-liquidity names with limited historical data</li>
+                <li><strong>Correlation learning</strong>: Capture how order flow in one stock propagates to correlated names (e.g., sector ETFs, pairs)</li>
+                <li><strong>Regime-aware generalisation</strong>: Training across 7+ years exposes the model to bull markets, crashes, and volatility regimes, improving robustness</li>
+                <li><strong>Portfolio-level simulation</strong>: Generate realistic multi-asset order flow for portfolio optimisation and risk management</li>
+            </ul>
+            <p>
+                This requires scaling compute from single-node (4&times; GH200) to multi-node clusters, and solving new challenges in cross-stock tokenisation, positional encoding across asynchronous event streams, and efficient data loading for trillion-token datasets.
+            </p>
+
             <!-- ========== SPONSOR ========== -->
             <h2>Support This Research</h2>
             <p>
