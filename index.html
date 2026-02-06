@@ -203,6 +203,15 @@
                 <strong>Figure 3.</strong> Message generation throughput comparison. LOBSv2 achieves <strong>100&ndash;600&times;</strong> throughput improvement over v1, reaching up to 15,000 messages/second. This throughput is critical for Evolution Strategies fine-tuning, which requires massive parallel rollouts.
             </p>
 
+            <h3>Generation Quality Across Versions</h3>
+            <p>
+                Successive iterations of LOBS5 show consistent improvement in generation fidelity. Evaluated on both INTC and GOOG order flow, LOBS5v2 (conditional and unconditional) substantially outperforms v1 across L1 and Wasserstein distance metrics&mdash;with lower values indicating closer distributional match to real market data:
+            </p>
+            <img src="imgs/lobs5_versions.png" alt="LOBS5 version comparison: L1 and Wasserstein distances" style="width: 85%; margin: 20px auto;">
+            <p class="fig-caption">
+                <strong>Figure 4.</strong> L1 and Wasserstein distance across LOBS5 versions (v1, v2-conditional, v2-unconditional) on INTC and GOOG. Each version progressively reduces distributional distance, with v2 variants achieving roughly <strong>2&times;</strong> improvement over v1.
+            </p>
+
             <!-- ========== POST-TRAINING ========== -->
             <h2>Post-training: Discrete Flow Matching</h2>
             <p>
