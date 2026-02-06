@@ -635,58 +635,65 @@
             </p>
 
             <!-- ========== CONTRIBUTE ========== -->
-            <h2>Contribute</h2>
-            <p>
-                Beyond funding and data, we are looking for collaborators who want to contribute directly to the project:
-            </p>
-
-            <table class="data-table" style="max-width: 600px; margin: 0 auto;">
-                <thead>
-                    <tr><th style="width: 30%;"><i class="fa fa-video-camera"></i>&nbsp; Media</th><th>What we need</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>Video production</td><td>Create explainer videos, demos, and visualisations of order book dynamics and model behaviour</td></tr>
-                    <tr><td>Social media</td><td>Help promote the project on Twitter/X, LinkedIn, and YouTube to reach the quant &amp; ML communities</td></tr>
-                </tbody>
-            </table>
-
-            <table class="data-table" style="max-width: 600px; margin: 20px auto 0;">
-                <thead>
-                    <tr><th style="width: 30%;"><i class="fa fa-plug"></i>&nbsp; Infrastructure</th><th>What we need</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>Trading server setup</td><td>Set up servers that simulate real exchange connectivity&mdash;including realistic submission latency, network routing, and order queue position effects</td></tr>
-                    <tr><td>Low-latency networking</td><td>Optimise the order submission pipeline: serialisation, router hops, and co-location simulation for realistic end-to-end latency profiling</td></tr>
-                </tbody>
-            </table>
+            <div class="oq-item">
+                <button class="oq-btn" onclick="toggleOQ(this)">
+                    <i class="fa fa-hands-helping" style="margin-right: 8px;"></i> Contribute
+                </button>
+                <div class="oq-body" style="display:none;">
+                    <p>
+                        Beyond funding and data, we are looking for collaborators who want to contribute directly to the project:
+                    </p>
+                    <table class="data-table" style="max-width: 100%;">
+                        <thead>
+                            <tr><th style="width: 30%;"><i class="fa fa-video-camera"></i>&nbsp; Media</th><th>What we need</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Video production</td><td>Create explainer videos, demos, and visualisations of order book dynamics and model behaviour</td></tr>
+                            <tr><td>Social media</td><td>Help promote the project on Twitter/X, LinkedIn, and YouTube to reach the quant &amp; ML communities</td></tr>
+                        </tbody>
+                    </table>
+                    <table class="data-table" style="max-width: 100%; margin-top: 15px;">
+                        <thead>
+                            <tr><th style="width: 30%;"><i class="fa fa-plug"></i>&nbsp; Infrastructure</th><th>What we need</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Trading server setup</td><td>Set up servers that simulate real exchange connectivity&mdash;including realistic submission latency, network routing, and order queue position effects</td></tr>
+                            <tr><td>Low-latency networking</td><td>Optimise the order submission pipeline: serialisation, router hops, and co-location simulation for realistic end-to-end latency profiling</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
             <!-- ========== HANDS-ON ========== -->
-            <h2>Hands-on the Project</h2>
-            <p>
-                Can't solve the Open Questions yet, but want to get involved? We offer hands-on engineering and research experience in the following areas:
-            </p>
-
-            <table class="data-table" style="max-width: 600px; margin: 0 auto;">
-                <thead>
-                    <tr><th style="width: 35%;">Skill</th><th>What you'll work on</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td><strong>Mixture of Experts</strong></td><td>Native MoE training&mdash;expert routing, load balancing, and capacity factors at scale</td></tr>
-                    <tr><td><strong>Mixed Precision</strong></td><td>FP16/BF16/FP8 training pipelines, loss scaling, and numerical stability for SSMs</td></tr>
-                    <tr><td><strong>Triton Kernels</strong></td><td>Write custom GPU kernels in Triton for order book operations and model inference</td></tr>
-                    <tr><td><strong>Kernel Fusion</strong></td><td>Fuse multi-step operations (scan + matmul + activation) into single kernel launches to minimise HBM round-trips</td></tr>
-                    <tr><td><strong>Attention Modules</strong></td><td>Implement and benchmark attention variants (FlashAttention, linear attention, sliding window) for financial sequences</td></tr>
-                    <tr><td><strong>Flow Matching Post-training</strong></td><td>Discrete Flow Matching and RL fine-tuning (EGGROLL) to convert pretrained models into trading agents</td></tr>
-                </tbody>
-            </table>
-
-            <p style="margin-top: 20px;">
-                If you want to work on <strong>large-scale time series foundation models</strong>&mdash;training on terabytes of data across thousands of H100 GPUs&mdash;this is the project for you.
-            </p>
-
-            <p style="text-align: center; margin-top: 20px;">
-                Contact: <a href="mailto:kang@robots.ox.ac.uk">kang@robots.ox.ac.uk</a> or <a href="mailto:jakob@robots.ox.ac.uk">jakob@robots.ox.ac.uk</a>
-            </p>
+            <div class="oq-item">
+                <button class="oq-btn" onclick="toggleOQ(this)">
+                    <i class="fa fa-wrench" style="margin-right: 8px;"></i> Hands-on the Project
+                </button>
+                <div class="oq-body" style="display:none;">
+                    <p>
+                        Can't solve the Open Questions yet, but want to get involved? We offer hands-on engineering and research experience in the following areas:
+                    </p>
+                    <table class="data-table" style="max-width: 100%;">
+                        <thead>
+                            <tr><th style="width: 35%;">Skill</th><th>What you'll work on</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Mixture of Experts</strong></td><td>Native MoE training&mdash;expert routing, load balancing, and capacity factors at scale</td></tr>
+                            <tr><td><strong>Mixed Precision</strong></td><td>FP16/BF16/FP8 training pipelines, loss scaling, and numerical stability for SSMs</td></tr>
+                            <tr><td><strong>Triton Kernels</strong></td><td>Write custom GPU kernels in Triton for order book operations and model inference</td></tr>
+                            <tr><td><strong>Kernel Fusion</strong></td><td>Fuse multi-step operations (scan + matmul + activation) into single kernel launches to minimise HBM round-trips</td></tr>
+                            <tr><td><strong>Attention Modules</strong></td><td>Implement and benchmark attention variants (FlashAttention, linear attention, sliding window) for financial sequences</td></tr>
+                            <tr><td><strong>Flow Matching Post-training</strong></td><td>Discrete Flow Matching and RL fine-tuning (EGGROLL) to convert pretrained models into trading agents</td></tr>
+                        </tbody>
+                    </table>
+                    <p style="margin-top: 15px;">
+                        If you want to work on <strong>large-scale time series foundation models</strong>&mdash;training on terabytes of data across thousands of H100 GPUs&mdash;this is the project for you.
+                    </p>
+                    <p style="text-align: center; margin-top: 15px;">
+                        Contact: <a href="mailto:kang@robots.ox.ac.uk">kang@robots.ox.ac.uk</a> or <a href="mailto:jakob@robots.ox.ac.uk">jakob@robots.ox.ac.uk</a>
+                    </p>
+                </div>
+            </div>
 
             <!-- ========== CITATION ========== -->
             <h2>Citation</h2>
