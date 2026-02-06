@@ -354,7 +354,7 @@
             <!-- ========== FINE-TUNING ========== -->
             <h2>Fine-tuning for Trading</h2>
             <p>
-                Foundation models must adapt to domain-specific tasks. We demonstrate LOBS5's versatility through fine-tuning on <strong>order execution</strong>, a central problem in high-frequency trading: executing a specified quantity (e.g., sell 30 shares) within a time window while maximizing profit. Two fundamentally different optimization paradigms apply:
+                Foundation models must adapt to domain-specific tasks. LOBS5 can be fine-tuned for a range of trading problems: <strong>order execution</strong> (executing a specified quantity within a time window while minimizing market impact), <strong>market making</strong> (continuously quoting bid/ask prices to earn the spread while managing inventory risk), and <strong>statistical arbitrage</strong> (exploiting transient mispricings across correlated instruments). Two fundamentally different optimization paradigms apply:
             </p>
 
             <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #f0f4ff; border: 1px solid #c0d0f0;">
@@ -821,7 +821,7 @@
                             <tr><td><strong>Triton Kernels</strong></td><td>Write custom GPU kernels in Triton for order book operations and model inference</td></tr>
                             <tr><td><strong>Kernel Fusion</strong></td><td>Fuse multi-step operations (scan + matmul + activation) into single kernel launches to minimise HBM round-trips</td></tr>
                             <tr><td><strong>Attention Modules</strong></td><td>Implement and benchmark attention variants (FlashAttention, linear attention, sliding window) for financial sequences</td></tr>
-                            <tr><td><strong>Agentic RL</strong></td><td>Reinforcement learning for order execution: reward shaping, policy gradient methods, and environment integration with the simulator stack</td></tr>
+                            <tr><td><strong>Agentic RL</strong></td><td>Reinforcement learning for trading tasks (order execution, market making, statistical arbitrage): reward shaping, policy gradient methods, and environment integration with the simulator stack</td></tr>
                             <tr><td><strong>Flow Matching Post-training</strong></td><td>Discrete Flow Matching to convert pretrained autoregressive models into bidirectional generators with reduced compound error</td></tr>
                         </tbody>
                     </table>
