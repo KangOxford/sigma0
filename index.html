@@ -303,36 +303,59 @@
                 <strong>Figure 5.</strong> Tick-normalised microscopic response functions for GOOG. Market orders (MO, red) exhibit the characteristic concave square-root shape, limit orders (LO, green) show negative impact, and cancellations (CA, blue) are near-zero. LOBS5v2 variants closely reproduce the real data patterns, while v1 (s5_main) shows deviations at longer lags.
             </p>
 
-            <!-- ========== ENVIRONMENT ========== -->
-            <h2>Environment: Hardware-Accelerated Order Book Simulator</h2>
+            <!-- ========== SIMULATOR ========== -->
+            <h2>Simulator</h2>
             <p>
-                Training and evaluating trading agents requires a fast, faithful market simulator. We build on two award-winning simulators from our group:
-            </p>
-            <ul>
-                <li><a href="https://arxiv.org/abs/2308.13289"><strong>JAX-LOB</strong></a> &mdash; A fully vectorized limit order book simulator in JAX that implements the full NASDAQ ITCH protocol with price-time priority matching (<em>ICAIF 2023 Best Paper</em>)</li>
-                <li><a href="https://dl.acm.org/doi/pdf/10.1145/3768292.3770416"><strong>JaxMARL-HFT</strong></a> &mdash; A multi-agent reinforcement learning extension that enables multiple trading agents to interact within the same order book environment (<em>ICAIF 2025 Best Paper</em>)</li>
-            </ul>
-            <p>
-                These simulators leverage JAX's <code>vmap</code> to run <strong>65,536 parallel environments</strong> on a single GPU cluster (2,048 per GPU &times; 32 GPUs), enabling the massive rollout throughput required by Evolution Strategies.
+                Training and evaluating trading agents requires a fast, faithful market simulator. Our simulator stack has three layers, each adding richer dynamics:
             </p>
 
-            <h3>The Sequential Bottleneck</h3>
+            <h3>Layer 1: Match Engine &mdash; JAX-LOB</h3>
             <p>
-                Order book matching is inherently <strong>sequential</strong>: each trade modifies the book state, and the next match depends on the updated state. In JAX, this is implemented via <code>lax.while_loop</code>, which requires a <strong>device-to-host (D2H) synchronization</strong> on every iteration to evaluate the loop condition on CPU. This costs 110&ndash;500ms per matching operation&mdash;despite the entire order book fitting in just 4.8 KB of SRAM.
+                At the foundation is <a href="https://arxiv.org/abs/2308.13289"><strong>JAX-LOB</strong></a> (<em>ICAIF 2023 Best Paper</em>), a fully vectorized limit order book matching engine in JAX. It implements the complete NASDAQ ITCH protocol with price-time priority matching. Given an incoming order and the current book state, the match engine deterministically executes trades and updates the book. This layer captures <strong>direct price impact</strong>&mdash;when your order consumes liquidity at a price level, that liquidity is gone and cannot be filled again.
+            </p>
+
+            <h3>Layer 2: Environment &mdash; Historical Replay</h3>
+            <p>
+                Wrapping the match engine with historical order flow replay creates an <strong>environment</strong>. The agent's orders are interleaved with real historical messages and processed through the match engine. This is sufficient for backtesting but has a critical limitation: the historical background agents do not react to the ego agent's actions&mdash;they replay the same orders regardless of what the agent does.
             </p>
             <p>
-                The bottleneck is not compute, but <strong>memory access patterns</strong>. The data is small enough to live entirely in GPU shared memory, yet the JAX control flow forces it through the slow HBM &rarr; CPU &rarr; HBM path on every iteration.
+                <a href="https://dl.acm.org/doi/pdf/10.1145/3768292.3770416"><strong>JaxMARL-HFT</strong></a> (<em>ICAIF 2025 Best Paper</em>) extends this to multi-agent settings, where multiple trading agents interact within the same order book. Both simulators leverage JAX's <code>vmap</code> to run <strong>65,536 parallel environments</strong> on a single GPU cluster (2,048 per GPU &times; 32 GPUs).
+            </p>
+
+            <h3>Layer 3: World Model Simulator &mdash; LOBS5 as Background</h3>
+            <p>
+                The full simulator replaces historical replay with a <strong>world model</strong>: the frozen pretrained LOBS5 generates background market activity <em>conditioned on the current state</em>, including the ego agent's actions. This unlocks <strong>indirect price impact</strong>&mdash;phenomena that historical replay cannot capture:
+            </p>
+            <ul>
+                <li><strong>Adversarial selection</strong>: Background agents observe the ego agent's orders and change their behavior accordingly. For example, a market maker seeing a large buy order may widen their spread or pull their quotes&mdash;exactly the adverse selection that makes real trading difficult</li>
+                <li><strong>Dynamic liquidity response</strong>: The order book replenishes (or thins out) in response to the ego agent's activity, rather than following a fixed historical script</li>
+                <li><strong>Strategic interaction</strong>: The world model learns the <em>equilibrium distribution</em> of market responses, providing a far more realistic training signal than static replay</li>
+            </ul>
+            <p>
+                This creates a two-model architecture: the <strong>policy model</strong> (fine-tuned LOBS5) learns to trade, while the <strong>world model</strong> (frozen pretrained LOBS5) provides the reactive environment. The policy model must learn strategies that are robust to adversarial selection&mdash;not just strategies that work against passive historical data.
+            </p>
+
+            <h4>Order Injection: Validating Price Impact</h4>
+            <p>
+                To verify that the world model captures realistic price impact, we inject buy or sell market orders at the junction point (step 500) and observe the midprice response:
+            </p>
+            <img src="imgs/injection_orders.png" alt="Midprice return after order injection: BUY vs SELL" style="width: 90%; margin: 20px auto;">
+            <p class="fig-caption">
+                <strong>Figure 7.</strong> Aggregated midprice return (mean &plusmn; 1 std) after injecting BUY (blue) and SELL*(&minus;1) (red) orders at the junction. The combined mean (purple) shows a clear positive drift post-injection, confirming that the world model produces realistic indirect price impact&mdash;background agents respond to the injected orders rather than ignoring them.
             </p>
 
             <h3>Triton Kernel Fusion</h3>
             <p>
-                We rewrite the order book matching engine (<code>_match_against_bid/ask_orders</code>) as fused <strong>Triton kernels</strong> that keep the entire while loop on-GPU, eliminating all D2H round-trips:
+                The match engine (Layer 1) is the performance bottleneck. Order book matching is inherently <strong>sequential</strong>: each trade modifies the book state, and the next match depends on the updated state. In JAX, <code>lax.while_loop</code> requires a <strong>device-to-host synchronization</strong> on every iteration, costing 110&ndash;500ms per match despite the entire book fitting in 4.8 KB of SRAM.
+            </p>
+            <p>
+                We rewrite the matching engine as fused <strong>Triton kernels</strong> that keep the entire while loop on-GPU:
             </p>
             <ul>
                 <li><strong>Zero D2H overhead</strong>: Loop condition evaluated in SRAM, no CPU synchronization needed</li>
-                <li><strong>99% HBM efficiency</strong>: Order book data (100 orders &times; 6 columns &times; 4 bytes = 2.4 KB per side) pinned in shared memory for the entire kernel duration</li>
-                <li><strong>Fused operations</strong>: Price-time priority search (parallel reduction), quantity deduction, trade recording, and empty-slot cleanup&mdash;all in a single kernel launch</li>
-                <li><strong>Sequential correctness</strong>: The kernel preserves exact price-time priority semantics&mdash;matching is done in a for-loop within the kernel, respecting state dependencies between consecutive trades</li>
+                <li><strong>99% HBM efficiency</strong>: Order book data (2.4 KB per side) pinned in shared memory for the entire kernel duration</li>
+                <li><strong>Fused operations</strong>: Price-time priority search, quantity deduction, trade recording, and empty-slot cleanup&mdash;all in a single kernel launch</li>
+                <li><strong>Sequential correctness</strong>: The kernel preserves exact price-time priority semantics via an in-kernel for-loop</li>
             </ul>
 
             <!-- ========== FINE-TUNING ========== -->
@@ -344,27 +367,6 @@
             <h3>EGGROLL + LoRA</h3>
             <p>
                 We employ <strong>Evolution Strategies</strong> via EGGROLL (Evolution Guided GeneRal Optimisation via Low-rank Learning), combined with LoRA rank-4 on all projection matrices while freezing SSM parameters. EGGROLL uses low-rank perturbations $AB^\top$ where $r \ll \min(m,n)$, reducing memory from $mn$ to $r(m+n)$ per layer and achieving up to a <strong>hundredfold increase</strong> in training throughput for billion-parameter models.
-            </p>
-
-            <h3>Dual-Role Architecture</h3>
-            <p>
-                Critically, our pretrained foundation model serves <strong>dual roles</strong>:
-            </p>
-            <ul>
-                <li><strong>Ego agent</strong>: The fine-tuned LOBS5 executes trades to maximize PnL</li>
-                <li><strong>World model</strong>: The frozen pretrained LOBS5 generates background market activity, simulating realistic responses from other market participants</li>
-            </ul>
-            <p>
-                This multi-agent setup enables accurate modeling of dynamic price impact, capturing how the ego agent's orders influence market microstructure through the reactions of synthetic background agents.
-            </p>
-
-            <h3>Order Injection and Price Impact</h3>
-            <p>
-                To validate that LOBS5 captures <strong>dynamic price impact</strong>, we inject buy or sell market orders at the junction point (step 500) and observe the midprice response. The model correctly learns that buy pressure drives prices up and sell pressure drives prices down&mdash;with the combined signal showing a persistent positive drift after injection:
-            </p>
-            <img src="imgs/injection_orders.png" alt="Midprice return after order injection: BUY vs SELL" style="width: 90%; margin: 20px auto;">
-            <p class="fig-caption">
-                <strong>Figure 7.</strong> Aggregated midprice return (mean &plusmn; 1 std) after injecting BUY (blue) and SELL*(&minus;1) (red) orders at the junction. The combined mean (purple) shows a clear positive drift post-injection, confirming that LOBS5 models realistic price impact dynamics rather than merely memorizing patterns.
             </p>
 
             <h3>Results</h3>
