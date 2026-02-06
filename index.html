@@ -156,13 +156,11 @@
 
             <!-- ========== ABSTRACT ========== -->
             <h2>Abstract</h2>
-            <blockquote>
+            <blockquote onclick="var el=document.getElementById('abstract-full');el.style.display=el.style.display==='none'?'block':'none';" style="cursor:pointer;">
             <p>
                 <strong>TL;DR</strong> &mdash; Finance is one of the hardest domains for ML: noisy, fast, strategic. We develop <strong>LOBS5</strong>, the first state-space foundation model for limit order book data, trained on <strong>25 billion tokens</strong> of NASDAQ order flow. Our three-stage pipeline (pre-training, post-training with Discrete Flow Matching, fine-tuning with Evolution Strategies) achieves <strong>155% PnL improvement</strong> on order execution and exhibits clear scaling laws from 34M to 2B+ parameters.
             </p>
-            <div style="text-align: center; margin: 8px 0 4px;">
-                <button onclick="var el=this.nextElementSibling;el.style.display=el.style.display==='none'?'block':'none';this.textContent=el.style.display==='none'?'▾':'▴';" style="background:none;border:none;color:#999;cursor:pointer;font-size:16px;padding:0;">▾</button>
-                <div style="display:none; text-align:left;">
+            <div id="abstract-full" style="display:none; text-align:left;">
                     <hr style="border: none; border-top: 1px dashed #b0c4de; margin: 12px 0;">
                     <p>
                         Financial markets operate through limit order books (LOBs), which aggregate market participants' trading intentions in the form of limit orders specifying order type, direction, price, and quantity. The continuous stream of these orders&mdash;the <em>order flow</em>&mdash;provides a high-fidelity record of market dynamics at unprecedented scale: the S&amp;P 500 constituents alone generated approximately <strong>3.8 trillion tokens</strong> of order flow between 2016 and 2021, comparable to the largest natural language corpora.
@@ -173,7 +171,6 @@
                     <p>
                         Our complete training pipeline consists of three stages: (1) S5-based pre-training with <em>Sliding Window Recurrences</em> for long context processing, (2) <em>Discrete Flow Matching</em> post-training that eliminates compound error through bidirectional refinement (48.6% reduction in Wasserstein distance), and (3) <em>Evolution Strategies</em> fine-tuning via EGGROLL that achieves 155% PnL improvement on order execution tasks with 65,536 parallel simulations. Pre-training exhibits clear scaling laws: test loss decreases monotonically from 34M to 617M parameters, achieving approximately 40% Model FLOPs Utilization comparable to Meta's Llama-3.1.
                     </p>
-                </div>
             </div>
             </blockquote>
 
