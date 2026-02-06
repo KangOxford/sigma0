@@ -433,7 +433,7 @@
                         Is financial order flow complex enough to require <strong>full quadratic attention</strong> ($O(n^2)$), or is the <strong>linear complexity</strong> ($O(n)$) of state space models sufficient? Transformers can capture arbitrary pairwise dependencies between tokens, while SSMs rely on compressed state representations. For LOB data&mdash;where long-range correlations may be weaker than in natural language&mdash;the answer is not obvious. Our scaling results with S5 are promising, but a rigorous comparison at 2B+ parameter scale remains open.
                     </p>
                     <div class="oq-comment-toggle">
-                        <button onclick="toggleOQ(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
+                        <button onclick="loadComments(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
                         <div class="oq-body" style="display:none;">
                             <div class="giscus-q1" data-term="Q1 Quadratic Attention vs. Linear Attention vs. State Space Models?"></div>
                         </div>
@@ -451,7 +451,7 @@
                         With TBPTT=20 (10k orders), our context covers roughly <strong>3&ndash;30 minutes</strong> of real market time. Is this sufficient to capture the dynamics that matter for trading, or do we need hours or even full-day context? Longer windows capture intraday trends and slow-moving signals, but they increase computational cost and may introduce noise. The optimal context length likely depends on the downstream task&mdash;execution may need minutes, while portfolio optimization may need hours.
                     </p>
                     <div class="oq-comment-toggle">
-                        <button onclick="toggleOQ(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
+                        <button onclick="loadComments(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
                         <div class="oq-body" style="display:none;">
                             <div class="giscus-q2" data-term="Q2 How Long Should the Context Window Be?"></div>
                         </div>
@@ -469,7 +469,7 @@
                         LOBS5 tokenizes each order message into 24 categorical tokens. An alternative is <strong>time-stepped representation</strong>&mdash;e.g., using RoPE (Rotary Position Embedding) with fixed time-step snapshots where each step aggregates multiple events. Tokenized representations preserve full message-level fidelity but produce very long sequences. Time-stepped approaches compress information but may lose critical microstructure details. Which is better for which tasks?
                     </p>
                     <div class="oq-comment-toggle">
-                        <button onclick="toggleOQ(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
+                        <button onclick="loadComments(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
                         <div class="oq-body" style="display:none;">
                             <div class="giscus-q3" data-term="Q3 Tokenized Messages vs. Time-Stepped Representations?"></div>
                         </div>
@@ -487,7 +487,7 @@
                         For better <strong>test-time generalization</strong>, should we train on more stocks (cross-sectional diversity) or more years of the same stock (temporal diversity)? If train and test data come from the same distribution, scaling more stocks (SPY500) provides diversity across market microstructures, while scaling more years captures diverse market regimes (bull, bear, crisis). The optimal data scaling strategy for foundation model generalization in finance remains an open empirical question.
                     </p>
                     <div class="oq-comment-toggle">
-                        <button onclick="toggleOQ(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
+                        <button onclick="loadComments(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
                         <div class="oq-body" style="display:none;">
                             <div class="giscus-q4" data-term="Q4 Scale Up Stocks or Scale Up Years?"></div>
                         </div>
@@ -505,7 +505,7 @@
                         Financial markets exhibit distinct <strong>regimes</strong>&mdash;volatile vs. calm, trending vs. mean-reverting, crisis vs. normal. A single model must <strong>memorize</strong> all these regimes and switch behavior accordingly. Can a <strong>Mixture of Experts</strong> architecture achieve this by dedicating different experts to different regimes&mdash;where each expert memorizes the dynamics of a particular market state? The key questions are: how many distinct regimes need to be memorized, can a router learn to detect regime shifts in real time, and does explicit expert specialization outperform a single large model that must implicitly memorize all regimes in its parameters?
                     </p>
                     <div class="oq-comment-toggle">
-                        <button onclick="toggleOQ(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
+                        <button onclick="loadComments(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
                         <div class="oq-body" style="display:none;">
                             <div class="giscus-q5" data-term="Q5 Memorizing Market Regimes via Mixture of Experts?"></div>
                         </div>
@@ -523,7 +523,7 @@
                         SSMs have inherently <strong>low arithmetic intensity</strong>&mdash;the ratio of FLOPs to memory accesses is small, meaning they are memory-bandwidth-bound rather than compute-bound. This underutilizes <strong>Tensor Cores</strong> (designed for dense matrix multiply) and puts pressure on HBM bandwidth. How can we restructure SSM computations to increase arithmetic intensity? Possibilities include fusing more operations into single kernels, batching state updates, or hybrid architectures that mix attention (high intensity) with SSM (low intensity) layers.
                     </p>
                     <div class="oq-comment-toggle">
-                        <button onclick="toggleOQ(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
+                        <button onclick="loadComments(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
                         <div class="oq-body" style="display:none;">
                             <div class="giscus-q6" data-term="Q6 Low Arithmetic Intensity of State Space Models?"></div>
                         </div>
@@ -541,7 +541,7 @@
                         JAX's <strong>XLA compiler</strong> is a black box that performs sophisticated graph-level optimizations (operator fusion, layout transformation, memory planning). Hand-written Triton kernels give precise control over memory access patterns, but XLA may find optimizations that humans miss. In practice, hand-optimized kernels are not guaranteed to be faster than XLA's auto-compiled output. When should we invest in custom kernels vs. trusting the compiler? A principled approach requires profiling to identify true bottlenecks before committing to manual optimization.
                     </p>
                     <div class="oq-comment-toggle">
-                        <button onclick="toggleOQ(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
+                        <button onclick="loadComments(this)" style="font-size: 12px; color: #1772d0; background: none; border: none; cursor: pointer; padding: 5px 0;"><i class="fa fa-comment-o"></i> Comments</button>
                         <div class="oq-body" style="display:none;">
                             <div class="giscus-q7" data-term="Q7 Hand-Written Kernels vs. XLA Auto-Optimization?"></div>
                         </div>
@@ -648,18 +648,23 @@
 })();
 </script>
 
-<!-- Open Questions toggle + giscus lazy load -->
+<!-- Open Questions toggle -->
 <script>
 function toggleOQ(btn) {
     var body = btn.nextElementSibling;
     if (!body) return;
     body.style.display = body.style.display === 'none' ? 'block' : 'none';
+}
 
-    // Lazy-load giscus when a comment section becomes visible
-    if (body.style.display === 'block') {
-        var gDiv = body.querySelector('[data-term]');
+// Separate function: only loads giscus when Comments button is clicked
+function loadComments(btn) {
+    var container = btn.nextElementSibling;
+    if (!container) return;
+    container.style.display = container.style.display === 'none' ? 'block' : 'none';
+
+    if (container.style.display === 'block') {
+        var gDiv = container.querySelector('[data-term]');
         if (gDiv && !gDiv.dataset.loaded) {
-            var qTitle = gDiv.dataset.term;
             var script = document.createElement('script');
             script.src = 'https://giscus.app/client.js';
             script.setAttribute('data-repo', 'KangOxford/sigma0');
@@ -667,8 +672,8 @@ function toggleOQ(btn) {
             script.setAttribute('data-category', 'General');
             script.setAttribute('data-category-id', 'DIC_kwDORKDiSc4C1-T6');
             script.setAttribute('data-mapping', 'specific');
-            script.setAttribute('data-term', qTitle);
-            script.setAttribute('data-strict', '0');
+            script.setAttribute('data-term', gDiv.dataset.term);
+            script.setAttribute('data-strict', '1');
             script.setAttribute('data-reactions-enabled', '1');
             script.setAttribute('data-emit-metadata', '0');
             script.setAttribute('data-input-position', 'bottom');
