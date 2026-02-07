@@ -253,6 +253,11 @@
             <p>
                 LOBS5 is built on the <strong>S5 State Space Model</strong>, a modern alternative to Transformers that provides linear-time $O(n)$ complexity for sequence modeling, compared to the quadratic $O(n^2)$ cost of self-attention. The choice of S5 is motivated by three factors:
             </p>
+            <img src="imgs/lobs5_architecture.png" alt="LOBS5 Architecture: S5 Message Module, S5 Book Module, Combined S5 Module" style="width: 95%; margin: 20px auto;">
+            <p class="fig-caption">
+                <strong>Figure 2.</strong> LOBS5 architecture. The S5 Message Module processes masked message sequences, while the S5 Book Module processes order book snapshots. Their outputs are concatenated and fed into the Combined S5 Module, which produces next-token probabilities via mean-pooling and softmax.
+            </p>
+
             <ol>
                 <li><strong>Linear complexity</strong>: Efficient processing of long order flow sequences (10,000+ tokens)</li>
                 <li><strong>Natural bridge</strong>: The state space formulation naturally connects continuous market dynamics with discrete observations</li>
