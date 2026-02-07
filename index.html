@@ -456,27 +456,33 @@
                     <strong>Figure 8.</strong> Training curves for order execution with EGGROLL. <strong>Left</strong>: Mean PnL over 6,500 epochs for baseline (&sigma;=0, orange dashed) and EGGROLL (&sigma;=0.01, blue solid). <strong>Right</strong>: PnL standard deviation. The initial increase in std corresponds to an exploration phase; the subsequent decrease indicates convergence to a high-performing policy. Shaded regions show interquartile range.
                 </p>
 
-                <style>.eggroll-table, .eggroll-table th, .eggroll-table td, .eggroll-table tr:nth-child(even) { background: transparent !important; }</style>
-                <table class="data-table eggroll-table" style="max-width: 550px; margin: 0 auto;">
-                    <thead>
-                        <tr>
-                            <th>Metric</th>
-                            <th>Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Model</td><td>LOBS5-360M</td></tr>
-                        <tr><td>Mean PnL (pretrained baseline)</td><td>~4,700</td></tr>
-                        <tr><td>Mean PnL (EGGROLL fine-tuned)</td><td><strong>~12,000</strong></td></tr>
-                        <tr><td>Improvement</td><td class="metric-highlight">155%</td></tr>
-                        <tr><td>Parallel generations (total)</td><td>65,536</td></tr>
-                        <tr><td>Parallel generations per GPU</td><td>2,048</td></tr>
-                        <tr><td>LoRA rank</td><td>4</td></tr>
-                        <tr><td>&sigma; (noise scale)</td><td>0.01</td></tr>
-                        <tr><td>Learning rate</td><td>0.001</td></tr>
-                        <tr><td>Epochs</td><td>6,500</td></tr>
-                    </tbody>
-                </table>
+                <div style="display: grid; gap: 15px; grid-template-columns: 1fr 1fr;">
+                    <!-- Results -->
+                    <div style="border: 1px solid #d0d0d0; border-radius: 10px; padding: 15px 18px; background: #fafafa;">
+                        <h4 style="margin: 0 0 10px; font-size: 15px;">Results</h4>
+                        <table class="data-table" style="max-width: 100%; margin: 0; font-size: 13px;">
+                            <tbody>
+                                <tr><td style="font-weight:600; width:45%;">Model</td><td>LOBS5-360M</td></tr>
+                                <tr><td style="font-weight:600;">PnL (baseline)</td><td>~4,700</td></tr>
+                                <tr><td style="font-weight:600;">PnL (fine-tuned)</td><td><strong>~12,000</strong></td></tr>
+                                <tr><td style="font-weight:600;">Improvement</td><td class="metric-highlight">155%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Training Settings -->
+                    <div style="border: 1px solid #d0d0d0; border-radius: 10px; padding: 15px 18px; background: #fafafa;">
+                        <h4 style="margin: 0 0 10px; font-size: 15px;">Training Settings</h4>
+                        <table class="data-table" style="max-width: 100%; margin: 0; font-size: 13px;">
+                            <tbody>
+                                <tr><td style="font-weight:600; width:55%;">Parallel generations</td><td>65,536 (2,048/GPU)</td></tr>
+                                <tr><td style="font-weight:600;">LoRA rank</td><td>4</td></tr>
+                                <tr><td style="font-weight:600;">&sigma; (noise scale)</td><td>0.01</td></tr>
+                                <tr><td style="font-weight:600;">Learning rate</td><td>0.001</td></tr>
+                                <tr><td style="font-weight:600;">Epochs</td><td>6,500</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
                 <p style="margin-top: 15px; margin-bottom: 0;">
                     The baseline policy (&sigma;=0, pretrained model without noise perturbation) achieves a mean PnL of approximately 4,700. EGGROLL fine-tuning improves this to around 12,000, a <strong class="metric-highlight">155% improvement</strong>. The PnL standard deviation initially increases to ~3,100 during the first 2,500 epochs (exploration phase), then decreases to ~400 by epoch 6,500, indicating convergence to a concentrated, high-performing policy.
                 </p>
