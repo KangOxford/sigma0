@@ -421,16 +421,22 @@
                 Foundation models must adapt to domain-specific tasks. LOBS5 can be fine-tuned for a range of trading problems: <strong>order execution</strong> (executing a specified quantity within a time window while minimizing market impact), <strong>market making</strong> (continuously quoting bid/ask prices to earn the spread while managing inventory risk), and <strong>statistical arbitrage</strong> (exploiting transient mispricings across correlated instruments). Two fundamentally different optimization paradigms apply:
             </p>
 
+            <!-- Approach 1: RL (blue box) — description + results -->
             <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #f0f4ff; border: 1px solid #c0d0f0;">
                 <h3 style="margin-top: 0;">Approach 1: Reinforcement Learning (First-Order)</h3>
                 <p>
                     Gradient-based fine-tuning via <strong>backpropagation</strong>: both forward pass and backward pass are required. This includes Inverse Reinforcement Learning (IRL) and standard RL policy gradient methods. Constraints must be expressed as differentiable regularisation terms in the loss function, limiting them to simple mathematical forms (L2 penalties, KL divergence bounds).
                 </p>
-                <p style="margin-bottom: 0;">
+                <p>
                     This approach is well-suited when the reward signal is differentiable or can be approximated by a learned reward model, but struggles with non-differentiable objectives like realized PnL.
+                </p>
+                <img src="imgs/rl_finetuning.png" alt="RL fine-tuning: Reward and PnL vs Episode for VOD.L" style="width: 75%; margin: 15px auto;">
+                <p class="fig-caption" style="margin-bottom: 0;">
+                    <strong>Figure 7.</strong> RL fine-tuning using SARSA (State-Action-Reward-State-Action, an on-policy temporal-difference method) on VOD.L (Vodafone, London Stock Exchange) order execution. <strong>Top</strong>: Reward vs. episode, showing convergence from negative to ~1.8M over 1,000 episodes. <strong>Bottom</strong>: PnL vs. episode, rising from ~1.2&times;10<sup>4</sup> to ~2.5&times;10<sup>4</sup>. Orange/blue lines show 10-episode rolling averages.
                 </p>
             </div>
 
+            <!-- Approach 2: EGGROLL (green box) — description + results -->
             <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #f0fff4; border: 1px solid #c0f0c8;">
                 <h3 style="margin-top: 0;">Approach 2: Evolution Strategies (Zeroth-Order)</h3>
                 <p>
@@ -441,22 +447,6 @@
                     <li><strong>Arbitrary constraints</strong>: Rather than encoding constraints as differentiable loss terms, Evolution Strategies can enforce complex, semantically described constraints (e.g., "never hold more than X shares", "respect exchange rate limits", "maintain inventory within bounds") by simply rejecting or penalising violating rollouts. The constraints do not need to be differentiable.</li>
                     <li><strong>Stronger exploration</strong>: Each generation samples diverse noise perturbations across the entire parameter space, naturally exploring multiple modes of the fitness landscape. Unlike gradient descent, which concentrates updates around the current mean, ES does not collapse to the nearest local optimum but maintains broad coverage of the solution space.</li>
                 </ul>
-            </div>
-
-            <h3>Results: Order Execution</h3>
-
-            <!-- RL results (blue box) -->
-            <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #f0f4ff; border: 1px solid #c0d0f0;">
-                <h4 style="margin-top: 0;">Approach 1 Result: Reinforcement Learning</h4>
-                <img src="imgs/rl_finetuning.png" alt="RL fine-tuning: Reward and PnL vs Episode for VOD.L" style="width: 75%; margin: 15px auto;">
-                <p class="fig-caption">
-                    <strong>Figure 7.</strong> RL fine-tuning using SARSA (State-Action-Reward-State-Action, an on-policy temporal-difference method) on VOD.L (Vodafone, London Stock Exchange) order execution. <strong>Top</strong>: Reward vs. episode, showing convergence from negative to ~1.8M over 1,000 episodes. <strong>Bottom</strong>: PnL vs. episode, rising from ~1.2&times;10<sup>4</sup> to ~2.5&times;10<sup>4</sup>. Orange/blue lines show 10-episode rolling averages.
-                </p>
-            </div>
-
-            <!-- EGGROLL results (green box) -->
-            <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #f0fff4; border: 1px solid #c0f0c8;">
-                <h4 style="margin-top: 0;">Approach 2 Result: EGGROLL</h4>
                 <p>
                     The task is to execute a sell order of <strong>Q = 30 shares</strong> within a horizon of <strong>T = 10 steps</strong>. In each episode, the LOB is initialised from a snapshot followed by 10 warm-up background messages. At each step, the population members generate their messages, followed by 50 real background messages processed through the <a href="https://arxiv.org/abs/2308.13289">JAX-LOB</a> simulator. Fine-tuning is performed on GOOG order flow from January 2023, applying LoRA (rank 4) on all projection matrices while freezing SSM parameters and layer norms. Performance is measured by realized PnL relative to the initial mid price.
                 </p>
