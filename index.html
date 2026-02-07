@@ -111,7 +111,7 @@
                         </tr>
                         <tr style="border-bottom: 1px solid #eee;">
                             <td style="padding: 10px 5px; border: none; vertical-align: top;">
-                                <a href="https://dl.acm.org/doi/10.1145/3768292.3768314" style="font-size: 14px; font-weight: 600;">Discrete Flow Matching is a Surprisingly Effective Post-training Method to Address Compound Error in Autoregressive Models</a><br>
+                                <a href="https://dl.acm.org/doi/10.1145/3768292.3770442" style="font-size: 14px; font-weight: 600;">Discrete Flow Matching is a Surprisingly Effective Post-training Method to Address Compound Error in Autoregressive Models</a><br>
                                 <span style="font-size: 12px; color: #666;">K Li, B Sarkar, Z Xiong, S Frey, Z Wang, F Zejnullahu, A Backhouse, ...</span><br>
                                 <span style="font-size: 12px; color: #e74c3c; font-weight: 600;">[Oral] ICAIF 2025</span> <span style="font-size: 12px; color: #999;">&nbsp;&middot;&nbsp; Cited: 1</span>
                             </td>
@@ -342,7 +342,7 @@
                 A fundamental limitation of autoregressive (AR) models is <strong>compound error accumulation</strong>: prediction errors propagate and amplify throughout sequence generation, as each token conditions on potentially incorrect previous outputs. This problem is particularly severe for financial order flow, where distributional shifts compound rapidly over long generation horizons.
             </p>
             <p>
-                To address this, we introduce a post-training stage using <strong>Discrete Flow Matching (DFM)</strong>, which converts our pretrained AR model into a flow-based generator. Unlike traditional flow matching that starts from random noise, our approach leverages the pretrained model's learned distribution as the starting point, significantly reducing the learning burden. Compared to GANs, which we found unstable and only marginally better than baselines on LOB data, DFM trains reliably and consistently converges.
+                To address this, we introduce a post-training stage using <strong>Discrete Flow Matching (DFM)</strong>, which converts our pretrained AR model into a flow-based generator. Unlike DDPM that starts from random noise, our approach leverages the pretrained model's learned distribution as the starting point, significantly reducing the learning burden. Compared to GANs, which we found unstable and only marginally better than baselines on LOB data, DFM trains reliably and consistently converges.
             </p>
             <p>
                 Crucially, DFM does not replace cross-entropy pre-training: <strong>CE learns <em>what</em> to generate</strong> (the data distribution), while <strong>DFM improves <em>how</em> to generate</strong> (the sampling procedure). The results are striking: while AR models exhibit Wasserstein distance increasing from 3 to 20+ throughout sequence generation, DFM maintains a nearly flat error profile (3&ndash;4) across all time steps, achieving a <strong class="metric-highlight">48.6% reduction</strong> in Wasserstein distance.
