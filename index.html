@@ -371,11 +371,11 @@
 
             <h3>Generation Quality Across Versions</h3>
             <p>
-                The key architectural change from v1 to v2 is the shift from <strong>teacher forcing</strong> to <strong>full autoregressive generation</strong>:
+                The key architectural change from v1 to v2 is the shift from <strong>sliding window</strong> to <strong>full autoregressive generation</strong>:
             </p>
             <div class="sponsor-grid" style="margin-bottom: 15px;">
                 <div style="border: 1px solid #d0d0d0; border-radius: 10px; padding: 15px 18px; background: #fafafa;">
-                    <h4 style="margin: 0 0 8px; font-size: 14px;">LOBS5 v1: Teacher Forcing</h4>
+                    <h4 style="margin: 0 0 8px; font-size: 14px;">LOBS5 v1: Sliding Window</h4>
                     <p style="font-size: 13px; margin: 0; font-family: monospace; line-height: 1.8;">
                         tokens[0:500] &rarr; predict token[501]<br>
                         tokens[1:501] &rarr; predict token[502]<br>
