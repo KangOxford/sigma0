@@ -346,7 +346,7 @@
                 To address this, we introduce a post-training stage using <strong>Discrete Flow Matching (DFM)</strong>, which converts our pretrained AR model into a flow-based generator. Unlike DDPM that starts from random noise, our approach leverages the pretrained model's learned distribution as the starting point, significantly reducing the learning burden. Compared to GANs, which we found unstable and only marginally better than baselines on LOB data, DFM trains reliably and consistently converges.
             </p>
             <p>
-                Crucially, DFM does not replace cross-entropy pre-training: <strong>CE learns <em>what</em> to generate</strong> (the data distribution), while <strong>DFM improves <em>how</em> to generate</strong> (the sampling procedure). The results are striking: while AR models exhibit Wasserstein distance increasing from 3 to 20+ throughout sequence generation, DFM maintains a nearly flat error profile (3&ndash;4) across all time steps, achieving a <strong class="metric-highlight">48.6% reduction</strong> in Wasserstein distance.
+                Crucially, DFM does not replace cross-entropy pre-training: <strong>CE learns <em>what</em> to generate</strong> (the data distribution), while <strong>DFM improves <em>how</em> to generate</strong> (the sampling procedure).
             </p>
 
             <!-- ========== SIMULATOR ========== -->
