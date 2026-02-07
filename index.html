@@ -371,7 +371,29 @@
 
             <h3>Generation Quality Across Versions</h3>
             <p>
-                Successive iterations of LOBS5 show consistent improvement in generation fidelity. Evaluated on both INTC and GOOG order flow, LOBS5v2 (conditional and unconditional) substantially outperforms v1 across L1 and Wasserstein distance metrics, with lower values indicating closer distributional match to real market data:
+                The key architectural change from v1 to v2 is the shift from <strong>teacher forcing</strong> to <strong>full autoregressive generation</strong>:
+            </p>
+            <div class="sponsor-grid" style="margin-bottom: 15px;">
+                <div style="border: 1px solid #d0d0d0; border-radius: 10px; padding: 15px 18px; background: #fafafa;">
+                    <h4 style="margin: 0 0 8px; font-size: 14px;">LOBS5 v1: Teacher Forcing</h4>
+                    <p style="font-size: 13px; margin: 0; font-family: monospace; line-height: 1.8;">
+                        tokens[0:500] &rarr; predict token[501]<br>
+                        tokens[1:501] &rarr; predict token[502]
+                    </p>
+                    <p style="font-size: 13px; margin: 8px 0 0; color: #666;">Fixed sliding window. Input is always ground truth.</p>
+                </div>
+                <div style="border: 1px solid #d0d0d0; border-radius: 10px; padding: 15px 18px; background: #fafafa;">
+                    <h4 style="margin: 0 0 8px; font-size: 14px;">LOBS5 v2: Full Autoregressive</h4>
+                    <p style="font-size: 13px; margin: 0; font-family: monospace; line-height: 1.8;">
+                        tokens[0:1] &rarr; predict token[2]<br>
+                        tokens[0:2] &rarr; predict token[3]<br>
+                        tokens[0:499] &rarr; predict token[500]
+                    </p>
+                    <p style="font-size: 13px; margin: 8px 0 0; color: #666;">Each prediction conditions on all prior tokens, including previously generated ones.</p>
+                </div>
+            </div>
+            <p>
+                This change eliminates the train&ndash;test mismatch inherent in teacher forcing and is the primary driver of v2's quality improvements. Evaluated on both INTC and GOOG order flow, LOBS5v2 (conditional and unconditional) substantially outperforms v1 across L1 and Wasserstein distance metrics, with lower values indicating closer distributional match to real market data:
             </p>
             <img src="imgs/lobs5_versions.png" alt="LOBS5 version comparison: L1 and Wasserstein distances" style="width: 85%; margin: 20px auto;">
             <p class="fig-caption">
