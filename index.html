@@ -453,7 +453,7 @@
                     The task is to execute a sell order of <strong>Q = 30 shares</strong> within a horizon of <strong>T = 10 steps</strong>. In each episode, the LOB is initialised from a snapshot followed by 10 warm-up background messages. At each step, the population members generate their messages, followed by 50 real background messages processed through the <a href="https://arxiv.org/abs/2308.13289">JAX-LOB</a> simulator. Fine-tuning is performed on GOOG order flow from January 2023, applying LoRA (rank 4) on all projection matrices while freezing SSM parameters and layer norms. Performance is measured by realized PnL relative to the initial mid price.
                 </p>
 
-                <div style="border: 1px solid #d0d0d0; border-radius: 10px; padding: 15px 18px; background: #fafafa;">
+                <div style="border: 1px solid #d0d0d0; border-radius: 10px; padding: 15px 18px; margin-bottom: 15px; background: #fafafa;">
                     <img src="imgs/eggroll_training.png" alt="EGGROLL training curves: Mean PnL and PnL Std" style="width: 100%; margin: 10px auto;">
                     <p class="fig-caption" style="margin-bottom: 0;">
                         <strong>Figure 8.</strong> Training curves for order execution with EGGROLL. <strong>Left</strong>: Mean PnL over 6,500 epochs for baseline (&sigma;=0, orange dashed) and EGGROLL (&sigma;=0.01, blue solid). <strong>Right</strong>: PnL standard deviation. The initial increase in std corresponds to an exploration phase; the subsequent decrease indicates convergence to a high-performing policy. Shaded regions show interquartile range.
