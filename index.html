@@ -179,6 +179,38 @@
             </div>
             </blockquote>
 
+            <!-- ========== WHY NOW ========== -->
+            <button class="collapsible">Why Now: The Compute &amp; Cost Inflection</button>
+            <div class="contentx">
+                <p>
+                    Three concurrent trends make large-scale order flow modeling feasible <em>today</em> in a way that was impossible even two years ago:
+                </p>
+
+                <div class="sponsor-grid" style="margin-bottom: 15px;">
+                    <!-- Huang's Law -->
+                    <div style="border: 1px solid #d0d0d0; border-radius: 10px; padding: 15px 18px; background: #fafafa;">
+                        <h4 style="margin: 0 0 10px; font-size: 15px;">1. Huang's Law: GPU Performance</h4>
+                        <p style="font-size: 13px; margin: 0;">
+                            <a href="https://en.wikipedia.org/wiki/Huang's_law">Huang's Law</a> (Jensen Huang, 2018): GPU performance more than doubles every two years, outpacing Moore's Law. Over the past decade, NVIDIA AI chips have improved <strong>1,000&times;</strong>. The architecture cadence&mdash;Ampere (2020) &rarr; <strong>Hopper</strong> (2022) &rarr; <strong>Blackwell</strong> (2024) &rarr; <strong>Vera Rubin</strong> (2026)&mdash;delivers compounding gains at each node.
+                        </p>
+                    </div>
+                    <!-- Cost per FLOP -->
+                    <div style="border: 1px solid #d0d0d0; border-radius: 10px; padding: 15px 18px; background: #fafafa;">
+                        <h4 style="margin: 0 0 10px; font-size: 15px;">2. GPU Cost per FLOP Collapse</h4>
+                        <p style="font-size: 13px; margin: 0;">
+                            Blackwell delivers <strong>68&times;</strong> the performance of Hopper at <strong>87% lower cost</strong>. <a href="https://www.tomshardware.com/pc-components/gpus/nvidia-launches-vera-rubin-nvl72-ai-supercomputer-at-ces-promises-up-to-5x-greater-inference-performance-and-10x-lower-cost-per-token-than-blackwell-coming-2h-2026">Vera Rubin</a> (2026) targets <strong>900&times;</strong> Hopper performance with <strong>10&times;</strong> lower cost-per-token than Blackwell. The cost floor for training and inference is dropping faster than the data is growing.
+                        </p>
+                    </div>
+                </div>
+
+                <div style="border: 1px solid #d0d0d0; border-radius: 10px; padding: 15px 18px; background: #fafafa; margin-bottom: 15px;">
+                    <h4 style="margin: 0 0 10px; font-size: 15px;">3. LLM Training &amp; Inference Cost Revolution</h4>
+                    <p style="font-size: 13px; margin: 0;">
+                        <a href="https://arthnova.com/deepseek-challenged-chatgpt-6-million-training-cost/">DeepSeek V3</a> trained a GPT-4-class model for <strong>$5.6M</strong> (vs. OpenAI's estimated $100M+ for GPT-4). On the inference side, GPT-4-equivalent performance costs <strong>$0.40 per million tokens</strong> today vs. $20 in late 2022&mdash;a <strong>50&times;</strong> reduction in two years. DeepSeek R1 inference runs at $0.65/M tokens, <strong>40&times; cheaper</strong> than OpenAI's o1 ($26.25/M). These cost curves apply directly to our domain: cheaper compute means more parallel simulations, larger models, and faster iteration cycles.
+                    </p>
+                </div>
+            </div>
+
             <!-- ========== PHILOSOPHY ========== -->
             <button class="collapsible">Philosophy</button>
             <div class="contentx">
