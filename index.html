@@ -445,43 +445,51 @@
 
             <h3>Results: Order Execution</h3>
 
-            <img src="imgs/rl_finetuning.png" alt="RL fine-tuning: Reward and PnL vs Episode for VOD.L" style="width: 75%; margin: 20px auto;">
-            <p class="fig-caption">
-                <strong>Figure 7.</strong> RL fine-tuning using SARSA (State-Action-Reward-State-Action, an on-policy temporal-difference method) on VOD.L (Vodafone, London Stock Exchange) order execution. <strong>Top</strong>: Reward vs. episode, showing convergence from negative to ~1.8M over 1,000 episodes. <strong>Bottom</strong>: PnL vs. episode, rising from ~1.2&times;10<sup>4</sup> to ~2.5&times;10<sup>4</sup>. Orange/blue lines show 10-episode rolling averages.
-            </p>
+            <!-- RL results (blue box) -->
+            <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #f0f4ff; border: 1px solid #c0d0f0;">
+                <h4 style="margin-top: 0;">Approach 1 Result: Reinforcement Learning</h4>
+                <img src="imgs/rl_finetuning.png" alt="RL fine-tuning: Reward and PnL vs Episode for VOD.L" style="width: 75%; margin: 15px auto;">
+                <p class="fig-caption">
+                    <strong>Figure 7.</strong> RL fine-tuning using SARSA (State-Action-Reward-State-Action, an on-policy temporal-difference method) on VOD.L (Vodafone, London Stock Exchange) order execution. <strong>Top</strong>: Reward vs. episode, showing convergence from negative to ~1.8M over 1,000 episodes. <strong>Bottom</strong>: PnL vs. episode, rising from ~1.2&times;10<sup>4</sup> to ~2.5&times;10<sup>4</sup>. Orange/blue lines show 10-episode rolling averages.
+                </p>
+            </div>
 
-            <p>
-                The task is to execute a sell order of <strong>Q = 30 shares</strong> within a horizon of <strong>T = 10 steps</strong>. In each episode, the LOB is initialised from a snapshot followed by 10 warm-up background messages. At each step, the population members generate their messages, followed by 50 real background messages processed through the <a href="https://arxiv.org/abs/2308.13289">JAX-LOB</a> simulator. Fine-tuning is performed on GOOG order flow from January 2023, applying LoRA (rank 4) on all projection matrices while freezing SSM parameters and layer norms. Performance is measured by realized PnL relative to the initial mid price.
-            </p>
+            <!-- EGGROLL results (green box) -->
+            <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #f0fff4; border: 1px solid #c0f0c8;">
+                <h4 style="margin-top: 0;">Approach 2 Result: EGGROLL</h4>
+                <p>
+                    The task is to execute a sell order of <strong>Q = 30 shares</strong> within a horizon of <strong>T = 10 steps</strong>. In each episode, the LOB is initialised from a snapshot followed by 10 warm-up background messages. At each step, the population members generate their messages, followed by 50 real background messages processed through the <a href="https://arxiv.org/abs/2308.13289">JAX-LOB</a> simulator. Fine-tuning is performed on GOOG order flow from January 2023, applying LoRA (rank 4) on all projection matrices while freezing SSM parameters and layer norms. Performance is measured by realized PnL relative to the initial mid price.
+                </p>
 
-            <img src="imgs/eggroll_training.png" alt="EGGROLL training curves: Mean PnL and PnL Std" style="width: 85%; margin: 20px auto;">
-            <p class="fig-caption">
-                <strong>Figure 8.</strong> Training curves for order execution with EGGROLL. <strong>Left</strong>: Mean PnL over 6,500 epochs for baseline (&sigma;=0, orange dashed) and EGGROLL (&sigma;=0.01, blue solid). <strong>Right</strong>: PnL standard deviation. The initial increase in std corresponds to an exploration phase; the subsequent decrease indicates convergence to a high-performing policy. Shaded regions show interquartile range.
-            </p>
+                <img src="imgs/eggroll_training.png" alt="EGGROLL training curves: Mean PnL and PnL Std" style="width: 85%; margin: 15px auto;">
+                <p class="fig-caption">
+                    <strong>Figure 8.</strong> Training curves for order execution with EGGROLL. <strong>Left</strong>: Mean PnL over 6,500 epochs for baseline (&sigma;=0, orange dashed) and EGGROLL (&sigma;=0.01, blue solid). <strong>Right</strong>: PnL standard deviation. The initial increase in std corresponds to an exploration phase; the subsequent decrease indicates convergence to a high-performing policy. Shaded regions show interquartile range.
+                </p>
 
-            <table class="data-table" style="max-width: 550px; margin: 0 auto;">
-                <thead>
-                    <tr>
-                        <th>Metric</th>
-                        <th>Value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>Model</td><td>LOBS5-360M</td></tr>
-                    <tr><td>Mean PnL (pretrained baseline)</td><td>~4,700</td></tr>
-                    <tr><td>Mean PnL (EGGROLL fine-tuned)</td><td><strong>~12,000</strong></td></tr>
-                    <tr><td>Improvement</td><td class="metric-highlight">155%</td></tr>
-                    <tr><td>Parallel generations (total)</td><td>65,536</td></tr>
-                    <tr><td>Parallel generations per GPU</td><td>2,048</td></tr>
-                    <tr><td>LoRA rank</td><td>4</td></tr>
-                    <tr><td>&sigma; (noise scale)</td><td>0.01</td></tr>
-                    <tr><td>Learning rate</td><td>0.001</td></tr>
-                    <tr><td>Epochs</td><td>6,500</td></tr>
-                </tbody>
-            </table>
-            <p style="margin-top: 15px;">
-                The baseline policy (&sigma;=0, pretrained model without noise perturbation) achieves a mean PnL of approximately 4,700. EGGROLL fine-tuning improves this to around 12,000, a <strong class="metric-highlight">155% improvement</strong>. The PnL standard deviation initially increases to ~3,100 during the first 2,500 epochs (exploration phase), then decreases to ~400 by epoch 6,500, indicating convergence to a concentrated, high-performing policy.
-            </p>
+                <table class="data-table" style="max-width: 550px; margin: 0 auto;">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Model</td><td>LOBS5-360M</td></tr>
+                        <tr><td>Mean PnL (pretrained baseline)</td><td>~4,700</td></tr>
+                        <tr><td>Mean PnL (EGGROLL fine-tuned)</td><td><strong>~12,000</strong></td></tr>
+                        <tr><td>Improvement</td><td class="metric-highlight">155%</td></tr>
+                        <tr><td>Parallel generations (total)</td><td>65,536</td></tr>
+                        <tr><td>Parallel generations per GPU</td><td>2,048</td></tr>
+                        <tr><td>LoRA rank</td><td>4</td></tr>
+                        <tr><td>&sigma; (noise scale)</td><td>0.01</td></tr>
+                        <tr><td>Learning rate</td><td>0.001</td></tr>
+                        <tr><td>Epochs</td><td>6,500</td></tr>
+                    </tbody>
+                </table>
+                <p style="margin-top: 15px; margin-bottom: 0;">
+                    The baseline policy (&sigma;=0, pretrained model without noise perturbation) achieves a mean PnL of approximately 4,700. EGGROLL fine-tuning improves this to around 12,000, a <strong class="metric-highlight">155% improvement</strong>. The PnL standard deviation initially increases to ~3,100 during the first 2,500 epochs (exploration phase), then decreases to ~400 by epoch 6,500, indicating convergence to a concentrated, high-performing policy.
+                </p>
+            </div>
 
             <!-- ========== BENCHMARKING ========== -->
             <h2>Benchmarking: LOB-Bench</h2>
