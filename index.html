@@ -378,7 +378,8 @@
                     <h4 style="margin: 0 0 8px; font-size: 14px;">LOBS5 v1: Teacher Forcing</h4>
                     <p style="font-size: 13px; margin: 0; font-family: monospace; line-height: 1.8;">
                         tokens[0:500] &rarr; predict token[501]<br>
-                        tokens[1:501] &rarr; predict token[502]
+                        tokens[1:501] &rarr; predict token[502]<br>
+                        <span style="color: #999;">&hellip;</span>
                     </p>
                     <p style="font-size: 13px; margin: 8px 0 0; color: #666;">Fixed sliding window. Input is always ground truth.</p>
                 </div>
@@ -387,6 +388,7 @@
                     <p style="font-size: 13px; margin: 0; font-family: monospace; line-height: 1.8;">
                         tokens[0:1] &rarr; predict token[2]<br>
                         tokens[0:2] &rarr; predict token[3]<br>
+                        <span style="color: #999;">&hellip;</span><br>
                         tokens[0:499] &rarr; predict token[500]
                     </p>
                     <p style="font-size: 13px; margin: 8px 0 0; color: #666;">Each prediction conditions on all prior tokens, including previously generated ones.</p>
