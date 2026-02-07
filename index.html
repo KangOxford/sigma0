@@ -430,10 +430,12 @@
                 <p>
                     This approach is well-suited when the reward signal is differentiable or can be approximated by a learned reward model, but struggles with non-differentiable objectives like realized PnL.
                 </p>
-                <img src="imgs/rl_finetuning.png" alt="RL fine-tuning: Reward and PnL vs Episode for VOD.L" style="width: 75%; margin: 15px auto;">
-                <p class="fig-caption" style="margin-bottom: 0;">
-                    <strong>Figure 7.</strong> RL fine-tuning using SARSA (State-Action-Reward-State-Action, an on-policy temporal-difference method) on VOD.L (Vodafone, London Stock Exchange) order execution. <strong>Top</strong>: Reward vs. episode, showing convergence from negative to ~1.8M over 1,000 episodes. <strong>Bottom</strong>: PnL vs. episode, rising from ~1.2&times;10<sup>4</sup> to ~2.5&times;10<sup>4</sup>. Orange/blue lines show 10-episode rolling averages.
-                </p>
+                <div style="border: 1px solid #d0d0d0; border-radius: 10px; padding: 15px 18px; background: #fafafa;">
+                    <img src="imgs/rl_finetuning.png" alt="RL fine-tuning: Reward and PnL vs Episode for VOD.L" style="width: 100%; margin: 10px auto;">
+                    <p class="fig-caption" style="margin-bottom: 0;">
+                        <strong>Figure 7.</strong> RL fine-tuning using SARSA (State-Action-Reward-State-Action, an on-policy temporal-difference method) on VOD.L (Vodafone, London Stock Exchange) order execution. <strong>Top</strong>: Reward vs. episode, showing convergence from negative to ~1.8M over 1,000 episodes. <strong>Bottom</strong>: PnL vs. episode, rising from ~1.2&times;10<sup>4</sup> to ~2.5&times;10<sup>4</sup>. Orange/blue lines show 10-episode rolling averages.
+                    </p>
+                </div>
             </div>
 
             <!-- Approach 2: EGGROLL (green box) — description + results -->
