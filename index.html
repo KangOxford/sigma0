@@ -296,16 +296,6 @@
                 <strong>2. S5 makes long sequences affordable.</strong> For Transformers, 12,000 tokens costs $O(n^2) = 144M$ attention computations, which is why lossy approaches are attractive. But S5 processes sequences in $O(n)$, making the 24&times; sequence length overhead manageable: our S5 model trains in 2.5 hours per epoch vs. 20 hours for an equivalent Transformer. Lossless encoding is a viable choice precisely because the architecture can handle it.
             </p>
 
-            <h3>Scaling Laws</h3>
-            <p>
-                Pre-training on 25 billion tokens of Google (GOOG) stock order flow from 2022 reveals clear power-law scaling:
-            </p>
-
-            <img src="imgs/scaling_law.png" alt="Loss vs Model Parameters" style="width: 80%; margin: 20px auto;">
-            <p class="fig-caption">
-                <strong>Figure 2.</strong> Test loss vs. model parameters (25B tokens). Loss decreases monotonically from 1.35 (34M) to 0.90 (617M), following a power-law relationship. Ratio = tokens / parameters.
-            </p>
-
             <h3>GPU Efficiency</h3>
             <p>
                 We achieve approximately <strong>40% Model FLOPs Utilization</strong> (MFU) during pre-training, comparable to Meta's Llama-3.1 (38&ndash;43%):
