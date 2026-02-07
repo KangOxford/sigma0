@@ -456,7 +456,8 @@
                     <strong>Figure 8.</strong> Training curves for order execution with EGGROLL. <strong>Left</strong>: Mean PnL over 6,500 epochs for baseline (&sigma;=0, orange dashed) and EGGROLL (&sigma;=0.01, blue solid). <strong>Right</strong>: PnL standard deviation. The initial increase in std corresponds to an exploration phase; the subsequent decrease indicates convergence to a high-performing policy. Shaded regions show interquartile range.
                 </p>
 
-                <table class="data-table" style="max-width: 550px; margin: 0 auto;">
+                <style>.eggroll-table, .eggroll-table th, .eggroll-table td, .eggroll-table tr:nth-child(even) { background: transparent !important; }</style>
+                <table class="data-table eggroll-table" style="max-width: 550px; margin: 0 auto;">
                     <thead>
                         <tr>
                             <th>Metric</th>
