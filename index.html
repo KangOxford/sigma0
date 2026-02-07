@@ -97,7 +97,7 @@
                         </tr>
                         <tr style="border-bottom: 1px solid #eee;">
                             <td style="padding: 10px 5px; border: none; vertical-align: top;">
-                                <a href="https://arxiv.org/abs/2502.09172" style="font-size: 14px; font-weight: 600;">LOB-Bench: Benchmarking Generative AI for Finance ,  an Application to Limit Order Book Data</a><br>
+                                <a href="https://arxiv.org/abs/2502.09172" style="font-size: 14px; font-weight: 600;">LOB-Bench: Benchmarking Generative AI for Finance: an Application to Limit Order Book Data</a><br>
                                 <span style="font-size: 12px; color: #666;">P Nagy, S Frey, K Li, B Sarkar, S Vyetrenko, S Zohren, A Calinescu, ...</span><br>
                                 <span style="font-size: 12px; color: #e74c3c; font-weight: 600;">ICML 2025</span> <span style="font-size: 12px; color: #999;">&nbsp;&middot;&nbsp; Cited: 5</span>
                             </td>
@@ -161,7 +161,7 @@
             <!-- ========== ABSTRACT ========== -->
             <blockquote onclick="var el=document.getElementById('abstract-full');el.style.display=el.style.display==='none'?'block':'none';" style="cursor:pointer; background-color:#f0f4ff; border:1px solid #c0d0f0; border-radius:12px; padding:20px 25px; margin:0;">
             <p>
-                <strong>TL;DR</strong> ,  Finance is one of the hardest domains for ML: noisy, fast, strategic. We develop <strong>LOBS5</strong>, the first state-space foundation model for limit order book data, trained on <strong>25 billion tokens</strong> of NASDAQ order flow. Our three-stage pipeline (pre-training, post-training with Discrete Flow Matching, fine-tuning with Evolution Strategies) achieves <strong>155% PnL improvement</strong> on order execution and exhibits clear scaling laws from 34M to 2B+ parameters.
+                <strong>TL;DR</strong>: Finance is one of the hardest domains for ML: noisy, fast, strategic. We develop <strong>LOBS5</strong>, the first state-space foundation model for limit order book data, trained on <strong>25 billion tokens</strong> of NASDAQ order flow. Our three-stage pipeline (pre-training, post-training with Discrete Flow Matching, fine-tuning with Evolution Strategies) achieves <strong>155% PnL improvement</strong> on order execution and exhibits clear scaling laws from 34M to 2B+ parameters.
             </p>
             <div id="abstract-full" style="display:none; text-align:left;">
                     <hr style="border: none; border-top: 1px dashed #b0c4de; margin: 12px 0;">
@@ -189,6 +189,9 @@
                 </p>
                 <p>
                     Because it is science: hypotheses are tested against data, results must be reproducible, and the infrastructure must support fast turnaround from idea to experiment to conclusion. This is why we invest heavily in GPU-accelerated simulation, automated benchmarking (LOB-Bench), and scalable training pipelines, they are the laboratory equipment that makes rapid experimental iteration possible.
+                </p>
+                <p>
+                    A core design principle is to <strong>stay true to the data</strong>. We discretize every field of an order message into categorical tokens and train with <strong>cross-entropy loss</strong>, performing general density modeling without assuming any parametric distribution. Regression losses and continuous distribution matching require distributional assumptions (Gaussian, exponential, etc.) that may not hold for financial data. Cross-entropy over discrete tokens is the only approach that models arbitrary distributions faithfully, letting the data speak for itself.
                 </p>
             </div>
 
@@ -223,7 +226,7 @@
                 The stock exchanges (NYSE and NASDAQ) generate massive volumes of high-frequency trading data, with new orders created at the millisecond level. These orders encapsulate a wealth of insights: the tendencies and preferences of various market participants, underlying market information, and the correlations between different stocks.
             </p>
             <p>
-                Our core objective is to train a foundation model on this terabyte-scale dataset, enabling it to identify the transition dynamics of limit order books. Through post-training, we fine-tune this large model for downstream tasks such as prediction, classification, and order execution. Even a few basis points of improvement in execution can translate to enormous profits when deployed at scale.
+                Our core objective is to train a foundation model on this terabyte-scale dataset, enabling it to learn the transition dynamics of limit order books. The pipeline has three distinct stages: <strong>pre-training</strong> learns the data distribution via next-token prediction, <strong>post-training</strong> (Discrete Flow Matching) improves generation quality by eliminating compound error, and <strong>fine-tuning</strong> (Evolution Strategies) optimizes for downstream tasks such as order execution. Even a few basis points of improvement in execution can translate to enormous profits when deployed at scale.
             </p>
 
             <button class="collapsible">The Multi-Agent Perspective</button>
@@ -339,10 +342,10 @@
                 A fundamental limitation of autoregressive (AR) models is <strong>compound error accumulation</strong>: prediction errors propagate and amplify throughout sequence generation, as each token conditions on potentially incorrect previous outputs. This problem is particularly severe for financial order flow, where distributional shifts compound rapidly over long generation horizons.
             </p>
             <p>
-                To address this, we introduce a post-training stage using <strong>Discrete Flow Matching (DFM)</strong>, which converts our pretrained AR model into a flow-based generator. Unlike traditional flow matching that starts from random noise, our approach leverages the pretrained model's learned distribution as the starting point, significantly reducing the learning burden.
+                To address this, we introduce a post-training stage using <strong>Discrete Flow Matching (DFM)</strong>, which converts our pretrained AR model into a flow-based generator. Unlike traditional flow matching that starts from random noise, our approach leverages the pretrained model's learned distribution as the starting point, significantly reducing the learning burden. Compared to GANs, which we found unstable and only marginally better than baselines on LOB data, DFM trains reliably and consistently converges.
             </p>
             <p>
-                The results are striking: while AR models exhibit Wasserstein distance increasing from 3 to 20+ throughout sequence generation, DFM maintains a nearly flat error profile (3&ndash;4) across all time steps, achieving a <strong class="metric-highlight">48.6% reduction</strong> in Wasserstein distance. This post-training framework preserves the model's learned representations while eliminating the compound error inherent in left-to-right generation.
+                Crucially, DFM does not replace cross-entropy pre-training: <strong>CE learns <em>what</em> to generate</strong> (the data distribution), while <strong>DFM improves <em>how</em> to generate</strong> (the sampling procedure). The results are striking: while AR models exhibit Wasserstein distance increasing from 3 to 20+ throughout sequence generation, DFM maintains a nearly flat error profile (3&ndash;4) across all time steps, achieving a <strong class="metric-highlight">48.6% reduction</strong> in Wasserstein distance.
             </p>
 
             <!-- ========== SIMULATOR ========== -->
@@ -352,14 +355,14 @@
             </p>
 
             <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #fff8f0; border: 1px solid #f0dcc0;">
-                <h3 style="margin-top: 0;">Layer 1: Match Engine ,  JAX-LOB</h3>
+                <h3 style="margin-top: 0;">Layer 1: Match Engine: JAX-LOB</h3>
                 <p style="margin-bottom: 0;">
                     At the foundation is <a href="https://arxiv.org/abs/2308.13289"><strong>JAX-LOB</strong></a> (<span style="color: #e74c3c; font-weight: 700;">ICAIF 2023 Best Paper</span>), a fully vectorized limit order book matching engine in JAX. It implements the complete NASDAQ ITCH protocol with price-time priority matching. Given an incoming order and the current book state, the match engine deterministically executes trades and updates the book.
                 </p>
             </div>
 
             <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #fff3eb; border: 1px solid #f0cdb8;">
-                <h3 style="margin-top: 0;">Layer 2: Environment ,  Historical Replay</h3>
+                <h3 style="margin-top: 0;">Layer 2: Environment: Historical Replay</h3>
                 <p>
                     Wrapping the match engine with historical order flow replay creates an <strong>environment</strong>. The agent's orders are interleaved with real historical messages and processed through the match engine. This layer captures <strong>direct price impact</strong>, when your order consumes liquidity at a price level, that liquidity is gone and cannot be filled again. However, it has a critical limitation: the historical background agents do not react to the ego agent's actions, they replay the same orders regardless of what the agent does.
                 </p>
@@ -369,7 +372,7 @@
             </div>
 
             <div style="border-radius: 12px; padding: 20px 25px; margin-bottom: 15px; background-color: #ffede6; border: 1px solid #f0bfaf;">
-                <h3 style="margin-top: 0;">Layer 3: World Model Simulator ,  LOBS5 as Background</h3>
+                <h3 style="margin-top: 0;">Layer 3: World Model Simulator: LOBS5 as Background</h3>
                 <p>
                     The full simulator replaces historical replay with a <strong>world model</strong>: the frozen pretrained LOBS5 generates background market activity <em>conditioned on the current state</em>, including the ego agent's actions. This unlocks <strong>indirect price impact</strong>, phenomena that historical replay cannot capture:
                 </p>
@@ -510,7 +513,7 @@
             <!-- ========== OPEN QUESTIONS ========== -->
             <h2>Open Questions</h2>
             <p>
-                These are unsolved problems we are actively working on. If you have ideas, insights, or preliminary results ,  <strong>we'd love to hear from you</strong>. Promising contributions lead to co-authorship on future publications. Click any question to explore the details and leave your thoughts below.
+                These are unsolved problems we are actively working on. If you have ideas, insights, or preliminary results, <strong>we'd love to hear from you</strong>. Promising contributions lead to co-authorship on future publications. Click any question to explore the details and leave your thoughts below.
             </p>
 
             <!-- Q1: Attention -->
@@ -1033,7 +1036,7 @@
     var pad = function(n) { return n < 10 ? '0' + n : '' + n; };
     var timeStr = pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
     document.getElementById('seed-note').innerHTML =
-        '<sup>&dagger;</sup> Author order randomized with <code>seed(' + hhmmss + ')</code> ,  ' +
+        '<sup>&dagger;</sup> Author order randomized with <code>seed(' + hhmmss + ')</code>: ' +
         'current timestamp HHMMSS (' + timeStr + '). Reload to re-shuffle.';
 })();
 </script>
