@@ -371,6 +371,9 @@
                         iteration possible.
                     </p>
                     <p>
+                        A second guiding principle is <strong>solving complex problems with simple methods</strong>. Through continuous ablation experimentation, we systematically strip away unnecessary components, modules, and abstractions, keeping only what demonstrably works. The goal is not to build the most complex system, but to find the simplest approach that solves the problem. This experimental discipline, repeatedly asking &ldquo;can we remove this and still succeed?&rdquo;, is how we arrive at solutions that are both effective and easy to reason about.
+                    </p>
+                    <p>
                         A core design principle is to <strong>stay true to the data</strong>. We discretize every field
                         of an order message into categorical tokens and train with <strong>cross-entropy loss</strong>,
                         performing general density modeling without assuming any parametric distribution. Regression
@@ -644,9 +647,12 @@
                 </div>
                 <p>
                     This change eliminates the train&ndash;test mismatch inherent in teacher forcing and is the primary
-                    driver of v2's quality improvements. Evaluated on both INTC and GOOG order flow, LOBS5v2
-                    (conditional and unconditional) substantially outperforms v1 across L1 and Wasserstein distance
-                    metrics, with lower values indicating closer distributional match to real market data:
+                    driver of v2's quality improvements. We evaluate using two distributional distance metrics:
+                    <strong>L1 distance</strong> (sum of absolute differences between generated and real distributions)
+                    and <strong>Wasserstein distance</strong> (earth mover's distance, measuring the minimum
+                    &ldquo;transport cost&rdquo; to reshape one distribution into another). Lower values indicate closer
+                    match to real market data. On both INTC and GOOG order flow, LOBS5v2 (conditional and unconditional)
+                    substantially outperforms v1:
                 </p>
                 <img src="imgs/lobs5_versions.png" alt="LOBS5 version comparison: L1 and Wasserstein distances"
                     style="width: 85%; margin: 20px auto;">
@@ -1000,18 +1006,18 @@
                     volume, and OFI; the spread and order levels show structural differences worth investigating.
                 </p>
 
-                <h3>Market Impact: Square Root Law</h3>
+                <h3>Market Impact: Microscopic Response Functions</h3>
                 <p>
-                    A critical test of any order flow model is whether it reproduces the <strong>square root law of
-                        market impact</strong>, a universal empirical regularity where price response to order flow
-                    scales as $R_\pi \sim l^{1/2}$ with event lag $l$. We compare microscopic response functions between
-                    real GOOG data and three LOBS5 variants:
+                    A critical test of any order flow model is whether it reproduces realistic <strong>microscopic
+                        response functions</strong>, which measure how the midprice reacts to individual order types
+                    over subsequent events. We compare these response functions between real GOOG data and three LOBS5
+                    variants:
                 </p>
                 <img src="imgs/market_impact.png" alt="Microscopic response functions: Real Data vs LOBS5 variants"
                     style="width: 95%; margin: 20px auto;">
                 <p class="fig-caption">
                     <strong>Figure 5.</strong> Tick-normalised microscopic response functions for GOOG. Market orders
-                    (MO, red) exhibit the characteristic concave square-root shape, limit orders (LO, green) show
+                    (MO, red) exhibit the characteristic concave shape, limit orders (LO, green) show
                     negative impact, and cancellations (CA, blue) are near-zero. LOBS5v2 variants closely reproduce the
                     real data patterns, while v1 (s5_main) shows deviations at longer lags.
                 </p>
