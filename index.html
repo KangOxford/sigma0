@@ -234,7 +234,9 @@
                             href="https://www.linkedin.com/in/gereon-franken/" style="color:#777;">Gereon Franken</a>
                         &middot; <a href="https://www.linkedin.com/in/silvia-sapora/" style="color:#777;">Silvia
                             Sapora</a> &middot; <a href="https://www.linkedin.com/in/timon-willi/"
-                            style="color:#777;">Timon Willi</a>
+                            style="color:#777;">Timon Willi</a> &middot; <a
+                            href="https://www.linkedin.com/in/svitlana-vyetrenko-2a75665b" style="color:#777;">Svitlana
+                            Vyetrenko</a>
                     </p>
                 </div>
 
@@ -753,18 +755,38 @@
                     </p>
                 </div>
 
-                <h3>Order Injection: Validating Price Impact</h3>
+                <h3>Emergent Macroscopic Market Impact Property</h3>
                 <p>
-                    To verify that the world model captures realistic price impact, we inject buy or sell market orders
-                    at the junction point (step 500) and observe the midprice response:
+                    A hallmark of real markets is the <strong>square-root law</strong> of price impact:
+                    the midprice shift caused by executing a meta-order of size $Q$ scales as
+                    $\Delta P \propto \sigma \, Q^{\beta}$ with $\beta \approx 0.5$, one of the most
+                    robust empirical regularities in market microstructure.
+                    We test whether this macroscopic property <strong>emerges</strong> from LOBS5
+                    without ever being explicitly trained on it.
                 </p>
-                <img src="imgs/injection_orders.png" alt="Midprice return after order injection: BUY vs SELL"
-                    style="width: 90%; margin: 20px auto;">
+                <p>
+                    The experiment is shown below: after a 500-message historical context window,
+                    we inject a sequence of aggressive market orders (buy or sell) and let the
+                    world model generate background activity during a cooling period.
+                    The sell experiment is mirrored by multiplying returns by $-1$ and combining
+                    with the buy experiment. Each configuration is repeated across 1,024 samples.
+                </p>
+                <img src="imgs/insertions_scheme.png"
+                    alt="Order injection experimental setup: aggressive insertions followed by cooling period"
+                    style="width: 85%; margin: 20px auto;">
                 <p class="fig-caption">
-                    <strong>Figure 7.</strong> Aggregated midprice return (mean &plusmn; 1 std) after injecting BUY
-                    (blue) and SELL*(&minus;1) (red) orders at the junction. The combined mean (purple) shows a clear
-                    positive drift post-injection, confirming that the world model produces realistic indirect price
-                    impact, background agents respond to the injected orders rather than ignoring them.
+                    <strong>Figure 7.</strong> Experimental setup for measuring macroscopic market
+                    impact. Aggressive buy (top) and sell (bottom) orders are injected after a
+                    500-message context. The midprice response during the cooling period is
+                    recorded and aggregated over 1,024 independent samples.
+                </p>
+                <p>
+                    Our results yield $\beta \approx 0.5\text{--}0.6$, closely matching the
+                    empirical square-root law observed in real markets. This confirms that the
+                    world model captures realistic macroscopic price impact as an emergent
+                    property of its learned order flow dynamics.
+                    Analysis of <strong>market impact decay</strong>&mdash;the transient
+                    relaxation of price after the meta-order ends&mdash;is currently underway.
                 </p>
 
                 <h3>Triton Kernel Fusion</h3>
