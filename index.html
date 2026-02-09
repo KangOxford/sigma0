@@ -8,7 +8,7 @@
     <meta name="description" content="Scaling Laws for Quantitative Finance Foundation Models - LOBS5">
     <meta name="keywords"
         content="foundation model, limit order book, state space model, order flow, quantitative finance, scaling laws">
-    <title>&sigma;0: Unlocking Large-Scale Quant Foundation Models</title>
+    <title>&alpha;0: Unlocking Large-Scale Quant Foundation Models</title>
     <link rel="icon" type="image/png" href="imgs/favicon.png">
     <link rel="apple-touch-icon" href="imgs/favicon.png">
 
@@ -57,7 +57,7 @@
                 <!-- ========== TITLE ========== -->
                 <div class="text-center" style="margin-top: 40px;">
                     <h1 style="font-size: 48px; font-weight: 700; font-family: 'Georgia', 'Times New Roman', serif;">
-                        <em>&sigma;<sub>0</sub></em>: Unlocking Large-Scale Quant Foundation Models
+                        <em>&alpha;<sub>0</sub></em>: Unlocking Large-Scale Quant Foundation Models
                     </h1>
                 </div>
 
@@ -397,12 +397,12 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td><strong>&sigma;<sub>0</sub></strong></td>
+                                <td><strong>&alpha;<sub>0</sub></strong></td>
                                 <td>Model family</td>
                                 <td>Like <em>LLaMA</em> or <em>GPT</em>. A herd of models including pre-trained
                                     foundation models and fine-tuned models for downstream tasks (order execution,
                                     market making, etc.). The core is the pre-trained foundation model;
-                                    &sigma;<sub>0</sub> is architecture-agnostic and future releases may use
+                                    &alpha;<sub>0</sub> is architecture-agnostic and future releases may use
                                     Transformers, Mamba, or hybrid architectures.</td>
                             </tr>
                             <tr>
@@ -411,12 +411,12 @@
                                 <td>Like <em>Transformer</em> or <em>Mamba</em>. A specific architecture built on S5
                                     (Simplified Structured State Space) layers that replaces attention with linear-time
                                     state space recurrences. LOBS5 is the architecture used in the current
-                                    &sigma;<sub>0</sub> release.</td>
+                                    &alpha;<sub>0</sub> release.</td>
                             </tr>
                         </tbody>
                     </table>
                     <p style="font-size: 13px; color: #666; text-align: center; margin-top: 10px;">
-                        In short: <strong>&sigma;<sub>0</sub></strong> is <em>what</em> we release,
+                        In short: <strong>&alpha;<sub>0</sub></strong> is <em>what</em> we release,
                         <strong>LOBS5</strong> is <em>how</em> it is built.
                     </p>
                 </div>
@@ -867,8 +867,8 @@
                             style="width: 100%; margin: 10px auto;">
                         <p class="fig-caption" style="margin-bottom: 0;">
                             <strong>Figure 8.</strong> Training curves for order execution with EGGROLL.
-                            <strong>Left</strong>: Mean PnL over 6,500 epochs for baseline (&sigma;=0, orange dashed)
-                            and EGGROLL (&sigma;=0.01, blue solid). <strong>Right</strong>: PnL standard deviation. The
+                            <strong>Left</strong>: Mean PnL over 6,500 epochs for baseline (&alpha;=0, orange dashed)
+                            and EGGROLL (&alpha;=0.01, blue solid). <strong>Right</strong>: PnL standard deviation. The
                             initial increase in std corresponds to an exploration phase; the subsequent decrease
                             indicates convergence to a high-performing policy. Shaded regions show interquartile range.
                         </p>
@@ -890,7 +890,7 @@
                                         <td>4</td>
                                     </tr>
                                     <tr>
-                                        <td style="font-weight:600;">&sigma; (noise scale)</td>
+                                        <td style="font-weight:600;">&alpha; (noise scale)</td>
                                         <td>0.01</td>
                                     </tr>
                                     <tr>
@@ -931,7 +931,7 @@
                         </div>
                     </div>
                     <p style="margin-top: 15px; margin-bottom: 0;">
-                        The baseline policy (&sigma;=0, pretrained model without noise perturbation) achieves a mean PnL
+                        The baseline policy (&alpha;=0, pretrained model without noise perturbation) achieves a mean PnL
                         of approximately 4,700. EGGROLL fine-tuning improves this to around 12,000, a <strong
                             class="metric-highlight">155% improvement</strong>. The PnL standard deviation initially
                         increases to ~3,100 during the first 2,500 epochs (exploration phase), then decreases to ~400 by
@@ -1566,7 +1566,7 @@
                             </div>
                             <div style="text-align: center; width: 20%;">
                                 <div style="font-size: 13px; font-weight: 700;">2026</div>
-                                <div style="font-size: 11px; color: #666; margin-top: 2px;">&sigma;<sub>0</sub> release
+                                <div style="font-size: 11px; color: #666; margin-top: 2px;">&alpha;<sub>0</sub> release
                                 </div>
                             </div>
                         </div>
