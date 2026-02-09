@@ -867,8 +867,8 @@
                             style="width: 100%; margin: 10px auto;">
                         <p class="fig-caption" style="margin-bottom: 0;">
                             <strong>Figure 8.</strong> Training curves for order execution with EGGROLL.
-                            <strong>Left</strong>: Mean PnL over 6,500 epochs for baseline (&alpha;=0, orange dashed)
-                            and EGGROLL (&alpha;=0.01, blue solid). <strong>Right</strong>: PnL standard deviation. The
+                            <strong>Left</strong>: Mean PnL over 6,500 epochs for baseline (&sigma;=0, orange dashed)
+                            and EGGROLL (&sigma;=0.01, blue solid). <strong>Right</strong>: PnL standard deviation. The
                             initial increase in std corresponds to an exploration phase; the subsequent decrease
                             indicates convergence to a high-performing policy. Shaded regions show interquartile range.
                         </p>
@@ -890,7 +890,7 @@
                                         <td>4</td>
                                     </tr>
                                     <tr>
-                                        <td style="font-weight:600;">&alpha; (noise scale)</td>
+                                        <td style="font-weight:600;">&sigma; (noise scale)</td>
                                         <td>0.01</td>
                                     </tr>
                                     <tr>
@@ -931,7 +931,7 @@
                         </div>
                     </div>
                     <p style="margin-top: 15px; margin-bottom: 0;">
-                        The baseline policy (&alpha;=0, pretrained model without noise perturbation) achieves a mean PnL
+                        The baseline policy (&sigma;=0, pretrained model without noise perturbation) achieves a mean PnL
                         of approximately 4,700. EGGROLL fine-tuning improves this to around 12,000, a <strong
                             class="metric-highlight">155% improvement</strong>. The PnL standard deviation initially
                         increases to ~3,100 during the first 2,500 epochs (exploration phase), then decreases to ~400 by
